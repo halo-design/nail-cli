@@ -1,3 +1,3 @@
 module.exports = {
-  name: 'nail'
+  serverPort: 3001
 }
