@@ -8,7 +8,7 @@ console.log(envPath.DIR.ROOT)
 console.log(envPath.DIR.PROJECT)
 
 console.log(envPath.resolve('lib/index.js'))
-console.log(process.argv.indexOf('dev') > -1)
+console.log(process.argv.includes("dev"))
 
 if (fs.existsSync(configPath)) {
   const userConfig = require(configPath)
