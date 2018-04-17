@@ -1,16 +1,21 @@
 const webpack = require('webpack')
 const entryPoint = require('./entry-point')
 const outputPoint = require('./output-point')
+const aliasWrapper = require('./alias-wrapper')
 const baseConfig = require('./webpack.base.config')
 const { getRealPath } = require('../lib/env-global')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AnalyzeWebpackPlugin = require('analyze-webpack-plugin').default
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
-module.exports = (entry, template, env) => ({
-  ...baseConfig(
-    entryPoint(entry),
-    outputPoint()
+module.exports = (entry, template, alias, postcssPlugins, env) => ({
+  ...aliasWrapper(
+    baseConfig(
+      entryPoint(entry),
+      outputPoint(),
+      postcssPlugins
+    ),
+    alias
   ),
   plugins: [
     new HtmlWebpackPlugin({
@@ -27,14 +32,5 @@ module.exports = (entry, template, env) => ({
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // visit http://localhost:3000/analyze.html
     new AnalyzeWebpackPlugin()
-  ],
-  node: {
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  },
-  performance: {
-    hints: false
-  }
+  ]
 })

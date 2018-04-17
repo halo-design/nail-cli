@@ -1,10 +1,11 @@
 const loaderRule = require('./loader-rule')
-const { ROOT, is, env } = require('../lib/env-global')
+const { ROOT, is, appResolve, env } = require('../lib/env-global')
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 
-module.exports = (entryPoint, outputPoint) => ({
+module.exports = (entryPoint, outputPoint, postcssPlugins) => ({
   context: ROOT.APP,
 
-  mode: env.debug ? 'development' : 'production',
+  mode: env.debug() ? 'development' : 'production',
 
   entry: {
     app: entryPoint
@@ -14,18 +15,21 @@ module.exports = (entryPoint, outputPoint) => ({
 
   resolve: {
     modules: ['node_modules', 'src'],
-    extensions: ['.js', '.json', '.jsx']
+    extensions: ['.js', '.json', '.jsx'],
+    plugins: [
+      new ModuleScopePlugin(appResolve('src'), [appResolve('package.json')])
+    ]
   },
 
   module: {
     strictExportPresence: true,
 
-    rules: loaderRule
+    rules: loaderRule(postcssPlugins)
   },
 
-  bail: !env.debug,
+  bail: !env.debug(),
 
-  cache: env.debug,
+  cache: env.debug(),
 
   stats: {
     cached: is.verbose,
@@ -35,10 +39,21 @@ module.exports = (entryPoint, outputPoint) => ({
     colors: true,
     hash: is.verbose,
     modules: is.verbose,
-    reasons: env.debug,
+    reasons: env.debug(),
     timings: true,
     version: is.verbose,
   },
 
-  devtool: env.debug ? 'cheap-module-inline-source-map' : 'source-map'
+  devtool: env.debug() ? 'cheap-module-inline-source-map' : 'source-map',
+
+  node: {
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  },
+
+  performance: {
+    hints: false
+  }
 })

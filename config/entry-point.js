@@ -8,5 +8,5 @@ module.exports = modules => {
     require.resolve('webpack/hot/dev-server')
   ].concat(base)
 
-  return env.debug ? hot : base
+  return env.debug() ? hot : base
 }

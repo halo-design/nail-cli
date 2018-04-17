@@ -1,6 +1,11 @@
 import './alert'
+import '@/view-demo'
 
 console.log('abc')
+
+import('./sync').then(() => {
+  console.log('loaded!')
+})
 
 const $root = document.getElementById('root')
 $root.innerText = 'awesome!'

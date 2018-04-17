@@ -4,14 +4,14 @@ const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMi
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
 const SET_HOST = process.env.HOST || '0.0.0.0'
 
-module.exports = (publicPath, proxy, allowedHost) => ({
+module.exports = (proxy, allowedHost, publicDir) => ({
   disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
   compress: true,
   clientLogLevel: 'none',
-  contentBase: appResolve('public'),
+  contentBase: appResolve(publicDir),
   watchContentBase: true,
   hot: true,
-  publicPath,
+  publicPath: '/',
   quiet: true,
   watchOptions: {
     ignored: /node_modules/,
@@ -24,7 +24,7 @@ module.exports = (publicPath, proxy, allowedHost) => ({
   },
   public: allowedHost,
   proxy,
-  setup (app) {
+  before (app) {
     app.use(noopServiceWorkerMiddleware())
   }
 })

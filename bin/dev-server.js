@@ -1,28 +1,28 @@
-const fs = require('fs')
 const chalk = require('chalk')
 const webpack = require('webpack')
 const devConfigGenerator = require('../config/webpack.dev.config')
 const devServerConfig = require('../config/devServer.config')
-const { appResolve } = require('../lib/env-global')
 const WebpackDevServer = require('webpack-dev-server')
 const openBrowser = require('react-dev-utils/openBrowser')
+const { appResolve, useYarn } = require('../lib/env-global')
 const { choosePort, prepareUrls, createCompiler, prepareProxy } = require('react-dev-utils/WebpackDevServerUtils')
 const pkg = require(appResolve('package.json'))
 
 const runServer = ({
   entry,
   template,
-  env,
+  alias,
+  publicDir,
   proxyTable,
-  serverPort
+  devServerPort,
+  postcssPlugins,
+  autoOpenBrowser
 }) => {
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
 const SET_HOST = process.env.HOST || '0.0.0.0'
-const SET_PORT = parseInt(process.env.PORT, 10) || serverPort
+const SET_PORT = parseInt(process.env.PORT, 10) || devServerPort
 
-const useYarn = fs.existsSync(appResolve('yarn.lock'))
-
-const devConfig = devConfigGenerator(entry, template, env)
+const devConfig = devConfigGenerator(entry, template, alias, postcssPlugins, 'development')
 
 choosePort(SET_HOST, SET_PORT)
   .then(port => {
@@ -32,19 +32,20 @@ choosePort(SET_HOST, SET_PORT)
     }
     const urls = prepareUrls(protocol, SET_HOST, port)
     const compiler = createCompiler(webpack, devConfig, pkg.name, urls, useYarn)
-    const proxyConfig = prepareProxy(proxyTable, appResolve('public'))
-    const devServer = new WebpackDevServer(compiler, devServerConfig(
-      devConfig.output.publicPath,
-      proxyConfig,
-      urls.lanUrlForConfig
-    ))
 
+    const proxyConfig = prepareProxy(proxyTable, appResolve(publicDir))
+    const devServer = new WebpackDevServer(compiler, devServerConfig(
+      proxyConfig,
+      urls.lanUrlForConfig,
+      publicDir
+    ))
+    
     devServer.listen(port, SET_HOST, err => {
       if (err) {
         return console.log(chalk.red(err))
       }
       console.log(chalk.cyan('Starting the development server...\n'))
-      openBrowser(urls.localUrlForBrowser)
+      autoOpenBrowser && openBrowser(urls.localUrlForBrowser)
     })
 
     ;['SIGINT', 'SIGTERM'].forEach(signal => {
