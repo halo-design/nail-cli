@@ -1,4 +1,4 @@
-const { appResolve } = require('../lib/env-global')
+const { getRealPath } = require('../lib/env-global')
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware')
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
@@ -8,7 +8,7 @@ module.exports = (proxy, allowedHost, publicDir) => ({
   disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
   compress: true,
   clientLogLevel: 'none',
-  contentBase: appResolve(publicDir),
+  contentBase: getRealPath(publicDir),
   watchContentBase: true,
   hot: true,
   publicPath: '/',

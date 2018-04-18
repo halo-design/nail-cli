@@ -4,7 +4,7 @@ const devConfigGenerator = require('../config/webpack.dev.config')
 const devServerConfig = require('../config/devServer.config')
 const WebpackDevServer = require('webpack-dev-server')
 const openBrowser = require('react-dev-utils/openBrowser')
-const { appResolve, useYarn } = require('../lib/env-global')
+const { appResolve, getRealPath, useYarn } = require('../lib/env-global')
 const { choosePort, prepareUrls, createCompiler, prepareProxy } = require('react-dev-utils/WebpackDevServerUtils')
 const pkg = require(appResolve('package.json'))
 
@@ -35,7 +35,7 @@ const runServer = ({
       const urls = prepareUrls(protocol, SET_HOST, port)
       const compiler = createCompiler(webpack, devConfig, pkg.name, urls, useYarn)
 
-      const proxyConfig = prepareProxy(proxyTable, appResolve(publicDir))
+      const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir))
       const devServer = new WebpackDevServer(compiler, devServerConfig(
         proxyConfig,
         urls.lanUrlForConfig,

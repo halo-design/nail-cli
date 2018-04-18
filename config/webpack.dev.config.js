@@ -5,7 +5,6 @@ const aliasWrapper = require('./alias-wrapper')
 const baseConfig = require('./webpack.base.config')
 const { getRealPath } = require('../lib/env-global')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const AnalyzeWebpackPlugin = require('analyze-webpack-plugin').default
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = (entry, template, alias, postcssPlugins, preLint, favicon, env) => ({
@@ -31,8 +30,6 @@ module.exports = (entry, template, alias, postcssPlugins, preLint, favicon, env)
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CaseSensitivePathsPlugin(),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // visit http://localhost:3000/analyze.html
-    new AnalyzeWebpackPlugin()
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
 })

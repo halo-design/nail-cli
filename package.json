@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Front-end Development Tool",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -34,7 +34,6 @@
     "@babel/preset-react": "^7.0.0-beta.42",
     "@babel/preset-stage-2": "^7.0.0-beta.42",
     "@babel/runtime": "^7.0.0-beta.44",
-    "analyze-webpack-plugin": "^0.2.5",
     "autoprefixer": "^8.3.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.2",
