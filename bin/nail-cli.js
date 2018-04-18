@@ -16,19 +16,21 @@ if (!semver.satisfies(process.version, requiredVersion)) {
   process.exit(1)
 }
 
+let finalConfig = require('../options')()
+
 if (fs.existsSync(configPath)) {
-  const finalConfig = {
-    ...require('../options')(),
+  finalConfig = {
+    ...finalConfig,
     ...require(configPath)
   }
-
-  if (process.argv.includes('serve')) {
-    process.env.NODE_ENV = process.env.BABEL_ENV = 'development'
-    runServer(finalConfig)
-  } else if (process.argv.includes('build')) {
-    process.env.NODE_ENV = process.env.BABEL_ENV = 'production'
-    runBuild(finalConfig)
-  }
 } else {
-  console.log(chalk.red('The configuration file "nail.config.js" does not exist.'))
+  console.log(chalk.cyan('The configuration file "nail.config.js" does not exist.'))
+}
+
+if (process.argv.includes('serve')) {
+  process.env.NODE_ENV = process.env.BABEL_ENV = 'development'
+  runServer(finalConfig)
+} else if (process.argv.includes('build')) {
+  process.env.NODE_ENV = process.env.BABEL_ENV = 'production'
+  runBuild(finalConfig)
 }
