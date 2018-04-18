@@ -8,18 +8,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AnalyzeWebpackPlugin = require('analyze-webpack-plugin').default
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
-module.exports = (entry, template, alias, postcssPlugins, env) => ({
+module.exports = (entry, template, alias, postcssPlugins, preLint, favicon, env) => ({
   ...aliasWrapper(
     baseConfig(
       entryPoint(entry),
       outputPoint(),
-      postcssPlugins
+      postcssPlugins,
+      preLint
     ),
     alias
   ),
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
+      favicon: getRealPath(favicon),
       template: getRealPath(template)
     }),
     new webpack.DefinePlugin({

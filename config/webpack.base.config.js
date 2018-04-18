@@ -2,7 +2,7 @@ const loaderRule = require('./loader-rule')
 const { ROOT, is, appResolve, env } = require('../lib/env-global')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 
-module.exports = (entryPoint, outputPoint, postcssPlugins) => ({
+module.exports = (entryPoint, outputPoint, postcssPlugins, preLint) => ({
   context: ROOT.APP,
 
   mode: env.debug() ? 'development' : 'production',
@@ -24,7 +24,7 @@ module.exports = (entryPoint, outputPoint, postcssPlugins) => ({
   module: {
     strictExportPresence: true,
 
-    rules: loaderRule(postcssPlugins)
+    rules: loaderRule(postcssPlugins, preLint)
   },
 
   bail: !env.debug(),
@@ -41,7 +41,7 @@ module.exports = (entryPoint, outputPoint, postcssPlugins) => ({
     modules: is.verbose,
     reasons: env.debug(),
     timings: true,
-    version: is.verbose,
+    version: is.verbose
   },
 
   devtool: env.debug() ? 'cheap-module-inline-source-map' : 'source-map',

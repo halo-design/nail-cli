@@ -7,38 +7,11 @@ const assetName = env.debug()
   ? '[path][name].[ext]?[hash:8]'
   : '[name].[hash:8].[ext]'
 
-module.exports = postcssPlugins => [{
-  test: reg.script,
-  include: [ROOT.APP],
-  loader: 'babel-loader',
-  options: {
-    cacheDirectory: env.debug(),
-
-    babelrc: false,
-    presets: [
-      [
-        '@babel/preset-env',
-        {
-          targets: {
-            browsers: pkg.browserslist || browserslist,
-            forceAllTransforms: !env.debug()
-          },
-          modules: false,
-          useBuiltIns: false,
-          debug: false
-        }
-      ],
-      '@babel/preset-stage-2',
-      ['@babel/preset-react', { development: env.debug() }]
-    ],
-    plugins: env.debug()
-      ? []
-      : [
-        '@babel/transform-react-constant-elements',
-        '@babel/transform-react-inline-elements',
-        'transform-react-remove-prop-types'
-      ]
-    }
+module.exports = (postcssPlugins, preLint) => {
+  let baseRules = [{
+    test: reg.script,
+    include: [ROOT.APP],
+    loader: 'babel-loader'
   }, {
     test: /\.css$/,
     use: styleLoader(null, null, postcssPlugins)
@@ -73,3 +46,18 @@ module.exports = postcssPlugins => [{
       name: `media/${assetName}`
     }
   }]
+
+  if (preLint) {
+    return [{
+      test: reg.script,
+      loader: 'eslint-loader',
+      enforce: 'pre',
+      include: [appResolve('src'), appResolve('test')],
+      options: {
+        formatter: require('eslint-friendly-formatter')
+      }
+    }].concat(baseRules)
+  }
+
+  return baseRules
+}

@@ -19,5 +19,6 @@ module.exports = {
     '&': '<rootDir>/src/models',
     '^': '<rootDir>/src/components'
   },
-  autoOpenBrowser: true
+  autoOpenBrowser: true,
+  lintOnSave: true
 }

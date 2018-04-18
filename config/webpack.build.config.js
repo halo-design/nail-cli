@@ -23,12 +23,13 @@ module.exports = (
   parallel,
   env
 ) => {
-    let buildConfig = {
+  let buildConfig = {
     ...aliasWrapper(
       baseConfig(
         entryPoint(entry),
         outputPoint(outputDir, publicPath),
-        postcssPlugins
+        postcssPlugins,
+        false
       ),
       alias
     ),

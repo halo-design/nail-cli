@@ -4,6 +4,7 @@ module.exports = () => ({
     '<rootDir>/src/index.js'
   ],
   template: '<rootDir>/public/index.html',
+  favicon: '<rootDir>/public/favicon.ico',
   outputDir: '<rootDir>/dist',
   publicDir: '<rootDir>/public',
   publicPath: '/',
