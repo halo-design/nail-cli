@@ -8,8 +8,8 @@ module.exports = (
   path: getRealPath(outputDir),
   publicPath,
   pathinfo: is.verbose,
-  filename: env.debug() ? '[name].js' : 'js/[name].[chunkhash:8].js',
-  chunkFilename: env.debug() ? '[name].chunk.js' : 'js/[name].[chunkhash:8].chunk.js',
+  filename: env.debug() ? '[name].js' : 'js/[name].[chunkhash:8].min.js',
+  chunkFilename: env.debug() ? '[name].chunk.js' : 'js/[name].[chunkhash:8].chunk.min.js',
   devtoolModuleFilenameTemplate: info =>
     path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
 })

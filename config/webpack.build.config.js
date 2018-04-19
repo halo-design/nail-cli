@@ -15,6 +15,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 module.exports = (
   entry,
   outputDir,
+  reportDir,
   publicPath,
   template,
   alias,
@@ -123,8 +124,8 @@ module.exports = (
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
-        filename: 'css/[name].[contenthash:8].css',
-        chunkFilename: 'css/[id].[contenthash:8].css'
+        filename: 'css/[name].[contenthash:8].min.css',
+        chunkFilename: 'css/[id].[contenthash:8].min.css'
       })
     ]
   }
@@ -133,7 +134,7 @@ module.exports = (
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     buildConfig.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: `../analyze/${Date.now()}.html`
+      reportFilename: getRealPath(`${reportDir}/analyze/${Date.now()}.html`)
     }))
   }
 

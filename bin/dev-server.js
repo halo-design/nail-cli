@@ -24,7 +24,15 @@ const runServer = ({
   const SET_HOST = process.env.HOST || '0.0.0.0'
   const SET_PORT = parseInt(process.env.PORT, 10) || devServerPort
 
-  const devConfig = devConfigGenerator(entry, template, alias, postcssPlugins, lintOnSave, favicon, 'development')
+  const devConfig = devConfigGenerator(
+    entry,
+    template,
+    alias,
+    postcssPlugins,
+    lintOnSave,
+    favicon,
+    'development'
+  )
 
   choosePort(SET_HOST, SET_PORT)
     .then(port => {

@@ -3,6 +3,7 @@
 node_modules/
 dist/
 test/
+report/
 
 npm-debug.log*
 yarn-debug.log*

@@ -3,7 +3,7 @@ module.exports = {
     '@babel/polyfill',
     '<rootDir>/src/index.js'
   ],
-  template: '<rootDir>/public/app.html',
+  template: '<rootDir>/public/index.html',
   devServerPort: 3001,
   buildServerPort: 3002,
   publicPath: '/nail/',
@@ -11,6 +11,12 @@ module.exports = {
     '/music': {
       target: 'http://yuis.qiniudn.com',
       changeOrigin: true
+    },
+    '/nail': {
+      target: 'http://localhost:3002',
+      pathRewrite: {
+        '^/nail' : ''
+      }
     }
   },
   alias: {

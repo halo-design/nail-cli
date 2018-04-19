@@ -12,6 +12,7 @@ const printBuildError = require('react-dev-utils/printBuildError')
 const runBuild = ({
   entry,
   outputDir,
+  reportDir,
   publicPath,
   publicDir,
   template,
@@ -39,6 +40,7 @@ const runBuild = ({
     const buildConfig = buildConfigGenerator(
       entry,
       outputDir,
+      reportDir,
       publicPath,
       template,
       alias,

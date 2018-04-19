@@ -11,6 +11,7 @@ const pkg = require(APP_PACKAGE_JSON)
 const runServer = ({
   entry,
   outputDir,
+  reportDir,
   template,
   alias,
   publicPath,
@@ -31,6 +32,7 @@ const runServer = ({
   const buildConfig = buildConfigGenerator(
     entry,
     outputDir,
+    reportDir,
     publicPath,
     template,
     alias,
@@ -48,6 +50,12 @@ const runServer = ({
       }
       const urls = prepareUrls(protocol, SET_HOST, port)
       const compiler = createCompiler(webpack, buildConfig, pkg.name, urls, useYarn)
+
+      if (publicPath !== '/') {
+        const proxyKey = publicPath.substring(0, publicPath.length - 1)
+        proxyTable[proxyKey]['target'] = `${protocol}://localhost:${port}`
+        proxyTable[proxyKey]['pathRewrite'][`^${proxyKey}`] = ''
+      }
 
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir))
       const devServer = new WebpackDevServer(compiler, buildServerConfig(

@@ -7,6 +7,7 @@ module.exports = () => ({
   favicon: '<rootDir>/public/favicon.ico',
   outputDir: '<rootDir>/dist',
   publicDir: '<rootDir>/public',
+  reportDir: '<rootDir>/report',
   publicPath: '/',
   alias: {},
   proxyTable: null,

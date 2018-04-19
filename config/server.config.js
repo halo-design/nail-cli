@@ -15,6 +15,7 @@ module.exports = (proxy, allowedHost, publicDir, publicPath) => ({
   quiet: true,
   watchOptions: {
     ignored: /node_modules/,
+    poll: true
   },
   https: protocol === 'https',
   host: SET_HOST,
