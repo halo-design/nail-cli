@@ -11,12 +11,6 @@ module.exports = {
     '/music': {
       target: 'http://yuis.qiniudn.com',
       changeOrigin: true
-    },
-    '/nail': {
-      target: 'http://localhost:3002',
-      pathRewrite: {
-        '^/nail' : ''
-      }
     }
   },
   alias: {

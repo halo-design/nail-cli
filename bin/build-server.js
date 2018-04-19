@@ -53,8 +53,14 @@ const runServer = ({
 
       if (publicPath !== '/') {
         const proxyKey = publicPath.substring(0, publicPath.length - 1)
-        proxyTable[proxyKey]['target'] = `${protocol}://localhost:${port}`
-        proxyTable[proxyKey]['pathRewrite'][`^${proxyKey}`] = ''
+
+        let rerite = {}
+        rerite[`^${proxyKey}`] = ''
+
+        let proxy = {}
+        proxy['pathRewrite'] = rerite
+        proxy['target'] = `${protocol}://localhost:${port}`
+        proxyTable[proxyKey] = proxy
       }
 
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir))

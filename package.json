@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "Front-end Development Tool",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
