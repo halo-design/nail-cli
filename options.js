@@ -11,6 +11,7 @@ module.exports = () => ({
   alias: {},
   proxyTable: null,
   devServerPort: 8080,
+  buildServerPort: 9090,
   autoOpenBrowser: true,
   productionSourceMap: false,
   postcssPlugins: [

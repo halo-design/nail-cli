@@ -2,7 +2,7 @@ const path = require('path')
 const chalk = require('chalk')
 const fs = require('fs-extra')
 const webpack = require('webpack')
-const { getRealPath, appResolve, useYarn } = require('../lib/env-global')
+const { getRealPath, APP_PACKAGE_JSON, useYarn } = require('../lib/env-global')
 const buildConfigGenerator = require('../config/webpack.build.config')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions')
@@ -52,7 +52,7 @@ const runBuild = ({
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
         if (err) {
-          return reject(err);
+          return reject(err)
         }
         const messages = formatWebpackMessages(stats.toJson({}, true))
         if (messages.errors.length) {
@@ -119,7 +119,7 @@ const runBuild = ({
         )
 
         printHostingInstructions(
-          require(appResolve('package.json')),
+          require(APP_PACKAGE_JSON),
           null,
           fullOutputDir,
           path.relative(process.cwd(), fullOutputDir),

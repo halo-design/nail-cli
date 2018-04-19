@@ -5,6 +5,7 @@ module.exports = {
   ],
   template: '<rootDir>/public/app.html',
   devServerPort: 3001,
+  buildServerPort: 3002,
   publicPath: '/nail/',
   proxyTable: {
     '/music': {

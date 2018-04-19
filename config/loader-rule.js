@@ -1,7 +1,7 @@
 const reg = require('../lib/reg')
 const styleLoader = require('./style-loader')
-const { ROOT, appResolve, env, browserslist } = require('../lib/env-global')
-const pkg = require(appResolve('package.json'))
+const { ROOT, APP_PACKAGE_JSON, APP_SRC_DIR, APP_TEST_DIR, env, browserslist } = require('../lib/env-global')
+const pkg = require(APP_PACKAGE_JSON)
 
 const assetName = env.debug()
   ? '[path][name].[ext]?[hash:8]'
@@ -52,7 +52,7 @@ module.exports = (postcssPlugins, preLint) => {
       test: reg.script,
       loader: 'eslint-loader',
       enforce: 'pre',
-      include: [appResolve('src'), appResolve('test')],
+      include: [APP_SRC_DIR, APP_TEST_DIR],
       options: {
         formatter: require('eslint-friendly-formatter')
       }

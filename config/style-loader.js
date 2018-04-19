@@ -1,6 +1,6 @@
-const { appResolve, env: { debug }, browserslist } = require('../lib/env-global')
+const { APP_PACKAGE_JSON, env: { debug }, browserslist } = require('../lib/env-global')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const pkg = require(appResolve('package.json'))
+const pkg = require(APP_PACKAGE_JSON)
 
 const styleLoader = (loader, options, postcssPlugins) => {
   options = options || {}

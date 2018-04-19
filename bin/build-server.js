@@ -1,7 +1,7 @@
 const chalk = require('chalk')
 const webpack = require('webpack')
-const devConfigGenerator = require('../config/webpack.dev.config')
-const devServerConfig = require('../config/server.config')
+const buildConfigGenerator = require('../config/webpack.build.config')
+const buildServerConfig = require('../config/server.config')
 const WebpackDevServer = require('webpack-dev-server')
 const openBrowser = require('react-dev-utils/openBrowser')
 const { APP_PACKAGE_JSON, getRealPath, useYarn } = require('../lib/env-global')
@@ -10,21 +10,35 @@ const pkg = require(APP_PACKAGE_JSON)
 
 const runServer = ({
   entry,
+  outputDir,
   template,
   alias,
+  publicPath,
   publicDir,
   proxyTable,
-  devServerPort,
+  buildServerPort,
   postcssPlugins,
+  productionSourceMap,
+  parallel,
   autoOpenBrowser,
   lintOnSave,
   favicon
 }) => {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
   const SET_HOST = process.env.HOST || '0.0.0.0'
-  const SET_PORT = parseInt(process.env.PORT, 10) || devServerPort
+  const SET_PORT = parseInt(process.env.PORT, 10) || buildServerPort
 
-  const devConfig = devConfigGenerator(entry, template, alias, postcssPlugins, lintOnSave, favicon, 'development')
+  const buildConfig = buildConfigGenerator(
+    entry,
+    outputDir,
+    publicPath,
+    template,
+    alias,
+    postcssPlugins,
+    productionSourceMap,
+    parallel,
+    'production'
+  )
 
   choosePort(SET_HOST, SET_PORT)
     .then(port => {
@@ -33,21 +47,22 @@ const runServer = ({
         return
       }
       const urls = prepareUrls(protocol, SET_HOST, port)
-      const compiler = createCompiler(webpack, devConfig, pkg.name, urls, useYarn)
+      const compiler = createCompiler(webpack, buildConfig, pkg.name, urls, useYarn)
 
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir))
-      const devServer = new WebpackDevServer(compiler, devServerConfig(
+      const devServer = new WebpackDevServer(compiler, buildServerConfig(
         proxyConfig,
         urls.lanUrlForConfig,
-        publicDir
+        publicDir,
+        publicPath
       ))
 
       devServer.listen(port, SET_HOST, err => {
         if (err) {
           return console.log(chalk.red(err))
         }
-        console.log(chalk.cyan('Starting the development server...\n'))
-        autoOpenBrowser && openBrowser(urls.localUrlForBrowser)
+        console.log(chalk.cyan('Starting the production server...\n'))
+        autoOpenBrowser && openBrowser(urls.localUrlForBrowser + publicPath.substr(1))
       })
 
       ;['SIGINT', 'SIGTERM'].forEach(signal => {

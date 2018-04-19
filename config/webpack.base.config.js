@@ -1,5 +1,5 @@
 const loaderRule = require('./loader-rule')
-const { ROOT, is, appResolve, env } = require('../lib/env-global')
+const { ROOT, is, APP_SRC_DIR, APP_PACKAGE_JSON, env } = require('../lib/env-global')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 
 module.exports = (entryPoint, outputPoint, postcssPlugins, preLint) => ({
@@ -17,7 +17,7 @@ module.exports = (entryPoint, outputPoint, postcssPlugins, preLint) => ({
     modules: ['node_modules', 'src'],
     extensions: ['.js', '.json', '.jsx'],
     plugins: [
-      new ModuleScopePlugin(appResolve('src'), [appResolve('package.json')])
+      new ModuleScopePlugin(APP_SRC_DIR, [APP_PACKAGE_JSON])
     ]
   },
 

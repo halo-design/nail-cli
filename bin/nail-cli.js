@@ -3,6 +3,7 @@ const fs = require('fs')
 const chalk = require('chalk')
 const semver = require('semver')
 const runServer = require('./dev-server')
+const buildServer = require('./build-server')
 const runBuild = require('./build')
 const requiredVersion = require('../package.json').engines.node
 const { ROOT, localResolve, appResolve, is } = require('../lib/env-global')
@@ -32,5 +33,9 @@ if (process.argv.includes('serve')) {
   runServer(finalConfig)
 } else if (process.argv.includes('build')) {
   process.env.NODE_ENV = process.env.BABEL_ENV = 'production'
-  runBuild(finalConfig)
+  if (process.argv.includes('--serve')) {
+    buildServer(finalConfig)
+  } else {
+    runBuild(finalConfig)
+  }
 }
