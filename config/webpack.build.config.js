@@ -4,6 +4,7 @@ const postcss = require('postcss')
 const entryPoint = require('./entry-point')
 const outputPoint = require('./output-point')
 const aliasWrapper = require('./alias-wrapper')
+const { removeLastSlash } = require('../lib/utils')
 const baseConfig = require('./webpack.base.config')
 const comments = require('postcss-discard-comments')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -123,7 +124,8 @@ module.exports = (
       }),
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(env)
+          NODE_ENV: JSON.stringify(env),
+          PUBLIC_URL: JSON.stringify(removeLastSlash(publicPath))
         }
       }),
       new ManifestPlugin({

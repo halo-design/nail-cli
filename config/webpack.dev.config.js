@@ -17,12 +17,7 @@ module.exports = (
   env
 ) => ({
   ...aliasWrapper(
-    baseConfig(
-      entryPoint(entry),
-      outputPoint(),
-      postcssPlugins,
-      preLint
-    ),
+    baseConfig(entryPoint(entry), outputPoint(), postcssPlugins, preLint),
     alias
   ),
   plugins: [
@@ -34,11 +29,12 @@ module.exports = (
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(env)
+        NODE_ENV: JSON.stringify(env),
+        PUBLIC_URL: JSON.stringify('')
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CaseSensitivePathsPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
-})
+});
