@@ -7,7 +7,15 @@ const { getRealPath } = require('../lib/env-global')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
-module.exports = (entry, template, alias, postcssPlugins, preLint, favicon, env) => ({
+module.exports = (
+  entry,
+  favicon,
+  template,
+  alias,
+  postcssPlugins,
+  preLint,
+  env
+) => ({
   ...aliasWrapper(
     baseConfig(
       entryPoint(entry),
@@ -20,6 +28,7 @@ module.exports = (entry, template, alias, postcssPlugins, preLint, favicon, env)
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
+      publicPath: '/',
       favicon: getRealPath(favicon),
       template: getRealPath(template)
     }),

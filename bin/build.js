@@ -2,12 +2,12 @@ const path = require('path')
 const chalk = require('chalk')
 const fs = require('fs-extra')
 const webpack = require('webpack')
-const { getRealPath, APP_PACKAGE_JSON, useYarn } = require('../lib/env-global')
+const printBuildError = require('react-dev-utils/printBuildError')
 const buildConfigGenerator = require('../config/webpack.build.config')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
+const { getRealPath, APP_PACKAGE_JSON, useYarn } = require('../lib/env-global')
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions')
 const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter')
-const printBuildError = require('react-dev-utils/printBuildError')
 
 const runBuild = ({
   entry,
@@ -20,6 +20,7 @@ const runBuild = ({
   productionSourceMap,
   parallel,
   postcssPlugins,
+  favicon,
   env
 }) => {
   const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024
@@ -30,7 +31,7 @@ const runBuild = ({
   const copyPublicFolder = (from, to) => {
     fs.copySync(from, to, {
       dereference: true,
-      filter: file => file !== getRealPath(template)
+      filter: file => file !== getRealPath(template) && file !== getRealPath(favicon)
     })
   }
 
@@ -42,6 +43,7 @@ const runBuild = ({
       outputDir,
       reportDir,
       publicPath,
+      favicon,
       template,
       alias,
       postcssPlugins,

@@ -1,0 +1,22 @@
+{
+  "name": "nail-app",
+  "version": "0.0.1",
+  "description": "A Nail Application",
+  "main": "./src/index.js",
+  "scripts": {
+    "serve": "nail serve",
+    "build": "nail build",
+    "build:analyze": "nail build --analyze",
+    "build:serve": "nail build --serve"
+  },
+  "author": "OwlAford",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "nail-cli": "0.1.16"
+  }
+}

@@ -2,9 +2,9 @@
 const fs = require('fs')
 const chalk = require('chalk')
 const semver = require('semver')
+const runBuild = require('./build')
 const runServer = require('./dev-server')
 const buildServer = require('./build-server')
-const runBuild = require('./build')
 const requiredVersion = require('../package.json').engines.node
 const { ROOT, localResolve, appResolve, is } = require('../lib/env-global')
 const configPath = appResolve('nail.config.js')
@@ -32,6 +32,7 @@ if (process.argv.includes('serve')) {
   process.env.NODE_ENV = process.env.BABEL_ENV = 'development'
   runServer(finalConfig)
 } else if (process.argv.includes('build')) {
+  process.env.PUBLIC_URL = finalConfig.publicPath
   process.env.NODE_ENV = process.env.BABEL_ENV = 'production'
   if (process.argv.includes('--serve')) {
     buildServer(finalConfig)

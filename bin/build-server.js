@@ -1,9 +1,9 @@
 const chalk = require('chalk')
 const webpack = require('webpack')
-const buildConfigGenerator = require('../config/webpack.build.config')
-const buildServerConfig = require('../config/server.config')
 const WebpackDevServer = require('webpack-dev-server')
 const openBrowser = require('react-dev-utils/openBrowser')
+const buildServerConfig = require('../config/server.config')
+const buildConfigGenerator = require('../config/webpack.build.config')
 const { APP_PACKAGE_JSON, getRealPath, useYarn } = require('../lib/env-global')
 const { choosePort, prepareUrls, createCompiler, prepareProxy } = require('react-dev-utils/WebpackDevServerUtils')
 const pkg = require(APP_PACKAGE_JSON)
@@ -34,6 +34,7 @@ const runServer = ({
     outputDir,
     reportDir,
     publicPath,
+    favicon,
     template,
     alias,
     postcssPlugins,

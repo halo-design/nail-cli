@@ -1,5 +1,5 @@
-const { getRealPath } = require('../lib/env-global')
 const { isEmptyObject } = require('../lib/utils')
+const { getRealPath } = require('../lib/env-global')
 
 module.exports = (config, aliasMap) => {
   let newAlias = {}

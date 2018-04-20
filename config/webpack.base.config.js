@@ -1,6 +1,6 @@
 const loaderRule = require('./loader-rule')
-const { ROOT, is, APP_SRC_DIR, APP_PACKAGE_JSON, env } = require('../lib/env-global')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
+const { ROOT, is, APP_SRC_DIR, APP_PACKAGE_JSON, env } = require('../lib/env-global')
 
 module.exports = (entryPoint, outputPoint, postcssPlugins, preLint) => ({
   context: ROOT.APP,

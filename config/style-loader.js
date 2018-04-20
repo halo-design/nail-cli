@@ -44,7 +44,7 @@ const styleLoader = (loader, options, postcssPlugins) => {
   }
 
   if (!debug()) {
-    return ['style-loader', MiniCssExtractPlugin.loader].concat(loaders)
+    return [MiniCssExtractPlugin.loader].concat(loaders)
   } else {
     return ['style-loader'].concat(loaders)
   }

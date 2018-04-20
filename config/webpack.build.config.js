@@ -1,22 +1,25 @@
 const chalk = require('chalk')
 const webpack = require('webpack')
+const postcss = require('postcss')
 const entryPoint = require('./entry-point')
 const outputPoint = require('./output-point')
 const aliasWrapper = require('./alias-wrapper')
-const ManifestPlugin = require('webpack-manifest-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const baseConfig = require('./webpack.base.config')
-const { getRealPath, is } = require('../lib/env-global')
+const comments = require('postcss-discard-comments')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { getRealPath, is } = require('../lib/env-global')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const LastCallWebpackPlugin = require('last-call-webpack-plugin')
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 module.exports = (
   entry,
   outputDir,
   reportDir,
   publicPath,
+  favicon,
   template,
   alias,
   postcssPlugins,
@@ -43,6 +46,12 @@ module.exports = (
             minChunks: 2,
             maxInitialRequests: 5,
             minSize: 0
+          },
+          styles: {
+            name: 'styles',
+            test: /\.css$/,
+            chunks: 'all',
+            enforce: true
           },
           vendor: {
             chunks: 'initial',
@@ -90,14 +99,15 @@ module.exports = (
           cache: true,
           parallel: parallel,
           sourceMap: productionSourceMap
-        }),
-        new OptimizeCSSAssetsPlugin()
+        })
       ]
     },
     plugins: [
       new HtmlWebpackPlugin({
         inject: true,
+        publicPath: publicPath,
         template: getRealPath(template),
+        favicon: getRealPath(favicon),
         minify: {
           removeComments: true,
           collapseWhitespace: true,
@@ -120,7 +130,10 @@ module.exports = (
         fileName: 'asset-manifest.json'
       }),
       new SWPrecacheWebpackPlugin({
-        staticFileGlobsIgnorePatterns: [/\.map$/]
+        dontCacheBustUrlsMatching: /\.\w{8}\./,
+        filename: 'service-worker.js',
+        minify: true,
+        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
@@ -136,6 +149,23 @@ module.exports = (
       analyzerMode: 'static',
       reportFilename: getRealPath(`${reportDir}/analyze/${Date.now()}.html`)
     }))
+  }
+
+  if (!productionSourceMap) {
+    buildConfig.plugins.push(
+      new LastCallWebpackPlugin({
+        assetProcessors: [{
+          regExp:  /\.css$/,
+          processor: (assetName, asset, assets) =>  {
+            assets.setAsset(`${assetName}.map`, null)
+            return postcss(comments({ removeAll: true }))
+              .process(asset.source())
+              .then(r => r.css)
+          }
+        }],
+        canPrint: true
+      })
+    )
   }
 
   return buildConfig
