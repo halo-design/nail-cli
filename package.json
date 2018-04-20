@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "Front-end Development Tool",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -87,7 +87,6 @@
     "postcss-selector-matches": "^3.0.1",
     "postcss-selector-not": "^3.0.1",
     "react-dev-utils": "^5.0.1",
-    "register-service-worker": "^1.2.0",
     "sass-loader": "^7.0.1",
     "semver": "^5.5.0",
     "style-loader": "^0.21.0",

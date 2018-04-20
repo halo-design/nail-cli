@@ -1,4 +1,4 @@
-import './registerServiceWorker'
+import registerServiceWorker from './registerServiceWorker'
 import './alert'
 import '@/view-demo'
 
@@ -11,3 +11,4 @@ import('./sync').then(() => {
 const $root = document.getElementById('MOUNT_NODE')
 $root.innerText = 'awesome!'
 $root.style.cssText = 'color: blue; font-size: 24px; line-height: 2; background-color: #ccc;'
+registerServiceWorker()
