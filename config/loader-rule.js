@@ -1,4 +1,6 @@
 const reg = require('../lib/reg')
+const babelrc = require('./babelrc')
+const eslintrc = require('./eslintrc')
 const styleLoader = require('./style-loader')
 const {
   ROOT,
@@ -14,11 +16,12 @@ const assetName = env.debug()
   ? '[path][name].[ext]?[hash:8]'
   : '[name].[hash:8].[ext]'
 
-module.exports = (postcssPlugins, preLint) => {
+module.exports = (assetsPath, postcssPlugins, preLint) => {
   let baseRules = [{
     test: reg.script,
     include: [ROOT.APP],
-    loader: 'babel-loader'
+    loader: 'babel-loader',
+    options: babelrc
   }, {
     test: /\.css$/,
     use: styleLoader(null, null, postcssPlugins)
@@ -36,21 +39,21 @@ module.exports = (postcssPlugins, preLint) => {
     loader: 'url-loader',
     query: {
       limit: 8192,
-      name: `images/${assetName}`
+      name: `${assetsPath}images/${assetName}`
     }
   }, {
     test: reg.font,
     loader: 'url-loader',
     query: {
       limit: 8192,
-      name: `fonts/${assetName}`
+      name: `${assetsPath}fonts/${assetName}`
     }
   }, {
     test: reg.media,
     loader: 'url-loader',
     options: {
       limit: 10000,
-      name: `media/${assetName}`
+      name: `${assetsPath}media/${assetName}`
     }
   }]
 
@@ -61,7 +64,8 @@ module.exports = (postcssPlugins, preLint) => {
       enforce: 'pre',
       include: [APP_SRC_DIR, APP_TEST_DIR],
       options: {
-        formatter: require('eslint-friendly-formatter')
+        formatter: require('eslint-friendly-formatter'),
+        baseConfig: eslintrc
       }
     }].concat(baseRules)
   }

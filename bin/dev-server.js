@@ -13,6 +13,7 @@ const runServer = ({
   template,
   alias,
   publicDir,
+  assetsPath,
   proxyTable,
   devServerPort,
   postcssPlugins,
@@ -26,6 +27,7 @@ const runServer = ({
 
   const devConfig = devConfigGenerator(
     entry,
+    assetsPath,
     favicon,
     template,
     alias,

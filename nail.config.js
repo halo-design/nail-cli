@@ -7,6 +7,7 @@ module.exports = {
   devServerPort: 3001,
   buildServerPort: 3002,
   publicPath: '/nail/',
+  assetsPath: 'static/',
   proxyTable: {
     '/music': {
       target: 'http://yuis.qiniudn.com',

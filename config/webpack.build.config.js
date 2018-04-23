@@ -20,6 +20,7 @@ module.exports = (
   outputDir,
   reportDir,
   publicPath,
+  assetsPath,
   favicon,
   template,
   alias,
@@ -32,7 +33,8 @@ module.exports = (
     ...aliasWrapper(
       baseConfig(
         entryPoint(entry),
-        outputPoint(outputDir, publicPath),
+        outputPoint(outputDir, publicPath, assetsPath),
+        assetsPath,
         postcssPlugins,
         false
       ),
@@ -139,8 +141,8 @@ module.exports = (
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
-        filename: 'css/[name].[contenthash:8].min.css',
-        chunkFilename: 'css/[id].[contenthash:8].min.css'
+        filename: `${assetsPath}css/[name].[contenthash:8].min.css`,
+        chunkFilename: `${assetsPath}css/[id].[contenthash:8].min.css`
       })
     ]
   }

@@ -9,6 +9,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = (
   entry,
+  assetsPath,
   favicon,
   template,
   alias,
@@ -17,7 +18,13 @@ module.exports = (
   env
 ) => ({
   ...aliasWrapper(
-    baseConfig(entryPoint(entry), outputPoint(), postcssPlugins, preLint),
+    baseConfig(
+      entryPoint(entry),
+      outputPoint(),
+      assetsPath,
+      postcssPlugins,
+      preLint
+    ),
     alias
   ),
   plugins: [

@@ -8,6 +8,7 @@ module.exports = () => ({
   outputDir: '<rootDir>/dist',
   publicDir: '<rootDir>/public',
   reportDir: '<rootDir>/report',
+  assetsPath: 'static/',
   publicPath: '/',
   alias: {},
   proxyTable: null,
