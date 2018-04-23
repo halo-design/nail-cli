@@ -1,11 +1,18 @@
 const loaderRule = require('./loader-rule')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
-const { ROOT, is, APP_SRC_DIR, APP_PACKAGE_JSON, env } = require('../lib/env-global')
+const { ROOT, is, APP_SRC_DIR, APP_PACKAGE_JSON } = require('../lib/env-global')
 
-module.exports = (entryPoint, outputPoint, assetsPath, postcssPlugins, preLint) => ({
+module.exports = (
+  isDebug,
+  entryPoint,
+  outputPoint,
+  assetsPath,
+  postcssPlugins,
+  preLint
+) => ({
   context: ROOT.APP,
 
-  mode: env.debug() ? 'development' : 'production',
+  mode: isDebug ? 'development' : 'production',
 
   entry: {
     app: entryPoint
@@ -24,12 +31,12 @@ module.exports = (entryPoint, outputPoint, assetsPath, postcssPlugins, preLint) 
   module: {
     strictExportPresence: true,
 
-    rules: loaderRule(assetsPath, postcssPlugins, preLint)
+    rules: loaderRule(isDebug, assetsPath, postcssPlugins, preLint)
   },
 
-  bail: !env.debug(),
+  bail: !isDebug,
 
-  cache: env.debug(),
+  cache: isDebug,
 
   stats: {
     cached: is.verbose,
@@ -39,12 +46,12 @@ module.exports = (entryPoint, outputPoint, assetsPath, postcssPlugins, preLint) 
     colors: true,
     hash: is.verbose,
     modules: is.verbose,
-    reasons: env.debug(),
+    reasons: isDebug,
     timings: true,
     version: is.verbose
   },
 
-  devtool: env.debug() ? 'cheap-module-inline-source-map' : 'source-map',
+  devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 
   node: {
     dgram: 'empty',

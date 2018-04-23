@@ -1,5 +1,3 @@
-import './style.scss'
-
 class Info {
   constructor (a) {
     this.a = a

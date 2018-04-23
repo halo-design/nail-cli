@@ -1,21 +1,19 @@
-const { APP_PACKAGE_JSON, env: { debug }, browserslist } = require('../lib/env-global')
+const { APP_PACKAGE_JSON, browserslist } = require('../lib/env-global')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const pkg = require(APP_PACKAGE_JSON)
 
-const styleLoader = (loader, options, postcssPlugins) => {
-  options = options || {}
-
+const styleLoader = (loader, postcssPlugins, isDebug) => {
   let loaders = [{
     loader: 'css-loader',
     options: {
       importLoaders: 1,
-      minimize: !debug(),
-      sourceMap: debug()
+      minimize: !isDebug,
+      sourceMap: isDebug
     }
   }, {
     loader: 'postcss-loader',
     options: {
-      sourceMap: debug(),
+      sourceMap: isDebug,
       ident: 'postcss',
       plugins: loader => [
         require('postcss-import')({
@@ -37,17 +35,13 @@ const styleLoader = (loader, options, postcssPlugins) => {
   if (loader) {
     loaders.push({
       loader: loader,
-      options: Object.assign({}, options, {
-        sourceMap: debug()
-      })
+      options: {
+        sourceMap: isDebug
+      }
     })
   }
 
-  if (!debug()) {
-    return [MiniCssExtractPlugin.loader].concat(loaders)
-  } else {
-    return ['style-loader'].concat(loaders)
-  }
+  return isDebug ? ['style-loader'].concat(loaders) : [MiniCssExtractPlugin.loader].concat(loaders)
 }
 
 module.exports = styleLoader

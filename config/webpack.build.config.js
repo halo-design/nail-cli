@@ -32,8 +32,9 @@ module.exports = (
   let buildConfig = {
     ...aliasWrapper(
       baseConfig(
-        entryPoint(entry),
-        outputPoint(outputDir, publicPath, assetsPath),
+        false,
+        entryPoint(false, entry),
+        outputPoint(false, outputDir, publicPath, assetsPath),
         assetsPath,
         postcssPlugins,
         false
@@ -163,7 +164,7 @@ module.exports = (
           processor: (assetName, asset, assets) =>  {
             assets.setAsset(`${assetName}.map`, null)
             return postcss(comments({ removeAll: true }))
-              .process(asset.source())
+              .process(asset.source(), { from: void 0 })
               .then(r => r.css)
           }
         }],

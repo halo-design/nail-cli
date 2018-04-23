@@ -1,3 +1,5 @@
+import './style.scss'
+
 const obj = {
   a: {
     b: 1,

@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.1.26",
+  "version": "0.1.28",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -13,8 +13,9 @@
   "scripts": {
     "update": "yarn upgrade-interactive --latest",
     "serve": "node ./bin/nail-cli serve",
-    "build": "node ./bin/nail-cli build --analyze",
-    "build:serve": "node ./bin/nail-cli build --serve"
+    "build": "node ./bin/nail-cli build",
+    "build:anly": "node ./bin/nail-cli build --analyze",
+    "build:prev": "node ./bin/nail-cli build --preview"
   },
   "author": "OwlAford",
   "license": "MIT",

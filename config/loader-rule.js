@@ -12,11 +12,11 @@ const {
 } = require('../lib/env-global')
 const pkg = require(APP_PACKAGE_JSON)
 
-const assetName = env.debug()
-  ? '[path][name].[ext]?[hash:8]'
-  : '[name].[hash:8].[ext]'
+module.exports = (isDebug, assetsPath, postcssPlugins, preLint) => {
+  const assetName = isDebug
+    ? '[path][name].[ext]?[hash:8]'
+    : '[name].[hash:8].[ext]'
 
-module.exports = (assetsPath, postcssPlugins, preLint) => {
   let baseRules = [{
     test: reg.script,
     include: [ROOT.APP],
@@ -24,16 +24,16 @@ module.exports = (assetsPath, postcssPlugins, preLint) => {
     options: babelrc
   }, {
     test: /\.css$/,
-    use: styleLoader(null, null, postcssPlugins)
+    use: styleLoader(null, postcssPlugins, isDebug)
   }, {
     test: /\.less$/,
-    use: styleLoader('less-loader', null, postcssPlugins)
+    use: styleLoader('less-loader', postcssPlugins, isDebug)
   }, {
     test: /\.(scss|sass)$/,
-    use: styleLoader('sass-loader', null, postcssPlugins)
+    use: styleLoader('sass-loader', postcssPlugins, isDebug)
   }, {
     test: /\.(stylus|styl)$/,
-    use: styleLoader('stylus-loader', null, postcssPlugins)
+    use: styleLoader('stylus-loader', postcssPlugins, isDebug)
   }, {
     test: reg.image,
     loader: 'url-loader',

@@ -47,6 +47,7 @@ const runServer = ({
 
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir))
       const devServer = new WebpackDevServer(compiler, devServerConfig(
+        true,
         proxyConfig,
         urls.lanUrlForConfig,
         publicDir

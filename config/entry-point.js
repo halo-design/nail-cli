@@ -1,12 +1,11 @@
-const { ROOT, getRealPath, env } = require('../lib/env-global')
+const { ROOT, getRealPath } = require('../lib/env-global')
 
-module.exports = modules => {
+module.exports = (isDebug, modules) => {
   const base = modules.map(path => getRealPath(path))
 
   const hot = [
-    require.resolve('webpack-dev-server/client'),
-    require.resolve('webpack/hot/dev-server')
+    require.resolve('react-dev-utils/webpackHotDevClient')
   ].concat(base)
 
-  return env.debug() ? hot : base
+  return isDebug ? hot : base
 }

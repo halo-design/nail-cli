@@ -29,13 +29,16 @@ if (fs.existsSync(configPath)) {
   console.log(chalk.cyan('The configuration file "nail.config.js" does not exist.'))
 }
 
+// process.traceDeprecation = true
+process.noDeprecation = true
+
 if (process.argv.includes('serve')) {
   process.env.NODE_ENV = process.env.BABEL_ENV = 'development'
   runServer(finalConfig)
 } else if (process.argv.includes('build')) {
   process.env.PUBLIC_URL = removeLastSlash(finalConfig.publicPath)
   process.env.NODE_ENV = process.env.BABEL_ENV = 'production'
-  if (process.argv.includes('--serve')) {
+  if (process.argv.includes('--preview')) {
     buildServer(finalConfig)
   } else {
     runBuild(finalConfig)

@@ -19,7 +19,8 @@ module.exports = (
 ) => ({
   ...aliasWrapper(
     baseConfig(
-      entryPoint(entry),
+      true,
+      entryPoint(true, entry),
       outputPoint(),
       assetsPath,
       postcssPlugins,
@@ -44,4 +45,4 @@ module.exports = (
     new CaseSensitivePathsPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
-});
+})

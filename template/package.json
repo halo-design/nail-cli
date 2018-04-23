@@ -6,8 +6,8 @@
   "scripts": {
     "serve": "nail serve",
     "build": "nail build",
-    "build:analyze": "nail build --analyze",
-    "build:serve": "nail build --serve"
+    "build:anly": "nail build --analyze",
+    "build:prev": "nail build --preview"
   },
   "author": "OwlAford",
   "license": "MIT",
