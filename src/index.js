@@ -1,14 +1,21 @@
 import registerServiceWorker from './registerServiceWorker'
-import './alert'
-import '@/view-demo'
+import { upcase } from './libs/utils'
+import './addTimestamp'
+import './style.scss'
 
-console.log('abc')
-
-import('./sync').then(() => {
-  console.log('loaded!')
+import('@/asyncModule').then(() => {
+  console.log('The asynchronous component is loaded.')
 })
 
 const $root = document.getElementById('MOUNT_NODE')
-$root.innerText = 'awesome!'
-$root.style.cssText = 'color: blue; font-size: 24px; line-height: 2; background-color: #ccc;'
+const title = upcase('Awesome Nail!')
+const $context = document.createElement('div')
+
+$context.innerHTML = `
+  <div class="logo"></div>
+  <h1>${title}</h1>
+`
+
+$root.appendChild($context)
+
 registerServiceWorker()

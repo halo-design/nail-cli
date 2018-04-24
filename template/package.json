@@ -19,6 +19,6 @@
   "dependencies": {
   },
   "devDependencies": {
-    "nail-cli": "0.1.29"
+    "nail-cli": "0.2.0"
   }
 }

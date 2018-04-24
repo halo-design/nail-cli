@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.1.29",
+  "version": "0.2.0",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -49,7 +49,7 @@
     "babel-jest": "^22.4.3",
     "babel-loader": "8.0.0-beta.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
-    "chalk": "^2.3.2",
+    "chalk": "^2.4.0",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",

@@ -16,4 +16,3 @@ const obj = {
 const { a: { c }, e: { f } } = obj
 
 console.log(c, f)
-console.log('view demo!')
