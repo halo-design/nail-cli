@@ -3,6 +3,7 @@ const fs = require('fs')
 const chalk = require('chalk')
 const semver = require('semver')
 const runBuild = require('./build')
+const jestTest = require('./jest-test')
 const runServer = require('./dev-server')
 const buildServer = require('./build-server')
 const { removeLastSlash } = require('../lib/utils')
@@ -32,15 +33,23 @@ if (fs.existsSync(configPath)) {
 // process.traceDeprecation = true
 process.noDeprecation = true
 
-if (process.argv.includes('serve')) {
+const argv = process.argv
+
+if (argv.length === 0) {
+  console.log(chalk.red('Please enter a valid command parameter.'))
+} else if (argv.includes('serve')) {
   process.env.NODE_ENV = process.env.BABEL_ENV = 'development'
+
   runServer(finalConfig)
-} else if (process.argv.includes('build')) {
+} else if (argv.includes('build')) {
   process.env.PUBLIC_URL = removeLastSlash(finalConfig.publicPath)
   process.env.NODE_ENV = process.env.BABEL_ENV = 'production'
-  if (process.argv.includes('--preview')) {
+
+  if (argv.includes('--preview')) {
     buildServer(finalConfig)
   } else {
     runBuild(finalConfig)
   }
+} else if (argv.includes('unit')) {
+  jestTest(finalConfig.jestConfig, argv.slice(argv.indexOf('unit') + 1))
 }

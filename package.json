@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -15,7 +15,9 @@
     "serve": "node ./bin/nail-cli serve",
     "build": "node ./bin/nail-cli build",
     "build:anly": "node ./bin/nail-cli build --analyze",
-    "build:prev": "node ./bin/nail-cli build --preview"
+    "build:prev": "node ./bin/nail-cli build --preview",
+    "unit": "node ./bin/nail-cli unit",
+    "unit:cov": "node ./bin/nail-cli unit --coverage"
   },
   "author": "OwlAford",
   "license": "MIT",
@@ -42,7 +44,9 @@
     "@babel/preset-stage-2": "^7.0.0-beta.46",
     "@babel/runtime": "^7.0.0-beta.46",
     "autoprefixer": "^8.3.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.3",
+    "babel-jest": "^22.4.3",
     "babel-loader": "8.0.0-beta.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "^2.3.2",
@@ -64,6 +68,7 @@
     "fs": "^0.0.1-security",
     "fs-extra": "^5.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^22.4.3",
     "last-call-webpack-plugin": "^3.0.0",
     "less": "^3.0.2",
     "less-loader": "^4.1.0",
@@ -83,7 +88,7 @@
     "postcss-loader": "^2.1.4",
     "postcss-media-minmax": "^3.0.0",
     "postcss-nested": "^3.0.0",
-    "postcss-nesting": "^4.2.1",
+    "postcss-nesting": "^5.0.0",
     "postcss-selector-matches": "^3.0.1",
     "postcss-selector-not": "^3.0.1",
     "react-dev-utils": "^5.0.1",
@@ -99,5 +104,6 @@
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^3.1.3",
     "webpack-manifest-plugin": "^2.0.1"
-  }
+  },
+  "devDependencies": {}
 }

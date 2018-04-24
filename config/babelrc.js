@@ -2,7 +2,7 @@ module.exports = {
   babelrc: false,
   cacheDirectory: true,
   presets: [
-    '@babel/env',
+    '@babel/preset-env',
     ['@babel/preset-stage-2', {
       'decoratorsLegacy': true
     }],

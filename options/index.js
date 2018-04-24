@@ -34,5 +34,5 @@ module.exports = () => ({
   ],
   parallel: require('os').cpus().length > 1,
   lintOnSave: true,
-  dll: true
+  jestConfig: {}
 })
