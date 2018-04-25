@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.2.0",
+  "version": "0.3.2",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -17,7 +17,11 @@
     "build:anly": "node ./bin/nail-cli build --analyze",
     "build:prev": "node ./bin/nail-cli build --preview",
     "unit": "node ./bin/nail-cli unit",
-    "unit:cov": "node ./bin/nail-cli unit --coverage"
+    "unit:cov": "node ./bin/nail-cli unit --coverage",
+    "e2e": "node ./bin/nail-cli e2e",
+    "e2e:open": "node ./bin/nail-cli e2e --open",
+    "prev-e2e": "node ./bin/nail-cli e2e --production",
+    "prev-e2e:open": "node ./bin/nail-cli e2e --open --production"
   },
   "author": "OwlAford",
   "license": "MIT",
@@ -53,6 +57,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
+    "cypress": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-react": "^6.0.0",
@@ -64,6 +69,7 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-standard": "^3.0.1",
+    "execa": "^0.10.0",
     "file-loader": "^1.1.11",
     "fs": "^0.0.1-security",
     "fs-extra": "^5.0.0",

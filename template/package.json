@@ -9,7 +9,11 @@
     "build:anly": "nail build --analyze",
     "build:prev": "nail build --preview",
     "unit": "nail unit",
-    "unit:cov": "nail unit --coverage"
+    "unit:cov": "nail unit --coverage",
+    "e2e": "nail e2e",
+    "e2e:open": "nail e2e --open",
+    "prev-e2e": "nail e2e --production",
+    "prev-e2e:open": "nail e2e --open --production"
   },
   "author": "OwlAford",
   "license": "MIT",
@@ -19,6 +23,6 @@
   "dependencies": {
   },
   "devDependencies": {
-    "nail-cli": "0.2.0"
+    "nail-cli": "0.3.2"
   }
 }

@@ -19,7 +19,8 @@ const runServer = ({
   postcssPlugins,
   autoOpenBrowser,
   lintOnSave,
-  favicon
+  favicon,
+  callback
 }) => {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
   const SET_HOST = process.env.HOST || '0.0.0.0'
@@ -44,6 +45,10 @@ const runServer = ({
       }
       const urls = prepareUrls(protocol, SET_HOST, port)
       const compiler = createCompiler(webpack, devConfig, pkg.name, urls, useYarn)
+
+      compiler.plugin('done', stats => {
+        callback && callback(stats)
+      })
 
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir))
       const devServer = new WebpackDevServer(compiler, devServerConfig(

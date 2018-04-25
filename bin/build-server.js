@@ -24,7 +24,8 @@ const runServer = ({
   parallel,
   autoOpenBrowser,
   lintOnSave,
-  favicon
+  favicon,
+  callback
 }) => {
   const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
   const SET_HOST = process.env.HOST || '0.0.0.0'
@@ -53,6 +54,10 @@ const runServer = ({
       }
       const urls = prepareUrls(protocol, SET_HOST, port)
       const compiler = createCompiler(webpack, buildConfig, pkg.name, urls, useYarn)
+
+      compiler.plugin('done', stats => {
+        callback && callback(stats)
+      })
 
       if (publicPath !== '/') {
         const proxyKey = publicPath.substring(0, publicPath.length - 1)
