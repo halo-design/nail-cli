@@ -69,8 +69,7 @@ const runBuild = ({
         }
         if (
           process.env.CI
-          && (typeof process.env.CI !== 'string'
-          || process.env.CI.toLowerCase() !== 'false')
+          && (typeof process.env.CI !== 'string' || process.env.CI.toLowerCase() !== 'false')
           && messages.warnings.length
         ) {
           console.log(
