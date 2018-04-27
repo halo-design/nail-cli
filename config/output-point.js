@@ -1,5 +1,5 @@
 const path = require('path')
-const { getRealPath, is } = require('../lib/env-global')
+const { getRealPath } = require('../lib/env-global')
 
 module.exports = (
   isDebug = true,
@@ -9,7 +9,7 @@ module.exports = (
 ) => ({
   path: getRealPath(outputDir),
   publicPath,
-  pathinfo: is.verbose,
+  pathinfo: true,
   filename: isDebug ? '[name].js' : `${assetsPath}js/[name].[chunkhash:8].min.js`,
   chunkFilename: isDebug ? '[name].chunk.js' : `${assetsPath}js/[name].[chunkhash:8].chunk.min.js`,
   devtoolModuleFilenameTemplate: info =>

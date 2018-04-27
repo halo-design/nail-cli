@@ -8,7 +8,7 @@ const { removeLastSlash } = require('../lib/utils')
 const baseConfig = require('./webpack.base.config')
 const comments = require('postcss-discard-comments')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { getRealPath, is } = require('../lib/env-global')
+const { getRealPath, isAnalyze } = require('../lib/env-global')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -70,34 +70,15 @@ module.exports = (
         new UglifyJsPlugin({
           uglifyOptions: {
             compress: {
-              arrows: false,
-              collapse_vars: false,
-              comparisons: false,
-              computed_props: false,
-              hoist_funs: false,
-              hoist_props: false,
-              hoist_vars: false,
-              inline: false,
-              loops: false,
-              negate_iife: false,
-              properties: false,
-              reduce_funcs: false,
-              reduce_vars: false,
-              switches: false,
-              toplevel: false,
-              typeofs: false,
-
-              booleans: true,
-              if_return: true,
-              sequences: true,
-              unused: true,
-
-              conditionals: true,
-              dead_code: true,
-              evaluate: true
+              warnings: false,
+              comparisons: false
             },
             mangle: {
               safari10: true
+            },
+            output: {
+              comments: false,
+              ascii_only: true
             }
           },
           cache: true,
@@ -148,7 +129,7 @@ module.exports = (
     ]
   }
 
-  if (is.analyze) {
+  if (isAnalyze) {
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     buildConfig.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',

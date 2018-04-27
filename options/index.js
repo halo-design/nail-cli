@@ -17,6 +17,7 @@ module.exports = () => ({
   autoOpenBrowser: true,
   productionSourceMap: false,
   postcssPlugins: [
+    'postcss-flexbugs-fixes',
     'postcss-custom-properties',
     'postcss-custom-media',
     'postcss-media-minmax',

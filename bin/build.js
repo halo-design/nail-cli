@@ -37,7 +37,7 @@ const runBuild = ({
   }
 
   const builder = previousFileSizes => {
-    console.log('Creating an optimized production build...')
+    console.log(chalk.cyan('Creating an optimized production build...'))
 
     const buildConfig = buildConfigGenerator(
       entry,

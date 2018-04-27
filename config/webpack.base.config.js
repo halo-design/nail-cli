@@ -38,19 +38,6 @@ module.exports = (
 
   cache: isDebug,
 
-  stats: {
-    cached: is.verbose,
-    cachedAssets: is.verbose,
-    chunks: is.verbose,
-    chunkModules: is.verbose,
-    colors: true,
-    hash: is.verbose,
-    modules: is.verbose,
-    reasons: isDebug,
-    timings: true,
-    version: is.verbose
-  },
-
   devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
 
   node: {
