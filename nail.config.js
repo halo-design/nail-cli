@@ -4,8 +4,8 @@ module.exports = {
     '<rootDir>/src/index.js'
   ],
   template: '<rootDir>/public/index.html',
-  devServerPort: 3001,
-  buildServerPort: 3002,
+  devServerPort: 3000,
+  buildServerPort: 3001,
   publicPath: '/nail/',
   assetsPath: 'static/',
   proxyTable: {

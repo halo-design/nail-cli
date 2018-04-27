@@ -1,20 +1,24 @@
 const chalk = require('chalk')
 const webpack = require('webpack')
 const { log } = require('../utils')
-const WebpackDevServer = require('webpack-dev-server')
 const openBrowser = require('../utils/openBrowser')
-const getServerConfig = require('../config/webpack/server')
+const WebpackDevServer = require('webpack-dev-server')
 const getBuildConfig = require('../config/webpack/build')
+const getServerConfig = require('../config/webpack/server')
 const { config, protocol, getRealPath, useYarn } = require('../env')
 const { choosePort, prepareUrls, createCompiler, prepareProxy } = require('../utils/WebpackDevServerUtils')
 
-const runServer = opts => {
-  const { publicPath, publicDir, proxyTable, buildServerPort, autoOpenBrowser, callback} = opts
+const runServer = (opts, isDev) => {
+  const { publicDir, proxyTable, autoOpenBrowser, callback } = opts
+  const publicPath = isDev ? '/' : opts.publicPath
 
   const SET_HOST = process.env.HOST || '0.0.0.0'
-  const SET_PORT = parseInt(process.env.PORT, 10) || buildServerPort
+  const SET_PORT = parseInt(process.env.PORT, 10)
+    || (isDev ? opts.devServerPort : opts.buildServerPort)
 
-  const buildConfig = getBuildConfig(opts)
+  const webpackConfig = isDev
+    ? require('../config/webpack/dev')(opts)
+    : require('../config/webpack/build')(opts)
 
   choosePort(SET_HOST, SET_PORT)
     .then(port => {
@@ -23,13 +27,13 @@ const runServer = opts => {
         return
       }
       const urls = prepareUrls(protocol, SET_HOST, port)
-      const compiler = createCompiler(webpack, buildConfig, config.app.packageJson.name, urls, useYarn)
+      const compiler = createCompiler(webpack, webpackConfig, config.app.packageJson.name, urls, useYarn)
 
       compiler.plugin('done', stats => {
         callback && callback(stats)
       })
 
-      if (publicPath !== '/') {
+      if (!isDev) {
         const proxyKey = publicPath.substring(0, publicPath.length - 1)
 
         let rerite = {}
@@ -42,19 +46,24 @@ const runServer = opts => {
       }
 
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir))
-      const devServer = new WebpackDevServer(compiler, getServerConfig(
-        false,
+      const devServerConfig = getServerConfig(
+        isDev,
         proxyConfig,
         urls.lanUrlForConfig,
         publicDir,
         publicPath
-      ))
+      )
+
+      const devServer = new WebpackDevServer(compiler, devServerConfig)
 
       devServer.listen(port, SET_HOST, err => {
         if (err) {
           return log.red(err)
         }
-        log.cyan('Starting the production server...\n')
+        isDev
+          ? log.cyan('Starting the development server...\n')
+          : log.cyan('Starting the production server...\n')
+
         autoOpenBrowser && openBrowser(urls.localUrlForBrowser + publicPath.substr(1))
       })
 

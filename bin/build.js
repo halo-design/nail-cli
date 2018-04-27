@@ -2,59 +2,24 @@ const path = require('path')
 const chalk = require('chalk')
 const fs = require('fs-extra')
 const webpack = require('webpack')
-const printBuildError = require('react-dev-utils/printBuildError')
-const buildConfigGenerator = require('../config/webpack.build.config')
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
-const { getRealPath, APP_PACKAGE_JSON, useYarn } = require('../lib/env-global')
-const printHostingInstructions = require('react-dev-utils/printHostingInstructions')
-const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter')
+const { log, copyer } = require('../utils')
+const getBuildConfig = require('../config/webpack/build')
+const { getRealPath, config, useYarn } = require('../env')
+const printBuildError = require('../utils/printBuildError')
+const formatWebpackMessages = require('../utils/formatWebpackMessages')
+const printHostingInstructions = require('../utils/printHostingInstructions')
+const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('../utils/FileSizeReporter')
 
-const runBuild = ({
-  entry,
-  outputDir,
-  reportDir,
-  publicPath,
-  assetsPath,
-  publicDir,
-  template,
-  alias,
-  productionSourceMap,
-  parallel,
-  postcssPlugins,
-  favicon,
-  env
-}) => {
-  const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024
-  const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024
-
+const runBuild = opts => {
+  const { publicDir, outputDir } = opts
+  const warnAfterBundleGzipSize = 512 * 1024
+  const warnAfterChunkGzipSize = 1024 * 1024
   const fullOutputDir = getRealPath(outputDir)
 
-  const copyPublicFolder = (from, to) => {
-    fs.copySync(from, to, {
-      dereference: true,
-      filter: file => file !== getRealPath(template) && file !== getRealPath(favicon)
-    })
-  }
-
   const builder = previousFileSizes => {
-    console.log(chalk.cyan('Creating an optimized production build...'))
+    log.cyan('Creating an optimized production build...')
 
-    const buildConfig = buildConfigGenerator(
-      entry,
-      outputDir,
-      reportDir,
-      publicPath,
-      assetsPath,
-      favicon,
-      template,
-      alias,
-      postcssPlugins,
-      productionSourceMap,
-      parallel,
-      'production'
-    )
-
-    let compiler = webpack(buildConfig)
+    let compiler = webpack(getBuildConfig(opts))
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
         if (err) {
@@ -66,19 +31,6 @@ const runBuild = ({
             messages.errors.length = 1
           }
           return reject(new Error(messages.errors.join('\n\n')))
-        }
-        if (
-          process.env.CI
-          && (typeof process.env.CI !== 'string' || process.env.CI.toLowerCase() !== 'false')
-          && messages.warnings.length
-        ) {
-          console.log(
-            chalk.yellow(
-              '\nTreating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.\n'
-            )
-          )
-          return reject(new Error(messages.warnings.join('\n\n')))
         }
         return resolve({
           stats,
@@ -92,13 +44,20 @@ const runBuild = ({
   measureFileSizesBeforeBuild(fullOutputDir)
     .then(previousFileSizes => {
       fs.emptyDirSync(fullOutputDir)
-      copyPublicFolder(getRealPath(publicDir), getRealPath(outputDir))
+      copyer(
+        getRealPath(publicDir),
+        getRealPath(outputDir),
+        [
+          getRealPath(opts.template),
+          getRealPath(opts.favicon)
+        ]
+      )
       return builder(previousFileSizes)
     })
     .then(
       ({ stats, previousFileSizes, warnings }) => {
         if (warnings.length) {
-          console.log(chalk.yellow('Compiled with warnings.\n'))
+          log.yellow('Compiled with warnings.\n')
           console.log(warnings.join('\n\n'))
           console.log(
             `\nSearch for the ${
@@ -119,12 +78,12 @@ const runBuild = ({
           stats,
           previousFileSizes,
           fullOutputDir,
-          WARN_AFTER_BUNDLE_GZIP_SIZE,
-          WARN_AFTER_CHUNK_GZIP_SIZE
+          warnAfterBundleGzipSize,
+          warnAfterChunkGzipSize
         )
 
         printHostingInstructions(
-          require(APP_PACKAGE_JSON),
+          config.app.packageJson,
           null,
           fullOutputDir,
           path.relative(process.cwd(), fullOutputDir),

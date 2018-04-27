@@ -1,4 +1,4 @@
-module.exports = () => ({
+module.exports = {
   entry: [
     '@babel/polyfill',
     '<rootDir>/src/index.js'
@@ -35,7 +35,8 @@ module.exports = () => ({
   ],
   parallel: require('os').cpus().length > 1,
   lintOnSave: true,
+  isAnalyze: true,
   jestConfig: {},
   babelConfig: {},
-  eslintCOnfig: {}
-})
+  eslintConfig: {}
+}
