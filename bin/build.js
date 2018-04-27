@@ -5,10 +5,10 @@ const webpack = require('webpack')
 const { log, copyer } = require('../utils')
 const getBuildConfig = require('../config/webpack/build')
 const { getRealPath, config, useYarn } = require('../env')
-const printBuildError = require('../utils/printBuildError')
-const formatWebpackMessages = require('../utils/formatWebpackMessages')
-const printHostingInstructions = require('../utils/printHostingInstructions')
-const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('../utils/FileSizeReporter')
+const printBuildError = require('../utils/devtools/printBuildError')
+const formatWebpackMessages = require('../utils/devtools/formatWebpackMessages')
+const printHostingInstructions = require('../utils/devtools/printHostingInstructions')
+const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('../utils/devtools/FileSizeReporter')
 
 const runBuild = opts => {
   const { publicDir, outputDir } = opts

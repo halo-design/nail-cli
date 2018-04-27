@@ -1,4 +1,4 @@
-const ModuleScopePlugin = require('../../utils/ModuleScopePlugin')
+const ModuleScopePlugin = require('../../utils/devtools/ModuleScopePlugin')
 const { dir } = require('../../env')
 
 module.exports = isDebug => ({

@@ -1,5 +1,5 @@
 const { getRealPath } = require('../../env')
-const noopServiceWorkerMiddleware = require('../../utils/noopServiceWorkerMiddleware')
+const noopServiceWorkerMiddleware = require('../../utils/devtools/noopServiceWorkerMiddleware')
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
 const SET_HOST = process.env.HOST || '0.0.0.0'

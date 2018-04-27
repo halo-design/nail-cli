@@ -1,12 +1,12 @@
 const chalk = require('chalk')
 const webpack = require('webpack')
 const { log } = require('../utils')
-const openBrowser = require('../utils/openBrowser')
 const WebpackDevServer = require('webpack-dev-server')
 const getBuildConfig = require('../config/webpack/build')
 const getServerConfig = require('../config/webpack/server')
+const openBrowser = require('../utils/devtools/openBrowser')
 const { config, protocol, getRealPath, useYarn } = require('../env')
-const { choosePort, prepareUrls, createCompiler, prepareProxy } = require('../utils/WebpackDevServerUtils')
+const { choosePort, prepareUrls, createCompiler, prepareProxy } = require('../utils/devtools/WebpackDevServerUtils')
 
 const runServer = (opts, isDev) => {
   const { publicDir, proxyTable, autoOpenBrowser, callback } = opts
@@ -27,9 +27,16 @@ const runServer = (opts, isDev) => {
         return
       }
       const urls = prepareUrls(protocol, SET_HOST, port)
-      const compiler = createCompiler(webpack, webpackConfig, config.app.packageJson.name, urls, useYarn)
+      const compiler = createCompiler(
+        webpack,
+        webpackConfig,
+        config.app.packageJson.name,
+        urls,
+        useYarn
+      )
 
       compiler.plugin('done', stats => {
+        autoOpenBrowser && openBrowser(urls.localUrlForBrowser + publicPath.substr(1))
         callback && callback(stats)
       })
 
@@ -63,8 +70,6 @@ const runServer = (opts, isDev) => {
         isDev
           ? log.cyan('Starting the development server...\n')
           : log.cyan('Starting the production server...\n')
-
-        autoOpenBrowser && openBrowser(urls.localUrlForBrowser + publicPath.substr(1))
       })
 
       ;['SIGINT', 'SIGTERM'].forEach(signal => {

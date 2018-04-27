@@ -6,7 +6,7 @@ const setEntry = ({ entry }, isDebug) => {
   return isDebug
     ? {
       entry: {
-        app: [require.resolve('../../../utils/webpackHotDevClient')].concat(base)
+        app: [require.resolve('../../../utils/devtools/webpackHotDevClient')].concat(base)
       }
     } : {
       entry: {

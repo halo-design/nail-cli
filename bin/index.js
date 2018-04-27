@@ -44,7 +44,7 @@ if (argv.length === 0) {
   setProdEnv(true)
   if (argv.includes('--preview')) {
     finalConfig.isAnalyze = false
-    runServer(finalConfig, true)
+    runServer(finalConfig, false)
   } else {
     runBuild(finalConfig)
   }

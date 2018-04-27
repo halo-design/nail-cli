@@ -36,16 +36,11 @@ function printHostingInstructions(
 
     printStaticServerInstructions(buildFolder, useYarn);
   }
-  console.log();
-  console.log('Find out more about deployment here:');
-  console.log();
-  console.log(`  ${chalk.yellow('http://bit.ly/2vY88Kr')}`);
-  console.log();
 }
 
 function printBaseMessage(buildFolder, hostingLocation) {
   console.log(
-    `The project was built assuming it is hosted at ${chalk.green(
+    `\nThe project was built assuming it is hosted at ${chalk.green(
       hostingLocation || 'the server root'
     )}.`
   );
@@ -65,8 +60,7 @@ function printBaseMessage(buildFolder, hostingLocation) {
       )}${chalk.cyan(',')}`
     );
   }
-  console.log();
-  console.log(`The ${chalk.cyan(buildFolder)} folder is ready to be deployed.`);
+  console.log(`The ${chalk.cyan(buildFolder)} folder is ready to be deployed.\n`);
 }
 
 function printDeployInstructions(publicUrl, hasDeployScript, useYarn) {
