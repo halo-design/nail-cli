@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -12,16 +12,15 @@
   },
   "scripts": {
     "update": "yarn upgrade-interactive --latest",
-    "serve": "node ./bin serve",
+    "help": "node ./bin --help",
+    "serve": "node ./bin serve -o",
+    "serve:p": "node ./bin serve -p -o",
     "build": "node ./bin build",
-    "build:anly": "node ./bin build --analyze",
-    "build:prev": "node ./bin build --preview",
+    "build:a": "node ./bin build -a",
     "unit": "node ./bin unit",
-    "unit:cov": "node ./bin unit --coverage",
+    "unit:c": "node ./bin unit -c",
     "e2e": "node ./bin e2e",
-    "e2e:open": "node ./bin e2e --open",
-    "prev-e2e": "node ./bin e2e --production",
-    "prev-e2e:open": "node ./bin e2e --open --production"
+    "e2e:o": "node ./bin e2e -o"
   },
   "author": "OwlAford",
   "license": "MIT",
@@ -55,6 +54,7 @@
     "babel-loader": "8.0.0-beta.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "^2.4.1",
+    "commander": "^2.15.1",
     "copy-webpack-plugin": "^4.5.1",
     "cross-spawn": "^6.0.5",
     "css-loader": "^0.28.11",

@@ -4,11 +4,12 @@ const execa = require('execa')
 const semver = require('semver')
 const jestTest = require('./jest')
 const runBuild = require('./build')
-const { config } = require('../env')
+const program = require('commander')
 const runServer = require('./server')
 const { log, removeLastSlash } = require('../utils')
+const { protocol, config: { app, local } } = require('../env')
 const cypressBinPath = require.resolve('cypress/bin/cypress')
-const requiredVersion = config.app.packageJson.engines.node
+const requiredVersion = app.packageJson.engines.node
 
 if (!semver.satisfies(process.version, requiredVersion)) {
   log.yellow(
@@ -25,48 +26,66 @@ const setProdEnv = stats => {
 }
 
 let finalConfig = {
-  ...config.local.options,
-  ...config.app.options
+  ...local.options,
+  ...app.options
 }
 
 // process.traceDeprecation = true
 process.noDeprecation = true
 
-const argv = process.argv
+program
+  .version('0.3.3', '-v, --version')
+  .command('serve')
+  .option('-o --open', 'Development mode launches local services')
+  .option('-p --production', 'Production mode launches local services')
+  .action(cmd => {
+    if (cmd.open) {
+      finalConfig.autoOpenBrowser = true
+    }
+    if (cmd.production) {
+      setProdEnv(true)
+      finalConfig.isAnalyze = false
+      runServer(finalConfig, false)
+    } else {
+      setProdEnv(false)
+      runServer(finalConfig, true)
+    }
+  })
 
-if (argv.length === 0) {
-  console.log(chalk.red('Please enter a valid command parameter.'))
-} else if (argv.includes('serve')) {
-  setProdEnv(false)
-  runServer(finalConfig, true)
-} else if (argv.includes('build')) {
-  process.env.PUBLIC_URL = removeLastSlash(finalConfig.publicPath)
-  setProdEnv(true)
-  if (argv.includes('--preview')) {
-    finalConfig.isAnalyze = false
-    runServer(finalConfig, false)
-  } else {
-    runBuild(finalConfig)
-  }
-} else if (argv.includes('unit')) {
-  jestTest(finalConfig.jestConfig, argv.slice(argv.indexOf('unit') + 1))
-}  else if (argv.includes('e2e')) {
-  const isProd = argv.includes('--production')
-  const isOpen = argv.includes('--open')
-  const port = isProd ? finalConfig.buildServerPort : finalConfig.devServerPort
-  let cyArgv = ['--config', `baseUrl=http://localhost:${port}/`]
-  cyArgv = [isOpen ? 'open' : 'run'].concat(cyArgv)
-
-  finalConfig.autoOpenBrowser = false
-  finalConfig.callback = stats => {
-    execa(cypressBinPath, cyArgv, { stdio: 'inherit' })
-  }
-
-  if (isProd) {
+program
+  .command('build')
+  .option('-a --analyze', 'Generate the packaging analysis report')
+  .action(cmd => {
+    process.env.PUBLIC_URL = removeLastSlash(finalConfig.publicPath)
     setProdEnv(true)
-    buildServer(finalConfig)
-  } else {
+    if (cmd.analyze) {
+      finalConfig.isAnalyze = true
+    }
+    runBuild(finalConfig)
+  })
+
+program
+  .command('unit')
+  .option('-c --coverage', 'Generate test coverage reports')
+  .action(cmd => {
+    let argv = cmd.coverage ? ['--coverage'] : []
+    jestTest(finalConfig.jestConfig, argv)
+  })
+
+program
+  .command('e2e')
+  .option('-o --open', 'Open cypress for testing')
+  .action(cmd => {
+    let cyArgv = ['--config', `baseUrl=${protocol}://localhost:${finalConfig.devServerPort}/`]
+    cyArgv = [cmd.open ? 'open' : 'run'].concat(cyArgv)
+
+    finalConfig.autoOpenBrowser = false
+    finalConfig.callback = stats => {
+      execa(cypressBinPath, cyArgv, { stdio: 'inherit' })
+    }
+
     setProdEnv(false)
-    runServer(finalConfig)
-  }
-}
+    runServer(finalConfig, true)
+  })
+  
+program.parse(process.argv)

@@ -14,7 +14,7 @@ module.exports = {
   proxyTable: null,
   devServerPort: 8080,
   buildServerPort: 9090,
-  autoOpenBrowser: true,
+  autoOpenBrowser: false,
   productionSourceMap: false,
   postcssPlugins: [
     'postcss-flexbugs-fixes',
@@ -35,7 +35,7 @@ module.exports = {
   ],
   parallel: require('os').cpus().length > 1,
   lintOnSave: true,
-  isAnalyze: true,
+  isAnalyze: false,
   jestConfig: {},
   babelConfig: {},
   eslintConfig: {}
