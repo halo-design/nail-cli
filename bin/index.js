@@ -34,7 +34,7 @@ let finalConfig = {
 process.noDeprecation = true
 
 program
-  .version('0.3.3', '-v, --version')
+  .version(app.packageJson.version, '-v, --version')
   .command('serve')
   .option('-o --open', 'Development mode launches local services')
   .option('-p --production', 'Production mode launches local services')

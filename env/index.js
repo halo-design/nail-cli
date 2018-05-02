@@ -63,6 +63,7 @@ const config = {
       options: require('../config/options')
     }
   },
+
   protocol: process.env.HTTPS === 'true' ? 'https' : 'http',
   useYarn: fs.existsSync(appResolve('yarn.lock')),
   browserslist:
