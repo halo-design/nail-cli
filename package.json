@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -60,7 +60,6 @@
     "cross-spawn": "^6.0.5",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
-    "cypress": "^2.1.0",
     "detect-port-alt": "^1.1.6",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -126,5 +125,7 @@
     "webpack-manifest-plugin": "^2.0.2",
     "webpack-merge": "^4.1.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "cypress": "^2.1.0"
+  }
 }
