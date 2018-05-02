@@ -2,8 +2,8 @@ const chalk = require('chalk')
 const webpack = require('webpack')
 const postcss = require('postcss')
 const merge = require('webpack-merge')
-const { getRealPath } = require('../../env')
 const { removeLastSlash } = require('../../utils')
+const { getRealPath, config } = require('../../env')
 const comments = require('postcss-discard-comments')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
@@ -120,6 +120,12 @@ const setBaseBuildConfig = ({
   }
 
   if (!productionSourceMap) {
+    const comment = '/*!\n' +
+    ` * Build By nail-cli@${config.local.packageJson.version}\n` +
+    ' * (c) 2018 OwlAford\n' +
+    ' * Released under the MIT License.\n' +
+    ' */\n'
+
     baseBuildConfig.plugins.push(
       new LastCallWebpackPlugin({
         assetProcessors: [{
@@ -130,6 +136,10 @@ const setBaseBuildConfig = ({
               .process(asset.source(), { from: void 0 })
               .then(r => r.css)
           }
+        }, {
+          regExp:  /\.js$/,
+          processor: (assetName, asset) =>
+            Promise.resolve(comment + asset.source())
         }],
         canPrint: true
       })

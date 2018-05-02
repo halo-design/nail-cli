@@ -8,7 +8,6 @@ const program = require('commander')
 const runServer = require('./server')
 const { log, removeLastSlash } = require('../utils')
 const { protocol, config: { app, local } } = require('../env')
-const cypressBinPath = require.resolve('cypress/bin/cypress')
 const requiredVersion = app.packageJson.engines.node
 
 if (!semver.satisfies(process.version, requiredVersion)) {
@@ -34,7 +33,7 @@ let finalConfig = {
 process.noDeprecation = true
 
 program
-  .version(app.packageJson.version, '-v, --version')
+  .version(local.packageJson.version, '-v, --version')
   .command('serve')
   .option('-o --open', 'Development mode launches local services')
   .option('-p --production', 'Production mode launches local services')
@@ -81,7 +80,14 @@ program
 
     finalConfig.autoOpenBrowser = false
     finalConfig.callback = stats => {
-      execa(cypressBinPath, cyArgv, { stdio: 'inherit' })
+      log.cyan('It\'s starting cypress...\n')
+      try {
+        const cypressBinPath = require.resolve('cypress/bin/cypress')
+        execa(cypressBinPath, cyArgv, { stdio: 'inherit' })
+      } catch (e) {
+        log.yellow('If you need an e2e test feature, install the cypress module please.\n')
+        process.exit(0)
+      }
     }
 
     setProdEnv(false)

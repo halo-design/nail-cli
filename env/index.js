@@ -14,6 +14,9 @@ const getRealPath = file =>
     ? appResolve(file.replace('<rootDir>/', ''))
     : require.resolve(file)
 
+const LOCAL_PACKAGEJSON_DIR = localResolve('package.json')
+const LOCAL_PACKAGEJSON_FILE = require(LOCAL_PACKAGEJSON_DIR)
+
 const APP_SRC_DIR = appResolve('src')
 const APP_TEST_DIR = appResolve('test')
 const APP_PACKAGEJSON_DIR = appResolve('package.json')
@@ -50,6 +53,7 @@ const config = {
     },
     local: {
       root: LOCAL_ROOT,
+      packageJson: LOCAL_PACKAGEJSON_DIR,
       resolve: localResolve
     }
   },
@@ -60,6 +64,7 @@ const config = {
       options: APP_NAILCONFIG_FILE
     },
     local: {
+      packageJson: LOCAL_PACKAGEJSON_FILE,
       options: require('../config/options')
     }
   },
