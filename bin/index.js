@@ -79,7 +79,8 @@ program
     cyArgv = [cmd.open ? 'open' : 'run'].concat(cyArgv)
 
     finalConfig.autoOpenBrowser = false
-    finalConfig.callback = stats => {
+    finalConfig.callback = urls => {
+      console.log(urls)
       log.cyan('It\'s starting cypress...\n')
       try {
         const cypressBinPath = require.resolve('cypress/bin/cypress')
