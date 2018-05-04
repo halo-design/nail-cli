@@ -8,6 +8,7 @@
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
+  coverageDirectory: '<rootDir>/report/coverage',
   setupFiles: [require.resolve('@babel/polyfill')],
   testMatch: [
     '<rootDir>/(tests/unit/**/*.spec.(ts|tsx|js)|**/__tests__/*.(ts|tsx|js))'

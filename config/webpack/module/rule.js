@@ -52,6 +52,9 @@ const setRule = ({
       limit: 10000,
       name: `${assetsPath}media/${assetName}`
     }
+  }, {
+    test: /\.txt$/,
+    use: 'raw-loader'
   }]
 
   return {

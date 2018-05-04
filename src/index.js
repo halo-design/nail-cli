@@ -1,5 +1,6 @@
 import registerServiceWorker from './registerServiceWorker'
 import { upcase } from './libs/utils'
+import txt from 'raw-loader!./nail.txt'
 import './addTimestamp'
 import './style.scss'
 
@@ -8,7 +9,7 @@ import('@/asyncModule').then(() => {
 })
 
 const $root = document.getElementById('MOUNT_NODE')
-const title = upcase('Awesome Nail!')
+const title = upcase(txt)
 const $context = document.createElement('div')
 
 $context.innerHTML = `
