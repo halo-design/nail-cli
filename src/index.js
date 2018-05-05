@@ -1,6 +1,6 @@
 import registerServiceWorker from './registerServiceWorker'
 import { upcase } from './libs/utils'
-import txt from 'raw-loader!./nail.txt'
+import txt from './nail.txt'
 import './addTimestamp'
 import './style.scss'
 
