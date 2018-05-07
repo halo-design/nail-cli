@@ -1,4 +1,4 @@
-const { browserslist } = require('../env')
+const { browserslist } = require('../../../env')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const styleLoader = (loader, postcssPlugins, isDebug) => {

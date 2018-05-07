@@ -1,10 +1,8 @@
 const reg = require('./reg')
 const chalk = require('chalk')
 const fs = require('fs-extra')
-const styleLoader = require('./style-loader')
 
 exports.reg = reg
-exports.styleLoader = styleLoader
 
 exports.isEmptyObject = obj => {
   for (let name in obj) return false

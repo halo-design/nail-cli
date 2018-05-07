@@ -1,4 +1,5 @@
-const { reg, styleLoader } = require('../../../utils')
+const styleLoader = require('./styleLoader')
+const { reg } = require('../../../utils')
 const { dir } = require('../../../env')
 
 const setRule = ({
