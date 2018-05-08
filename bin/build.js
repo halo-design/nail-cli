@@ -8,7 +8,10 @@ const { getRealPath, config, useYarn } = require('../env')
 const printBuildError = require('../utils/devtools/printBuildError')
 const formatWebpackMessages = require('../utils/devtools/formatWebpackMessages')
 const printHostingInstructions = require('../utils/devtools/printHostingInstructions')
-const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('../utils/devtools/FileSizeReporter')
+const {
+  measureFileSizesBeforeBuild,
+  printFileSizesAfterBuild
+} = require('../utils/devtools/FileSizeReporter')
 
 const runBuild = opts => {
   const { publicDir, outputDir } = opts

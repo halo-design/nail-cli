@@ -94,5 +94,5 @@ program
     setProdEnv(false)
     runServer(finalConfig, true)
   })
-  
+
 program.parse(process.argv)
