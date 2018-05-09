@@ -1,5 +1,5 @@
-const ModuleScopePlugin = require('../../utils/devtools/ModuleScopePlugin')
-const { dir } = require('../../env')
+const ModuleScopePlugin = require('../../utils/devtools/ModuleScopePlugin');
+const { dir } = require('../../env');
 
 module.exports = isDebug => ({
   context: dir.app.root,
@@ -10,12 +10,12 @@ module.exports = isDebug => ({
     modules: ['node_modules', 'src'],
     extensions: ['.js', '.json', '.jsx'],
     plugins: [
-      new ModuleScopePlugin(dir.app.src, [dir.app.packageJson])
-    ]
+      new ModuleScopePlugin(dir.app.src, [dir.app.packageJson]),
+    ],
   },
 
   module: {
-    strictExportPresence: true
+    strictExportPresence: true,
   },
 
   bail: !isDebug,
@@ -26,10 +26,10 @@ module.exports = isDebug => ({
     dgram: 'empty',
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   },
 
   performance: {
-    hints: false
-  }
-})
+    hints: false,
+  },
+});

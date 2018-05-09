@@ -1,16 +1,16 @@
-const path = require('path')
-const { getRealPath } = require('../../../env')
+const path = require('path');
+const { getRealPath } = require('../../../env');
 
 const setOutPut = ({
   outputDir,
   publicPath,
-  assetsPath
+  assetsPath,
 }, isDebug) => ({
   output: {
     path: getRealPath(outputDir),
     publicPath,
     pathinfo: true,
-    filename: isDebug 
+    filename: isDebug
       ? '[name].js'
       : `${assetsPath}js/[name].[chunkhash:8].min.js`,
 
@@ -19,8 +19,8 @@ const setOutPut = ({
       : `${assetsPath}js/[name].[chunkhash:8].chunk.min.js`,
 
     devtoolModuleFilenameTemplate: info =>
-      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-  }
-})
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+  },
+});
 
-module.exports = setOutPut
+module.exports = setOutPut;

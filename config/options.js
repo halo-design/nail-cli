@@ -1,7 +1,7 @@
 module.exports = {
   entry: [
     '@babel/polyfill',
-    '<rootDir>/src/index.js'
+    '<rootDir>/src/index.js',
   ],
   template: '<rootDir>/public/index.html',
   favicon: '<rootDir>/public/favicon.ico',
@@ -18,7 +18,7 @@ module.exports = {
   productionSourceMap: false,
   postcssPlugins: [
     'postcss-flexbugs-fixes',
-    'postcss-flexibility'
+    'postcss-flexibility',
   ],
   parallel: require('os').cpus().length > 1,
   lintOnSave: true,
@@ -26,5 +26,5 @@ module.exports = {
   jestConfig: {},
   babelConfig: {},
   eslintType: 'standard',
-  eslintConfig: {}
-}
+  eslintConfig: {},
+};

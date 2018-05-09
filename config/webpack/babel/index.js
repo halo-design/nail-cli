@@ -4,28 +4,28 @@ const baseConfig = {
   presets: [
     '@babel/preset-env',
     ['@babel/preset-stage-2', {
-      'decoratorsLegacy': true
+      decoratorsLegacy: true,
     }],
-    '@babel/preset-react'
+    '@babel/preset-react',
   ],
-  plugins:  [
+  plugins: [
     '@babel/proposal-numeric-separator',
     '@babel/plugin-proposal-export-namespace-from',
     ['@babel/proposal-object-rest-spread', {
-      useBuiltIns: true
+      useBuiltIns: true,
     }],
     ['@babel/plugin-proposal-decorators', {
-      'legacy': true
+      legacy: true,
     }],
     ['@babel/plugin-proposal-class-properties', {
-      'loose' : true 
-    }]
-  ]
-}
+      loose: true,
+    }],
+  ],
+};
 
 const finalConfig = (customConfig = {}) => ({
   ...baseConfig,
-  ...customConfig
-})
+  ...customConfig,
+});
 
-module.exports = finalConfig
+module.exports = finalConfig;

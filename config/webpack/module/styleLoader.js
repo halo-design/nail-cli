@@ -1,48 +1,48 @@
-const { browserslist } = require('../../../env')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { browserslist } = require('../../../env');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const styleLoader = (loader, postcssPlugins, isDebug) => {
-  let loaders = [{
+  const loaders = [{
     loader: 'css-loader',
     options: {
       importLoaders: 1,
       minimize: !isDebug,
-      sourceMap: isDebug
-    }
+      sourceMap: isDebug,
+    },
   }, {
     loader: 'postcss-loader',
     options: {
       sourceMap: isDebug,
       ident: 'postcss',
-      plugins: loader => [
+      plugins: opts => [
         require('postcss-import')({
-          root: loader.resourcePath
+          root: opts.resourcePath,
         }),
         ...postcssPlugins.map(plugin => require(plugin)()),
         require('autoprefixer')({
-          browsers: browserslist
+          browsers: browserslist,
         }),
         require('cssnano')({
           preset: 'advanced',
           reduceIdents: false,
-          safe: true
-        })
-      ]
-    }
-  }]
+          safe: true,
+        }),
+      ],
+    },
+  }];
 
   if (loader) {
     loaders.push({
-      loader: loader,
+      loader,
       options: {
-        sourceMap: isDebug
-      }
-    })
+        sourceMap: isDebug,
+      },
+    });
   }
 
   return isDebug
     ? ['style-loader'].concat(loaders)
-    : [MiniCssExtractPlugin.loader].concat(loaders)
-}
+    : [MiniCssExtractPlugin.loader].concat(loaders);
+};
 
-module.exports = styleLoader
+module.exports = styleLoader;

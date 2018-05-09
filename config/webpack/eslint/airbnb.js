@@ -5,14 +5,14 @@ module.exports = {
     ecmaVersion: 6,
     sourceType: 'module',
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   env: {
     browser: true,
-    node: true
+    node: true,
   },
-  'extends': ['airbnb'],
+  extends: ['airbnb'],
   rules: {
     'no-console': 0,
     'arrow-parens': 0,
@@ -22,24 +22,24 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        packageDir: '.'
-      }
+        packageDir: '.',
+      },
     ],
     'prefer-destructuring': [
       'error',
       {
         VariableDeclarator: {
           array: false,
-          object: true
+          object: true,
         },
         AssignmentExpression: {
           array: false,
-          object: false
-        }
+          object: false,
+        },
       },
       {
-        enforceForRenamedProperties: false
-      }
+        enforceForRenamedProperties: false,
+      },
     ],
 
     'jsx-a11y/anchor-is-valid': [
@@ -50,18 +50,18 @@ module.exports = {
         aspects: [
           'noHref',
           'invalidHref',
-          'preferButton'
-        ]
-      }
+          'preferButton',
+        ],
+      },
     ],
 
     'react/jsx-filename-extension': [
       'error',
       {
-        extensions: ['.js', '.jsx']
-      }
+        extensions: ['.js', '.jsx'],
+      },
     ],
-    'react/prefer-stateless-function': 'off'
-  }
-}
+    'react/prefer-stateless-function': 'off',
+  },
+};
 

@@ -5,21 +5,21 @@ module.exports = {
     ecmaVersion: 6,
     sourceType: 'module',
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   env: {
     browser: true,
-    node: true
+    node: true,
   },
-  'extends': [
+  extends: [
     'standard',
-    'standard-react'
+    'standard-react',
   ],
-  'plugins': [
+  plugins: [
     'babel',
     'react',
-    'promise'
+    'promise',
   ],
   rules: {
     'arrow-parens': 0,
@@ -27,10 +27,10 @@ module.exports = {
     'react/prop-types': 0,
     'padded-blocks': 0,
     'no-unused-expressions': ['error', {
-      'allowShortCircuit': true,
-      'allowTernary': true
+      allowShortCircuit: true,
+      allowTernary: true,
     }],
-    'import/no-webpack-loader-syntax': 0
-  }
-}
+    'import/no-webpack-loader-syntax': 0,
+  },
+};
 

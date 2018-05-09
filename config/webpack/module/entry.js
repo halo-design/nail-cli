@@ -1,18 +1,18 @@
-const { getRealPath } = require('../../../env')
+const { getRealPath } = require('../../../env');
 
 const setEntry = ({ entry }, isDebug) => {
-  const base = entry.map(path => getRealPath(path))
+  const base = entry.map(path => getRealPath(path));
 
   return isDebug
     ? {
       entry: {
-        app: [require.resolve('../../../utils/devtools/webpackHotDevClient')].concat(base)
-      }
+        app: [require.resolve('../../../utils/devtools/webpackHotDevClient')].concat(base),
+      },
     } : {
       entry: {
-        app: base
-      }
-    }
-}
+        app: base,
+      },
+    };
+};
 
-module.exports = setEntry
+module.exports = setEntry;

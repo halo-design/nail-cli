@@ -1,8 +1,8 @@
-const { getRealPath } = require('../../env')
-const noopServiceWorkerMiddleware = require('../../utils/devtools/noopServiceWorkerMiddleware')
+const { getRealPath } = require('../../env');
+const noopServiceWorkerMiddleware = require('../../utils/devtools/noopServiceWorkerMiddleware');
 
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
-const SET_HOST = process.env.HOST || '0.0.0.0'
+const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+const SET_HOST = process.env.HOST || '0.0.0.0';
 
 module.exports = (isDebug, proxy, allowedHost, publicDir, publicPath) => ({
   disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
@@ -15,17 +15,17 @@ module.exports = (isDebug, proxy, allowedHost, publicDir, publicPath) => ({
   quiet: true,
   watchOptions: {
     ignored: /node_modules/,
-    poll: true
+    poll: true,
   },
   https: protocol === 'https',
   host: SET_HOST,
   overlay: false,
   historyApiFallback: {
-    disableDotRule: true
+    disableDotRule: true,
   },
   public: allowedHost,
   proxy,
-  before (app) {
-    app.use(noopServiceWorkerMiddleware())
-  }
-})
+  before(app) {
+    app.use(noopServiceWorkerMiddleware());
+  },
+});

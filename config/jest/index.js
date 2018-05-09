@@ -1,17 +1,17 @@
- const baseConfig = {
+const baseConfig = {
   transform: {
     '^.+\\.css$': require.resolve('./transform/css.js'),
     '^.+\\.(js|jsx|mjs)$': require.resolve('./transform/babel.js'),
-    '^(?!.*\\.(js|jsx|mjs|css|json)$)': require.resolve('./transform/file.js')
+    '^(?!.*\\.(js|jsx|mjs|css|json)$)': require.resolve('./transform/file.js'),
   },
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
   coverageDirectory: '<rootDir>/report/coverage',
   setupFiles: [require.resolve('@babel/polyfill')],
   testMatch: [
-    '<rootDir>/(tests/unit/**/*.spec.(ts|tsx|js)|**/__tests__/*.(ts|tsx|js))'
+    '<rootDir>/(tests/unit/**/*.spec.(ts|tsx|js)|**/__tests__/*.(ts|tsx|js))',
   ],
   testEnvironment: 'node',
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
@@ -22,13 +22,13 @@
     'web.jsx',
     'jsx',
     'node',
-    'mjs'
-  ]
-}
+    'mjs',
+  ],
+};
 
 const finalConfig = (customConfig = {}) => ({
   ...baseConfig,
-  ...customConfig
-})
+  ...customConfig,
+});
 
-module.exports = finalConfig
+module.exports = finalConfig;

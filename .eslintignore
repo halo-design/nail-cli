@@ -1,7 +1,5 @@
-bin
-config
-data
 dist
 node_modules
 public
+utils/devtools/
 src/assets/

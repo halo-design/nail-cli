@@ -1,31 +1,31 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const { getRealPath } = require('../../env')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const { getRealPath } = require('../../env');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 const setBaseConfig = ({
   favicon,
-  template
+  template,
 }) => ({
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
       publicPath: '/',
       favicon: getRealPath(favicon),
-      template: getRealPath(template)
+      template: getRealPath(template),
     }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
-        PUBLIC_URL: JSON.stringify('')
-      }
+        PUBLIC_URL: JSON.stringify(''),
+      },
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CaseSensitivePathsPlugin(),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-  ]
-})
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  ],
+});
 
 const setDevConfig = opts =>
   merge(
@@ -36,11 +36,11 @@ const setDevConfig = opts =>
       ...opts,
       ...{
         assetsPath: '',
-        publicPath: '/'
-      }
+        publicPath: '/',
+      },
     }, true),
     require('./module/rule')(opts, true),
-    setBaseConfig(opts)
-  )
+    setBaseConfig(opts),
+  );
 
-module.exports = setDevConfig
+module.exports = setDevConfig;

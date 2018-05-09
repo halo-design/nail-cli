@@ -1,16 +1,15 @@
-const chalk = require('chalk')
-const webpack = require('webpack')
-const postcss = require('postcss')
-const merge = require('webpack-merge')
-const { removeLastSlash } = require('../../utils')
-const { getRealPath, config } = require('../../env')
-const comments = require('postcss-discard-comments')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const LastCallWebpackPlugin = require('last-call-webpack-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const webpack = require('webpack');
+const postcss = require('postcss');
+const merge = require('webpack-merge');
+const { removeLastSlash } = require('../../utils');
+const { getRealPath, config } = require('../../env');
+const comments = require('postcss-discard-comments');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const LastCallWebpackPlugin = require('last-call-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const setBaseBuildConfig = ({
   favicon,
@@ -20,9 +19,9 @@ const setBaseBuildConfig = ({
   reportDir,
   publicPath,
   assetsPath,
-  productionSourceMap
+  productionSourceMap,
 }) => {
-  let baseBuildConfig = {
+  const baseBuildConfig = {
     optimization: {
       runtimeChunk: false,
       splitChunks: {
@@ -31,21 +30,21 @@ const setBaseBuildConfig = ({
             chunks: 'initial',
             minChunks: 2,
             maxInitialRequests: 5,
-            minSize: 0
+            minSize: 0,
           },
           styles: {
             name: 'styles',
             test: /\.css$/,
             chunks: 'all',
-            enforce: true
+            enforce: true,
           },
           vendor: {
             chunks: 'initial',
             test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
             priority: 10,
-            enforce: true
-          }
+            enforce: true,
+          },
         },
       },
       minimizer: [
@@ -53,26 +52,26 @@ const setBaseBuildConfig = ({
           uglifyOptions: {
             compress: {
               warnings: false,
-              comparisons: false
+              comparisons: false,
             },
             mangle: {
-              safari10: true
+              safari10: true,
             },
             output: {
               comments: false,
-              ascii_only: true
-            }
+              ascii_only: true,
+            },
           },
           cache: true,
-          parallel: parallel,
-          sourceMap: productionSourceMap
-        })
-      ]
+          parallel,
+          sourceMap: productionSourceMap,
+        }),
+      ],
     },
     plugins: [
       new HtmlWebpackPlugin({
         inject: true,
-        publicPath: publicPath,
+        publicPath,
         template: getRealPath(template),
         favicon: getRealPath(favicon),
         minify: {
@@ -85,39 +84,39 @@ const setBaseBuildConfig = ({
           keepClosingSlash: true,
           minifyJS: true,
           minifyCSS: true,
-          minifyURLs: true
-        }
+          minifyURLs: true,
+        },
       }),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('production'),
-          PUBLIC_URL: JSON.stringify(removeLastSlash(publicPath))
-        }
+          PUBLIC_URL: JSON.stringify(removeLastSlash(publicPath)),
+        },
       }),
       new ManifestPlugin({
-        fileName: 'asset-manifest.json'
+        fileName: 'asset-manifest.json',
       }),
       new SWPrecacheWebpackPlugin({
         filename: 'service-worker.js',
         cacheId: config.app.packageJson.name,
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-        minify: true
+        minify: true,
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
         filename: `${assetsPath}css/[name].[contenthash:8].min.css`,
-        chunkFilename: `${assetsPath}css/[id].[contenthash:8].min.css`
-      })
-    ]
-  }
+        chunkFilename: `${assetsPath}css/[id].[contenthash:8].min.css`,
+      }),
+    ],
+  };
 
   if (isAnalyze) {
-    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
     baseBuildConfig.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: getRealPath(`${reportDir}/analyze/${Date.now()}.html`)
-    }))
+      reportFilename: getRealPath(`${reportDir}/analyze/${Date.now()}.html`),
+    }));
   }
 
   if (!productionSourceMap) {
@@ -125,30 +124,28 @@ const setBaseBuildConfig = ({
     ` * Build By nail-cli@${config.local.packageJson.version}\n` +
     ' * (c) 2018 OwlAford\n' +
     ' * Released under the MIT License.\n' +
-    ' */\n'
+    ' */\n';
 
-    baseBuildConfig.plugins.push(
-      new LastCallWebpackPlugin({
-        assetProcessors: [{
-          regExp:  /\.css$/,
-          processor: (assetName, asset, assets) =>  {
-            assets.setAsset(`${assetName}.map`, null)
-            return postcss(comments({ removeAll: true }))
-              .process(asset.source(), { from: void 0 })
-              .then(r => r.css)
-          }
-        }, {
-          regExp:  /\.js$/,
-          processor: (assetName, asset) =>
-            Promise.resolve(comment + asset.source())
-        }],
-        canPrint: true
-      })
-    )
+    baseBuildConfig.plugins.push(new LastCallWebpackPlugin({
+      assetProcessors: [{
+        regExp: /\.css$/,
+        processor: (assetName, asset, assets) => {
+          assets.setAsset(`${assetName}.map`, null);
+          return postcss(comments({ removeAll: true }))
+            .process(asset.source(), { from: void 0 })
+            .then(r => r.css);
+        },
+      }, {
+        regExp: /\.js$/,
+        processor: (assetName, asset) =>
+          Promise.resolve(comment + asset.source()),
+      }],
+      canPrint: true,
+    }));
   }
 
-  return baseBuildConfig
-}
+  return baseBuildConfig;
+};
 
 const setBuildConfig = opts =>
   merge(
@@ -157,7 +154,7 @@ const setBuildConfig = opts =>
     require('./module/entry')(opts, false),
     require('./module/output')(opts, false),
     require('./module/rule')(opts, false),
-    setBaseBuildConfig(opts)
-  )
+    setBaseBuildConfig(opts),
+  );
 
-module.exports = setBuildConfig
+module.exports = setBuildConfig;
