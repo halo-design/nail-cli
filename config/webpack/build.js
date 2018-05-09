@@ -98,10 +98,11 @@ const setBaseBuildConfig = ({
         fileName: 'asset-manifest.json'
       }),
       new SWPrecacheWebpackPlugin({
-        dontCacheBustUrlsMatching: /\.\w{8}\./,
         filename: 'service-worker.js',
-        minify: true,
-        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
+        cacheId: config.app.packageJson.name,
+        dontCacheBustUrlsMatching: /\.\w{8}\./,
+        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+        minify: true
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({

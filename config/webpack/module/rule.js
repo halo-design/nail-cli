@@ -34,11 +34,24 @@ const setRule = ({
     use: Loader('stylus-loader')
   }, {
     test: reg.image,
-    loader: 'url-loader',
-    query: {
-      limit: 8192,
-      name: `${assetsPath}images/${assetName}`
-    }
+    oneOf: [{
+      test: /\.svg$/,
+      oneOf: [{
+        resourceQuery: /inline/,
+        use: 'svg-inline-loader'
+      }, {
+        loader: 'file-loader',
+        query: {
+          name: `${assetsPath}images/${assetName}`
+        }
+      }]
+    }, {
+      loader: 'url-loader',
+      query: {
+        limit: 4096,
+        name: `${assetsPath}images/${assetName}`
+      }
+    }]
   }, {
     test: reg.font,
     loader: 'url-loader',
@@ -48,9 +61,8 @@ const setRule = ({
     }
   }, {
     test: reg.media,
-    loader: 'url-loader',
+    loader: 'file-loader',
     options: {
-      limit: 10000,
       name: `${assetsPath}media/${assetName}`
     }
   }, {

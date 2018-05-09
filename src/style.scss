@@ -26,4 +26,13 @@ body {
     line-height: 1.5;
     font-family: "Monaco", "Consolas", "Source Code Pro";
   }
+
+  .empty {
+    height: 200px;
+    width: 200px;
+    background: url(./noresult.svg) no-repeat center center;
+    background-size: 100% auto;
+    margin: 20px auto;
+    display: none;
+  }
 }

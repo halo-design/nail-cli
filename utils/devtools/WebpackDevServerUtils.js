@@ -89,28 +89,18 @@ function prepareUrls(protocol, host, port) {
 }
 
 function printInstructions(appName, urls, useYarn) {
-  console.log();
-  console.log(`You can now view ${chalk.bold(appName)} in the browser.`);
-  console.log();
+  console.log(`\n✨ You can now view ${chalk.bold(appName)} in the browser.\n`);
 
   if (urls.lanUrlForTerminal) {
     console.log(
-      `  ${chalk.bold('Local:')}            ${urls.localUrlForTerminal}`
+      `  ${chalk.bold('Local:')}    ${urls.localUrlForTerminal}`
     );
     console.log(
-      `  ${chalk.bold('On Your Network:')}  ${urls.lanUrlForTerminal}`
+      `  ${chalk.bold('Network:')}  ${urls.lanUrlForTerminal}\n`
     );
   } else {
-    console.log(`  ${urls.localUrlForTerminal}`);
+    console.log(`  ${urls.localUrlForTerminal}\n`);
   }
-
-  console.log();
-  console.log('Note that the development build is not optimized.');
-  console.log(
-    `To create a production build, use ` +
-      `${chalk.cyan(`${useYarn ? 'yarn' : 'npm run'} build`)}.`
-  );
-  console.log();
 }
 
 function createCompiler(webpack, config, appName, urls, useYarn) {
