@@ -1,0 +1,13 @@
+node_modules/
+dist/
+report/
+public/
+src/
+tests/
+.eslintignore
+.eslintrc
+cypress.json
+jsconfig.json
+logo.png
+nail.config.js
+yarn.lock

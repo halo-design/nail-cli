@@ -1,9 +1,7 @@
 .idea
 .DS_Store
 node_modules/
-coverage/
 dist/
-test/
 report/
 /tests/e2e/videos/
 /tests/e2e/screenshots/
