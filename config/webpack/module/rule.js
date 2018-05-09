@@ -5,6 +5,7 @@ const { dir } = require('../../../env')
 const setRule = ({
   assetsPath,
   lintOnSave,
+  eslintType,
   babelConfig,
   eslintConfig,
   postcssPlugins
@@ -72,7 +73,7 @@ const setRule = ({
 
   return {
     module: {
-      rules: lintOnSave
+      rules: lintOnSave && !isDebug
         ? [{
           test: reg.script,
           loader: 'eslint-loader',
@@ -80,7 +81,7 @@ const setRule = ({
           include: [dir.app.src, dir.app.test],
           options: {
             formatter: require('eslint-friendly-formatter'),
-            baseConfig: require('../eslint')(eslintConfig, isDebug)
+            baseConfig: require('../eslint')(eslintConfig, eslintType, isDebug)
           }
         }].concat(baseRules)
         : baseRules

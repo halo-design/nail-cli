@@ -25,5 +25,6 @@ module.exports = {
   isAnalyze: false,
   jestConfig: {},
   babelConfig: {},
+  eslintType: 'standard',
   eslintConfig: {}
 }

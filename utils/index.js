@@ -23,6 +23,10 @@ exports.copyer = (from, to, exclude) => {
   })
 }
 
+exports.writeJSON = (data, output) => {
+  fs.writeFileSync(output, JSON.stringify(data, null, 2))
+}
+
 let log = {}
 const colorList = ['red', 'blue', 'cyan', 'green', 'white', 'yellow', 'magenta', 'gray']
 colorList.forEach(item => {

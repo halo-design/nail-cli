@@ -1,1 +1,1 @@
-export const upcase = txt => txt.toUpperCase()
+export const upcase = txt => txt.toUpperCase();

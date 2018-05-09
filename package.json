@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.4.6",
+  "version": "0.5.2",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -11,6 +11,8 @@
     "url": "git+https://@github.com/OwlAford/nail-cli.git"
   },
   "scripts": {
+    "lint": "eslint --ext .js,.jsx src/",
+    "lint:fix": "eslint --fix --ext .js,.jsx src/",
     "update": "yarn upgrade-interactive --latest",
     "version": "node ./bin -v",
     "help": "node ./bin --help",
@@ -61,13 +63,15 @@
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
     "detect-port-alt": "^1.1.6",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^12.0.0-alpha.0",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-standard": "11.0.0",
     "eslint-config-standard-react": "^6.0.0",
     "eslint-friendly-formatter": "^4.0.0",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-react": "^7.7.0",

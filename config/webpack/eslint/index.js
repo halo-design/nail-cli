@@ -1,47 +1,17 @@
-baseConfig = {
-  root: true,
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true
-    }
-  },
-  env: {
-    browser: true,
-    node: true
-  },
-  'extends': [
-    'standard',
-    'standard-react'
-  ],
-  'plugins': [
-    'babel',
-    'react',
-    'promise'
-  ],
-  rules: {
-    'arrow-parens': 0,
-    'generator-star-spacing': 0,
-    'react/prop-types': 0,
-    'padded-blocks': 0,
-    'no-unused-expressions': ['error', {
-      'allowShortCircuit': true,
-      'allowTernary': true
-    }],
-    'import/no-webpack-loader-syntax': 0,
-    
-  }
+const { getRealPath } = require('../../../env')
+const { writeJSON } = require('../../../utils')
+
+const createBaseConfig = eslintType => {
+  eslintType = eslintType || 'standard'
+  const config = require(`./${eslintType}`)
+  writeJSON(config, getRealPath('<rootDir>/.eslintrc'))
+  return config
 }
 
-finalConfig = (customConfig = {}, isDebug) => ({
-  ...baseConfig,
-  ...{
-    'no-debugger': isDebug ? 0 : 2
-  },
+finalConfig = (customConfig = {}, eslintType, isDebug) => ({
+  ...createBaseConfig(eslintType),
+  ...{ 'no-debugger': isDebug ? 0 : 2 },
   ...customConfig
 })
-
 
 module.exports = finalConfig
