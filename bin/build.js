@@ -68,7 +68,7 @@ const runBuild = opts => {
           chalk.cyan('// eslint-disable-next-line')
         } to the line before.\n`);
       } else {
-        console.log(chalk.green('Compiled successfully.\n'));
+        log.green('Compiled successfully.\n');
       }
 
       console.log('File sizes after gzip:\n');

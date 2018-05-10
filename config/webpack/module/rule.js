@@ -73,7 +73,7 @@ const setRule = ({
 
   return {
     module: {
-      rules: lintOnSave && !isDebug
+      rules: lintOnSave && isDebug
         ? [{
           test: reg.script,
           loader: 'eslint-loader',

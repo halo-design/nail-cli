@@ -1,6 +1,6 @@
 {
   "name": "nail-cli",
-  "version": "0.5.5",
+  "version": "0.5.7",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "bin": {
@@ -80,7 +80,7 @@
     "file-loader": "^1.1.11",
     "filesize": "^3.6.1",
     "fs": "^0.0.1-security",
-    "fs-extra": "^6.0.0",
+    "fs-extra": "^6.0.1",
     "global-modules": "^1.0.0",
     "gzip-size": "^4.1.0",
     "html-webpack-plugin": "^3.2.0",
@@ -116,7 +116,7 @@
     "url": "^0.11.0",
     "url-loader": "^1.0.1",
     "webpack": "4.8.1",
-    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-bundle-analyzer": "^2.11.2",
     "webpack-dev-server": "^3.1.4",
     "webpack-manifest-plugin": "^2.0.2",
     "webpack-merge": "^4.1.2"
