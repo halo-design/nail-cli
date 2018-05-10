@@ -26,6 +26,8 @@ module.exports = (isDebug, proxy, allowedHost, publicDir, publicPath) => ({
   public: allowedHost,
   proxy,
   before(app) {
-    app.use(noopServiceWorkerMiddleware());
+    if (isDebug) {
+      app.use(noopServiceWorkerMiddleware());
+    }
   },
 });

@@ -10,4 +10,5 @@ cypress.json
 jsconfig.json
 logo.png
 nail.config.js
+package-lock.json
 yarn.lock

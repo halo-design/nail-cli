@@ -42,9 +42,9 @@ const runServer = (opts, isDev) => {
         useYarn,
       );
 
-      if (!isDev) {
-        const proxyKey = publicPath.substring(0, publicPath.length - 1);
+      const proxyKey = publicPath.substring(0, publicPath.length - 1);
 
+      if (!isDev && proxyKey) {
         const rerite = {};
         rerite[`^${proxyKey}`] = '';
 
