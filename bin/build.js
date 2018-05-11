@@ -13,7 +13,7 @@ const {
   printFileSizesAfterBuild,
 } = require('../utils/devtools/FileSizeReporter');
 
-const runBuild = opts => {
+const runBuild = (opts, callback) => {
   const { publicDir, outputDir } = opts;
   const warnAfterBundleGzipSize = 512 * 1024;
   const warnAfterChunkGzipSize = 1024 * 1024;
@@ -87,6 +87,8 @@ const runBuild = opts => {
         path.relative(process.cwd(), fullOutputDir),
         useYarn,
       );
+
+      if (callback) callback();
     }).catch(err => {
       console.log(chalk.red('Failed to compile.\n'));
       printBuildError(err);

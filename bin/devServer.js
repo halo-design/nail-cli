@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const { log } = require('../utils');
 const WebpackDevServer = require('webpack-dev-server');
+const getWebpackConfig = require('../config/webpack/dev');
 const getServerConfig = require('../config/webpack/server');
 const openBrowser = require('../utils/devtools/openBrowser');
 const {
@@ -13,19 +14,16 @@ const {
   prepareProxy,
 } = require('../utils/devtools/WebpackDevServerUtils');
 
-const runServer = (opts, isDev) => {
+const runServer = opts => {
   const {
     publicDir, proxyTable, autoOpenBrowser, callback,
   } = opts;
-  const publicPath = isDev ? '/' : opts.publicPath;
+  const publicPath = '/';
 
   const SET_HOST = process.env.HOST || '0.0.0.0';
-  const SET_PORT = parseInt(process.env.PORT, 10)
-    || (isDev ? opts.devServerPort : opts.buildServerPort);
+  const SET_PORT = parseInt(process.env.PORT, 10) || opts.devServerPort;
 
-  const webpackConfig = isDev
-    ? require('../config/webpack/dev')(opts)
-    : require('../config/webpack/build')(opts);
+  const webpackConfig = getWebpackConfig(opts);
 
   choosePort(SET_HOST, SET_PORT)
     .then(port => {
@@ -42,21 +40,8 @@ const runServer = (opts, isDev) => {
         useYarn,
       );
 
-      const proxyKey = publicPath.substring(0, publicPath.length - 1);
-
-      if (!isDev && proxyKey) {
-        const rerite = {};
-        rerite[`^${proxyKey}`] = '';
-
-        const proxy = {};
-        proxy.pathRewrite = rerite;
-        proxy.target = urls.localUrlForBrowser;
-        proxyTable[proxyKey] = proxy;
-      }
-
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir));
       const devServerConfig = getServerConfig(
-        isDev,
         proxyConfig,
         urls.lanUrlForConfig,
         publicDir,
@@ -67,15 +52,20 @@ const runServer = (opts, isDev) => {
 
       devServer.listen(port, SET_HOST, err => {
         if (err) {
-          return log.red(err);
-        }
-        isDev
-          ? log.cyan('Starting the development server...\n')
-          : log.cyan('Starting the production server...\n');
+          log.red(err);
+        } else {
+          log.cyan('Starting the development server...\n');
 
-        autoOpenBrowser && openBrowser(urls.localUrlForBrowser + publicPath.substr(1));
-        callback && callback(urls);
+          if (autoOpenBrowser) {
+            openBrowser(urls.localUrlForBrowser);
+          }
+
+          if (callback) {
+            callback(urls);
+          }
+        }
       });
+
       ['SIGINT', 'SIGTERM'].forEach(signal => {
         process.on(signal, () => {
           devServer.close(() => {

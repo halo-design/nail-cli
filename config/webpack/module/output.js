@@ -15,8 +15,8 @@ const setOutPut = ({
       : `${assetsPath}js/[name].[chunkhash:8].min.js`,
 
     chunkFilename: isDebug
-      ? '[name].chunk.js'
-      : `${assetsPath}js/[name].[chunkhash:8].chunk.min.js`,
+      ? '[name].js'
+      : `${assetsPath}js/[name].[chunkhash:8].min.js`,
 
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),

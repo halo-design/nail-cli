@@ -4,13 +4,13 @@ const noopServiceWorkerMiddleware = require('../../utils/devtools/noopServiceWor
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const SET_HOST = process.env.HOST || '0.0.0.0';
 
-module.exports = (isDebug, proxy, allowedHost, publicDir, publicPath) => ({
+module.exports = (proxy, allowedHost, publicDir, publicPath) => ({
   disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
   compress: true,
   clientLogLevel: 'none',
   contentBase: getRealPath(publicDir),
   watchContentBase: true,
-  hot: isDebug,
+  hot: true,
   publicPath: publicPath || '/',
   quiet: true,
   watchOptions: {
@@ -26,8 +26,6 @@ module.exports = (isDebug, proxy, allowedHost, publicDir, publicPath) => ({
   public: allowedHost,
   proxy,
   before(app) {
-    if (isDebug) {
-      app.use(noopServiceWorkerMiddleware());
-    }
+    app.use(noopServiceWorkerMiddleware());
   },
 });

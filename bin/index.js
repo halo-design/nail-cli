@@ -4,7 +4,8 @@ const semver = require('semver');
 const jestTest = require('./jest');
 const runBuild = require('./build');
 const program = require('commander');
-const runServer = require('./server');
+const runDevServer = require('./devServer');
+const runProdServer = require('./prodServer');
 const { log, removeLastSlash } = require('../utils');
 const { protocol, config: { app, local } } = require('../env');
 
@@ -42,10 +43,10 @@ program
     if (cmd.production) {
       setProdEnv(true);
       finalConfig.isAnalyze = false;
-      runServer(finalConfig, false);
+      runProdServer(finalConfig);
     } else {
       setProdEnv(false);
-      runServer(finalConfig, true);
+      runDevServer(finalConfig);
     }
   });
 
@@ -77,8 +78,7 @@ program
     cyArgv = [cmd.open ? 'open' : 'run'].concat(cyArgv);
 
     finalConfig.autoOpenBrowser = false;
-    finalConfig.callback = urls => {
-      console.log(urls);
+    finalConfig.callback = () => {
       log.cyan('It\'s starting cypress...\n');
       try {
         const cypressBinPath = require.resolve('cypress/bin/cypress');
@@ -90,7 +90,7 @@ program
     };
 
     setProdEnv(false);
-    runServer(finalConfig, true);
+    runDevServer(finalConfig);
   });
 
 program.parse(process.argv);

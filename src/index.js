@@ -5,7 +5,7 @@ import './addTimestamp';
 import './style.scss';
 import halo from './halo.svg?inline';
 
-import('@/asyncModule').then(() => {
+import(/* webpackChunkName: "async" */ '@/asyncModule').then(() => {
   console.log('The asynchronous component is loaded.');
 });
 
