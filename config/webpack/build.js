@@ -112,7 +112,7 @@ const setBaseBuildConfig = ({
   };
 
   if (isAnalyze) {
-    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
     baseBuildConfig.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: getRealPath(`${reportDir}/analyze/${Date.now()}.html`),
@@ -132,7 +132,7 @@ const setBaseBuildConfig = ({
         processor: (assetName, asset, assets) => {
           assets.setAsset(`${assetName}.map`, null);
           return postcss(comments({ removeAll: true }))
-            .process(asset.source(), { from: void 0 })
+            .process(asset.source(), { from: undefined })
             .then(r => r.css);
         },
       }, {

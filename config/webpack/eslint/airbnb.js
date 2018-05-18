@@ -16,6 +16,7 @@ module.exports = {
   rules: {
     'no-console': 0,
     'arrow-parens': 0,
+    'global-require': 0,
     'linebreak-style': 0,
     'no-param-reassign': 0,
     'import/no-unresolved': 0,

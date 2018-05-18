@@ -4,9 +4,9 @@ const { isEmptyObject } = require('../../../utils');
 const setAlias = ({ alias }) => {
   const newAlias = {};
 
-  for (let key in alias) {
+  Object.keys(alias).forEach(key => {
     newAlias[key] = getRealPath(alias[key]);
-  }
+  });
 
   return isEmptyObject(newAlias) ? {} : { resolve: { alias: newAlias } };
 };
