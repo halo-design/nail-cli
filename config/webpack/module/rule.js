@@ -5,9 +5,9 @@ const { dir } = require('../../../env');
 const setRule = ({
   assetsPath,
   lintOnSave,
-  eslintType,
   babelConfig,
   eslintConfig,
+  eslintExtend,
   postcssPlugins,
 }, isDebug) => {
   const assetName = isDebug
@@ -81,7 +81,7 @@ const setRule = ({
           include: [dir.app.src, dir.app.test],
           options: {
             formatter: require('eslint-friendly-formatter'),
-            baseConfig: require('../eslint')(eslintConfig, eslintType, isDebug),
+            baseConfig: require('../eslint')(eslintConfig, eslintExtend, isDebug),
           },
         }].concat(baseRules)
         : baseRules,

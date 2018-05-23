@@ -21,7 +21,8 @@ module.exports = {
     '&': '<rootDir>/src/models',
     '^': '<rootDir>/src/components',
   },
-  eslintType: 'airbnb',
+  eslintExtend: 'airbnb',
   autoOpenBrowser: true,
   lintOnSave: true,
+  pwa: true,
 };

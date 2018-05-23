@@ -12,6 +12,7 @@ const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const setBaseBuildConfig = ({
+  pwa,
   favicon,
   parallel,
   template,
@@ -70,8 +71,9 @@ const setBaseBuildConfig = ({
     },
     plugins: [
       new HtmlWebpackPlugin({
-        inject: true,
+        pwa,
         publicPath,
+        inject: true,
         template: getRealPath(template),
         favicon: getRealPath(favicon),
         minify: {
@@ -92,16 +94,6 @@ const setBaseBuildConfig = ({
           NODE_ENV: JSON.stringify('production'),
           PUBLIC_URL: JSON.stringify(removeLastSlash(publicPath)),
         },
-      }),
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json',
-      }),
-      new SWPrecacheWebpackPlugin({
-        filename: 'service-worker.js',
-        cacheId: config.app.packageJson.name,
-        dontCacheBustUrlsMatching: /\.\w{8}\./,
-        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
-        minify: true,
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
@@ -142,6 +134,21 @@ const setBaseBuildConfig = ({
       }],
       canPrint: true,
     }));
+  }
+
+  if (pwa) {
+    baseBuildConfig.plugins.push(
+      new ManifestPlugin({
+        fileName: 'asset-manifest.json',
+      }),
+      new SWPrecacheWebpackPlugin({
+        filename: 'service-worker.js',
+        cacheId: config.app.packageJson.name,
+        dontCacheBustUrlsMatching: /\.\w{8}\./,
+        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+        minify: true,
+      }),
+    );
   }
 
   return baseBuildConfig;

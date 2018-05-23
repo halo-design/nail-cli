@@ -1,15 +1,15 @@
 const { getRealPath } = require('../../../env');
 const { writeJSON } = require('../../../utils');
 
-const createBaseConfig = eslintType => {
-  eslintType = eslintType || 'standard';
-  const config = require(`./${eslintType}`);
+const createBaseConfig = eslintExtend => {
+  eslintExtend = eslintExtend || 'standard';
+  const config = require(`./${eslintExtend}`);
   writeJSON(config, getRealPath('<rootDir>/.eslintrc'));
   return config;
 };
 
-const finalConfig = (customConfig = {}, eslintType, isDebug) => ({
-  ...createBaseConfig(eslintType),
+const finalConfig = (customConfig = {}, eslintExtend, isDebug) => ({
+  ...createBaseConfig(eslintExtend),
   ...{ 'no-debugger': isDebug ? 0 : 2 },
   ...customConfig,
 });

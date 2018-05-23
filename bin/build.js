@@ -44,16 +44,22 @@ const runBuild = (opts, callback) => {
     });
   };
 
+  const excludeFiles = [
+    getRealPath(opts.template),
+    getRealPath(opts.favicon),
+  ];
+
+  if (!opts.pwa) {
+    excludeFiles.push(getRealPath(opts.manifest));
+  }
+
   measureFileSizesBeforeBuild(fullOutputDir)
     .then(previousFileSizes => {
       fs.emptyDirSync(fullOutputDir);
       copyer(
         getRealPath(publicDir),
         getRealPath(outputDir),
-        [
-          getRealPath(opts.template),
-          getRealPath(opts.favicon),
-        ],
+        excludeFiles,
       );
       return builder(previousFileSizes);
     })
