@@ -107,7 +107,12 @@ const setBaseBuildConfig = ({
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
     baseBuildConfig.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: getRealPath(`${reportDir}/analyze/${Date.now()}.html`),
+      reportFilename: getRealPath(`${reportDir}/analyze/${
+        (new Date()).toString()
+          .split(' ')
+          .slice(0, 5)
+          .join('_')
+      }.html`),
     }));
   }
 
