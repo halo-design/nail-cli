@@ -1,0 +1,9 @@
+{
+  "globals": {
+    "test": true,
+    "expect": true
+  },
+  "rules": {
+    "import/extensions": 0
+  }
+}
