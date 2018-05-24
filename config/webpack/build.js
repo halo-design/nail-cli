@@ -108,10 +108,8 @@ const setBaseBuildConfig = ({
     baseBuildConfig.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: getRealPath(`${reportDir}/analyze/${
-        (new Date()).toString()
-          .split(' ')
-          .slice(0, 5)
-          .join('_')
+        (new Date()).toLocaleString()
+          .replace(/ /g, '_')
       }.html`),
     }));
   }
