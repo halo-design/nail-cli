@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 exports.reg = reg;
 
 exports.isEmptyObject = obj => {
-  for (const name in obj) return false;
+  for (let name in obj) return false;
   return true;
 };
 
