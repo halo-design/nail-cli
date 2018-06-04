@@ -50,7 +50,7 @@
     "@babel/preset-stage-2": "^7.0.0-beta.49",
     "@babel/runtime": "^7.0.0-beta.49",
     "address": "^1.0.3",
-    "autoprefixer": "^8.5.2",
+    "autoprefixer": "^8.6.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^23.0.1",
@@ -75,7 +75,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-react": "^7.8.2",
+    "eslint-plugin-react": "^7.9.0",
     "eslint-plugin-standard": "^3.0.1",
     "execa": "^0.10.0",
     "express": "^4.16.3",
@@ -87,7 +87,7 @@
     "gzip-size": "^4.1.0",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^0.18.0",
-    "inquirer": "^5.2.0",
+    "inquirer": "^6.0.0",
     "is-root": "^2.0.0",
     "jest": "^23.1.0",
     "last-call-webpack-plugin": "^3.0.0",
@@ -106,7 +106,7 @@
     "react-error-overlay": "^4.0.0",
     "recursive-readdir": "^2.2.2",
     "resolve": "^1.7.1",
-    "sass-loader": "^7.0.1",
+    "sass-loader": "^7.0.2",
     "semver": "^5.5.0",
     "sockjs-client": "^1.1.5",
     "strip-ansi": "^4.0.0",
@@ -125,6 +125,6 @@
     "webpack-merge": "^4.1.2"
   },
   "devDependencies": {
-    "cypress": "^3.0.0"
+    "cypress": "^3.0.1"
   }
 }
