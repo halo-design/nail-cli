@@ -9,7 +9,7 @@ module.exports = {
   publicPath: '/nail/',
   assetsPath: 'static/',
   proxyTable: {
-    '/music': {
+    '/data': {
       target: 'http://yuis.qiniudn.com',
       changeOrigin: true,
     },

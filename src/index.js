@@ -20,6 +20,14 @@ $context.innerHTML = `
   <div class="empty"></div>
 `;
 
+fetch('/data/userInfo.json', {
+  method: 'GET',
+})
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+  });
+
 $root.appendChild($context);
 
 registerServiceWorker();

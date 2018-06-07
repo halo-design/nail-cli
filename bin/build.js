@@ -77,7 +77,7 @@ const runBuild = (opts, callback) => {
         log.green('Compiled successfully.\n');
       }
 
-      console.log('File sizes after gzip:\n');
+      console.log('📦 File sizes after gzip:\n');
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,
