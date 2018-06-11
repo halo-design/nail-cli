@@ -4,6 +4,7 @@ report/
 public/
 src/
 tests/
+.travis.yml
 .eslintignore
 .eslintrc
 cypress.json
