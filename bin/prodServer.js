@@ -65,12 +65,10 @@ const runServer = opts => {
         options = { target: options };
       }
       options.onProxyReq = proxyReq => {
-        console.log(
-          `[${chalk.gray('proxy')}]: ` +
+        console.log(`[${chalk.gray('proxy')}]: ` +
           `${chalk.cyanBright(proxyReq.method)} ` +
-          `${chalk.yellowBright(proxyReq.path)}`
-        );
-      }
+          `${chalk.yellowBright(proxyReq.path)}`);
+      };
       app.use(proxyMiddleware(options.filter || context, options));
     });
   };

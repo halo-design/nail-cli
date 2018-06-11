@@ -329,11 +329,9 @@ function prepareProxy(proxy, appPublicFolder) {
           if (proxyReq.getHeader('origin')) {
             proxyReq.setHeader('origin', target);
           };
-          console.log(
-            `[${chalk.gray('proxy')}]: ` +
+          console.log(`[${chalk.gray('proxy')}]: ` +
             `${chalk.cyanBright(proxyReq.method)} ` +
-            `${chalk.yellowBright(proxyReq.path)}`
-          );
+            `${chalk.yellowBright(proxyReq.path)}`);
         },
         onError: onProxyError(target),
         secure: false,
@@ -372,11 +370,9 @@ function prepareProxy(proxy, appPublicFolder) {
         if (proxyReq.getHeader('origin')) {
           proxyReq.setHeader('origin', target);
         };
-        console.log(
-          `[${chalk.gray('proxy')}]: ` +
+        console.log(`[${chalk.gray('proxy')}]: ` +
           `${chalk.cyanBright(proxyReq.method)} ` +
-          `${chalk.yellowBright(proxyReq.path)}`
-        );
+          `${chalk.yellowBright(proxyReq.path)}`);
       },
       target,
       onError: onProxyError(target),
