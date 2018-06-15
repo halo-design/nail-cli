@@ -54,7 +54,7 @@ const runServer = opts => {
         if (err) {
           log.red(err);
         } else {
-          log.cyan('Starting the development server...\n');
+          log.cyan('🚀 Starting the development server...\n');
 
           if (autoOpenBrowser) {
             openBrowser(urls.localUrlForBrowser);
