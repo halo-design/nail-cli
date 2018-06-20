@@ -43,14 +43,14 @@ const setRule = ({
       }, {
         loader: 'file-loader',
         query: {
-          name: `${assetsPath}images/${assetName}`,
+          name: `${assetsPath}img/${assetName}`,
         },
       }],
     }, {
       loader: 'url-loader',
       query: {
         limit: 4096,
-        name: `${assetsPath}images/${assetName}`,
+        name: `${assetsPath}img/${assetName}`,
       },
     }],
   }, {
@@ -58,7 +58,7 @@ const setRule = ({
     loader: 'url-loader',
     query: {
       limit: 8192,
-      name: `${assetsPath}fonts/${assetName}`,
+      name: `${assetsPath}font/${assetName}`,
     },
   }, {
     test: reg.media,
