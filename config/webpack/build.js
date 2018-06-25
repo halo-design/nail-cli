@@ -1,8 +1,6 @@
 const webpack = require('webpack');
 const postcss = require('postcss');
 const merge = require('webpack-merge');
-const { removeLastSlash } = require('../../utils');
-const { getRealPath, config } = require('../../env');
 const comments = require('postcss-discard-comments');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -10,6 +8,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const { removeLastSlash } = require('../../utils');
+const { getRealPath, config } = require('../../env');
 
 const setBaseBuildConfig = ({
   pwa,
@@ -115,11 +115,11 @@ const setBaseBuildConfig = ({
   }
 
   if (!productionSourceMap) {
-    const comment = '/*!\n' +
-    ` * Build By nail-cli@${config.local.packageJson.version}\n` +
-    ' * (c) 2018 OwlAford\n' +
-    ' * Released under the MIT License.\n' +
-    ' */\n';
+    const comment = '/*!\n'
+    + ` * Build By nail-cli@${config.local.packageJson.version}\n`
+    + ' * (c) 2018 OwlAford\n'
+    + ' * Released under the MIT License.\n'
+    + ' */\n';
 
     baseBuildConfig.plugins.push(new LastCallWebpackPlugin({
       assetProcessors: [{
@@ -132,8 +132,7 @@ const setBaseBuildConfig = ({
         },
       }, {
         regExp: /\.js$/,
-        processor: (assetName, asset) =>
-          Promise.resolve(comment + asset.source()),
+        processor: (assetName, asset) => Promise.resolve(comment + asset.source()),
       }],
       canPrint: true,
     }));
@@ -157,14 +156,13 @@ const setBaseBuildConfig = ({
   return baseBuildConfig;
 };
 
-const setBuildConfig = opts =>
-  merge(
-    require('./base')(false),
-    require('./module/alias')(opts),
-    require('./module/entry')(opts, false),
-    require('./module/output')(opts, false),
-    require('./module/rule')(opts, false),
-    setBaseBuildConfig(opts),
-  );
+const setBuildConfig = opts => merge(
+  require('./base')(false),
+  require('./module/alias')(opts),
+  require('./module/entry')(opts, false),
+  require('./module/output')(opts, false),
+  require('./module/rule')(opts, false),
+  setBaseBuildConfig(opts),
+);
 
 module.exports = setBuildConfig;

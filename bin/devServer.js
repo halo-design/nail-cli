@@ -1,6 +1,6 @@
 const webpack = require('webpack');
-const { log } = require('../utils');
 const WebpackDevServer = require('webpack-dev-server');
+const { log } = require('../utils');
 const getWebpackConfig = require('../config/webpack/dev');
 const getServerConfig = require('../config/webpack/server');
 const openBrowser = require('../utils/devtools/openBrowser');

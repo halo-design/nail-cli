@@ -1,10 +1,10 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const express = require('express');
-const { log } = require('../utils');
-const runBuild = require('./build');
 const history = require('connect-history-api-fallback');
 const proxyMiddleware = require('http-proxy-middleware');
+const { log } = require('../utils');
+const runBuild = require('./build');
 const openBrowser = require('../utils/devtools/openBrowser');
 
 const {
@@ -65,9 +65,9 @@ const runServer = opts => {
         options = { target: options };
       }
       options.onProxyReq = proxyReq => {
-        console.log(`[${chalk.gray('proxy')}]: ` +
-          `${chalk.cyanBright(proxyReq.method)} ` +
-          `${chalk.yellowBright(proxyReq.path)}`);
+        console.log(`[${chalk.gray('proxy')}]: `
+          + `${chalk.cyanBright(proxyReq.method)} `
+          + `${chalk.yellowBright(proxyReq.path)}`);
       };
       app.use(proxyMiddleware(options.filter || context, options));
     });

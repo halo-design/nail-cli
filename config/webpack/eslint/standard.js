@@ -33,4 +33,3 @@ module.exports = {
     'import/no-webpack-loader-syntax': 0,
   },
 };
-

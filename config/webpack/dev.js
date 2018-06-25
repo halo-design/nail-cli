@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const { getRealPath } = require('../../env');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const { getRealPath } = require('../../env');
 
 const setBaseConfig = ({
   favicon,
@@ -27,20 +27,19 @@ const setBaseConfig = ({
   ],
 });
 
-const setDevConfig = opts =>
-  merge(
-    require('./base')(true),
-    require('./module/alias')(opts),
-    require('./module/entry')(opts, true),
-    require('./module/output')({
-      ...opts,
-      ...{
-        assetsPath: '',
-        publicPath: '/',
-      },
-    }, true),
-    require('./module/rule')(opts, true),
-    setBaseConfig(opts),
-  );
+const setDevConfig = opts => merge(
+  require('./base')(true),
+  require('./module/alias')(opts),
+  require('./module/entry')(opts, true),
+  require('./module/output')({
+    ...opts,
+    ...{
+      assetsPath: '',
+      publicPath: '/',
+    },
+  }, true),
+  require('./module/rule')(opts, true),
+  setBaseConfig(opts),
+);
 
 module.exports = setDevConfig;

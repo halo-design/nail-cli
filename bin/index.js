@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 const execa = require('execa');
 const semver = require('semver');
+const program = require('commander');
 const jestTest = require('./jest');
 const runBuild = require('./build');
-const program = require('commander');
 const runDevServer = require('./devServer');
 const runProdServer = require('./prodServer');
 const { log, removeLastSlash } = require('../utils');
@@ -12,8 +12,8 @@ const { protocol, config: { app, local } } = require('../env');
 const requiredVersion = app.packageJson.engines.node;
 
 if (!semver.satisfies(process.version, requiredVersion)) {
-  log.yellow(`You are using Node ${process.version}, but nail-cli ` +
-    `requires Node ${requiredVersion}.\nPlease upgrade your Node version.`);
+  log.yellow(`You are using Node ${process.version}, but nail-cli `
+    + `requires Node ${requiredVersion}.\nPlease upgrade your Node version.`);
   process.exit(1);
 }
 

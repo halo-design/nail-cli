@@ -1,6 +1,6 @@
-const reg = require('./reg');
 const chalk = require('chalk');
 const fs = require('fs-extra');
+const reg = require('./reg');
 
 exports.reg = reg;
 
@@ -9,11 +9,9 @@ exports.isEmptyObject = obj => {
   return true;
 };
 
-exports.getFileName = s =>
-  s.substring(s.lastIndexOf('/') + 1);
+exports.getFileName = s => s.substring(s.lastIndexOf('/') + 1);
 
-exports.removeLastSlash = s =>
-  s.substring(0, s.lastIndexOf('/'));
+exports.removeLastSlash = s => s.substring(0, s.lastIndexOf('/'));
 
 exports.copyer = (from, to, exclude) => {
   exclude = exclude || [];

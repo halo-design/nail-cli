@@ -67,4 +67,3 @@ module.exports = {
     'react/prefer-stateless-function': 'off',
   },
 };
-
