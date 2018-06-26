@@ -15,6 +15,8 @@ const {
 } = require('../utils/devtools/WebpackDevServerUtils');
 
 const runServer = opts => {
+  const isWin = process.platform === 'win32';
+  const iconRocket = isWin ? '' : '🚀 ';
   const {
     publicDir, proxyTable, autoOpenBrowser, callback,
   } = opts;
@@ -54,7 +56,7 @@ const runServer = opts => {
         if (err) {
           log.red(err);
         } else {
-          log.cyan('🚀 Starting the development server...\n');
+          log.cyan(`${iconRocket}Starting the development server...\n`);
 
           if (autoOpenBrowser) {
             openBrowser(urls.localUrlForBrowser);

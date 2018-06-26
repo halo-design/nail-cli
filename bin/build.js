@@ -14,6 +14,8 @@ const {
 } = require('../utils/devtools/FileSizeReporter');
 
 const runBuild = (opts, callback) => {
+  const isWin = process.platform === 'win32';
+  const iconPackage = isWin ? '' : '📦 ';
   const { publicDir, outputDir } = opts;
   const warnAfterBundleGzipSize = 512 * 1024;
   const warnAfterChunkGzipSize = 1024 * 1024;
@@ -77,7 +79,7 @@ const runBuild = (opts, callback) => {
         log.green('Compiled successfully.\n');
       }
 
-      console.log('📦 File sizes after gzip:\n');
+      console.log(`${iconPackage}File sizes after gzip:\n`);
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,

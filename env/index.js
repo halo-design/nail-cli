@@ -8,10 +8,9 @@ const LOCAL_ROOT = resolve(__dirname, '..');
 const appResolve = args => resolve(APP_ROOT, args);
 const localResolve = args => resolve(LOCAL_ROOT, args);
 
-const getRealPath = file =>
-  (file.indexOf('<rootDir>/') > -1
-    ? appResolve(file.replace('<rootDir>/', ''))
-    : require.resolve(file));
+const getRealPath = file => (file.indexOf('<rootDir>/') > -1
+  ? appResolve(file.replace('<rootDir>/', ''))
+  : require.resolve(file));
 
 const LOCAL_PACKAGEJSON_DIR = localResolve('package.json');
 const LOCAL_PACKAGEJSON_FILE = require(LOCAL_PACKAGEJSON_DIR);

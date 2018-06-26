@@ -13,6 +13,6 @@ addons:
     packages:
       - g++-4.8
 script:
-  - npm run unit:c
   - npm run lint
+  - npm run unit:c
   - npm run build
