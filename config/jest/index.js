@@ -11,10 +11,10 @@ const baseConfig = {
   coverageDirectory: '<rootDir>/report/coverage',
   setupFiles: [require.resolve('@babel/polyfill')],
   testMatch: [
-    '<rootDir>/(tests/unit/**/*.spec.(ts|tsx|js)|**/__tests__/*.(ts|tsx|js))',
+    '<rootDir>/tests/unit/**/*.spec.(ts|tsx|js)',
   ],
   testEnvironment: 'node',
-  // transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
+  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
   moduleFileExtensions: [
     'web.js',
     'js',
