@@ -9,7 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const { removeLastSlash } = require('../../utils');
-const { getRealPath, config } = require('../../env');
+const { getRealPath, config, author, githubSite, license } = require('../../env');
 
 const setBaseBuildConfig = ({
   pwa,
@@ -117,8 +117,9 @@ const setBaseBuildConfig = ({
   if (!productionSourceMap) {
     const comment = '/*!\n'
     + ` * Build By nail-cli@${config.local.packageJson.version}\n`
-    + ' * (c) 2018 OwlAford\n'
-    + ' * Released under the MIT License.\n'
+    + ` * (c) 2018 ${author}\n`
+    + ` * GitHub ${githubSite}\n`
+    + ` * Released under the ${license} License.\n`
     + ' */\n';
 
     baseBuildConfig.plugins.push(new LastCallWebpackPlugin({

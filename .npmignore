@@ -4,6 +4,7 @@ report/
 public/
 src/
 tests/
+nail.yml
 .travis.yml
 .gitignore
 .eslintignore

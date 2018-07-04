@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { resolve } = require('path');
+const readYaml = require('read-yaml');
 const { log } = require('../utils');
 
 const APP_ROOT = resolve();
@@ -18,6 +19,7 @@ const LOCAL_PACKAGEJSON_FILE = require(LOCAL_PACKAGEJSON_DIR);
 const APP_SRC_DIR = appResolve('src');
 const APP_TEST_DIR = appResolve('test');
 const APP_PACKAGEJSON_DIR = appResolve('package.json');
+const NAILLOCK = appResolve('nail.yml');
 
 let APP_NAILCONFIG_DIR = null;
 const APP_NAILCONFIG_DIRS = [
@@ -25,7 +27,12 @@ const APP_NAILCONFIG_DIRS = [
   appResolve('nail.config.json'),
 ];
 
+let APP_NAILCONFIG_FILE;
 let APP_PACKAGEJSON_FILE;
+let SETAUTHOR = 'OwlAford';
+let SETGITHUBSITE = 'https://github.com/halo-design/nail-cli';
+let SETLICENSE = 'MIT';
+
 if (fs.existsSync(APP_PACKAGEJSON_DIR)) {
   APP_PACKAGEJSON_FILE = require(APP_PACKAGEJSON_DIR);
 } else {
@@ -34,21 +41,50 @@ if (fs.existsSync(APP_PACKAGEJSON_DIR)) {
   process.exit(1);
 }
 
-let APP_NAILCONFIG_FILE;
-if (fs.existsSync(APP_NAILCONFIG_DIRS[0])) {
-  APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[0];
-  APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
-} else if (fs.existsSync(APP_NAILCONFIG_DIRS[1])) {
-  APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[1];
-  APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
+if (fs.existsSync(NAILLOCK)) {
+  const lockData = readYaml.sync(NAILLOCK);
+  let { author, lockConfig, githubSite, license } = lockData;
+
+  if (author) {
+    SETAUTHOR = author;
+  }
+
+  if (githubSite) {
+    SETGITHUBSITE = githubSite;
+  }
+
+  if (license) {
+    SETLICENSE = license
+  }
+
+  if (lockConfig) {
+    let SET_NAILCONFIG_DIR = appResolve(lockConfig);
+    if (fs.existsSync(SET_NAILCONFIG_DIR)) {
+      APP_NAILCONFIG_FILE = require(SET_NAILCONFIG_DIR);
+    } else {
+      log.red(`\nThe specified nail-cli configuration ${lockConfig} does not exist.\n`);
+      process.exit(1);
+    }
+  }
 } else {
-  APP_NAILCONFIG_FILE = {};
-  log.yellow('\nThe nail-cli configuration file does not exist.\n');
+  if (fs.existsSync(APP_NAILCONFIG_DIRS[0])) {
+    APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[0];
+    APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
+  } else if (fs.existsSync(APP_NAILCONFIG_DIRS[1])) {
+    APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[1];
+    APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
+  } else {
+    APP_NAILCONFIG_FILE = {};
+    log.yellow('\nThe nail-cli configuration file does not exist.\n');
+  }
 }
+
 
 const config = {
   getRealPath,
-
+  githubSite: SETGITHUBSITE,
+  author: SETAUTHOR,
+  license: SETLICENSE,
   dir: {
     app: {
       root: APP_ROOT,
