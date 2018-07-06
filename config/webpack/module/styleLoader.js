@@ -23,7 +23,6 @@ const styleLoader = (loader, postcssPlugins, isDebug) => {
           browsers: browserslist,
         }),
         require('cssnano')({
-          preset: 'advanced',
           reduceIdents: false,
           safe: true,
         }),

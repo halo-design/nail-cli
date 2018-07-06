@@ -24,5 +24,5 @@ module.exports = {
   eslintExtend: 'airbnb',
   autoOpenBrowser: true,
   lintOnSave: true,
-  pwa: false,
+  pwa: true,
 };
