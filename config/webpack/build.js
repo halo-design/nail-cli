@@ -142,13 +142,13 @@ const setBaseBuildConfig = ({
   if (pwa) {
     baseBuildConfig.plugins.push(
       new ManifestPlugin({
-        fileName: 'asset-manifest.json',
+        fileName: 'precache-manifest.json',
       }),
       new SWPrecacheWebpackPlugin({
         filename: 'service-worker.js',
         cacheId: config.app.packageJson.name,
         dontCacheBustUrlsMatching: /\.\w{8}\./,
-        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+        staticFileGlobsIgnorePatterns: [/\.map$/, /precache-manifest\.json$/],
         minify: true,
       }),
     );

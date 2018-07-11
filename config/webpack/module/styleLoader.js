@@ -41,7 +41,13 @@ const styleLoader = (loader, postcssPlugins, isDebug) => {
 
   return isDebug
     ? ['style-loader'].concat(loaders)
-    : [MiniCssExtractPlugin.loader].concat(loaders);
+    : [{
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        minimize: !isDebug,
+        sourceMap: isDebug,
+      },
+    }].concat(loaders);
 };
 
 module.exports = styleLoader;
