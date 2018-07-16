@@ -9,6 +9,7 @@ nail.yml
 .gitignore
 .eslintignore
 .eslintrc
+config.json
 cypress.json
 jsconfig.json
 logo.png

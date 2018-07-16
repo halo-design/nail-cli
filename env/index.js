@@ -19,7 +19,7 @@ const LOCAL_PACKAGEJSON_FILE = require(LOCAL_PACKAGEJSON_DIR);
 const APP_SRC_DIR = appResolve('src');
 const APP_TEST_DIR = appResolve('test');
 const APP_PACKAGEJSON_DIR = appResolve('package.json');
-const NAILLOCK = appResolve('nail.yml');
+const NAILLOCK = appResolve('.nail.yml');
 
 let APP_NAILCONFIG_DIR = null;
 const APP_NAILCONFIG_DIRS = [
@@ -43,7 +43,9 @@ if (fs.existsSync(APP_PACKAGEJSON_DIR)) {
 
 if (fs.existsSync(NAILLOCK)) {
   const lockData = readYaml.sync(NAILLOCK);
-  let { author, lockConfig, githubSite, license } = lockData;
+  const {
+    author, lockConfig, githubSite, license,
+  } = lockData;
 
   if (author) {
     SETAUTHOR = author;
@@ -54,11 +56,11 @@ if (fs.existsSync(NAILLOCK)) {
   }
 
   if (license) {
-    SETLICENSE = license
+    SETLICENSE = license;
   }
 
   if (lockConfig) {
-    let SET_NAILCONFIG_DIR = appResolve(lockConfig);
+    const SET_NAILCONFIG_DIR = appResolve(lockConfig);
     if (fs.existsSync(SET_NAILCONFIG_DIR)) {
       APP_NAILCONFIG_FILE = require(SET_NAILCONFIG_DIR);
     } else {
@@ -66,19 +68,16 @@ if (fs.existsSync(NAILLOCK)) {
       process.exit(1);
     }
   }
+} else if (fs.existsSync(APP_NAILCONFIG_DIRS[0])) {
+  APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[0];
+  APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
+} else if (fs.existsSync(APP_NAILCONFIG_DIRS[1])) {
+  APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[1];
+  APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
 } else {
-  if (fs.existsSync(APP_NAILCONFIG_DIRS[0])) {
-    APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[0];
-    APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
-  } else if (fs.existsSync(APP_NAILCONFIG_DIRS[1])) {
-    APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[1];
-    APP_NAILCONFIG_FILE = require(APP_NAILCONFIG_DIR);
-  } else {
-    APP_NAILCONFIG_FILE = {};
-    log.yellow('\nThe nail-cli configuration file does not exist.\n');
-  }
+  APP_NAILCONFIG_FILE = {};
+  log.yellow('\nThe nail-cli configuration file does not exist.\n');
 }
-
 
 const config = {
   getRealPath,
