@@ -9,7 +9,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const { removeLastSlash } = require('../../utils');
-const { getRealPath, config, author, githubSite, license } = require('../../env');
+const {
+  getRealPath, config, author, githubSite, license,
+} = require('../../env');
 
 const setBaseBuildConfig = ({
   pwa,
