@@ -367,12 +367,14 @@ function prepareProxy(proxy, appPublicFolder) {
         // Browers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
+        const cur = (new Date()).toLocaleTimeString('it-IT');
         if (proxyReq.getHeader('origin')) {
           proxyReq.setHeader('origin', target);
         };
         console.log(`[${chalk.gray('proxy')}]: ` +
+          `${chalk.greenBright(cur)} ` +
           `${chalk.cyanBright(proxyReq.method)} ` +
-          `${chalk.yellowBright(proxyReq.path)}`);
+          `${chalk.yellowBright(proxyReq.path)} `);
       },
       target,
       onError: onProxyError(target),

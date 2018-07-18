@@ -20,7 +20,7 @@ $context.innerHTML = `
   <div class="empty"></div>
 `;
 
-fetch('/data/userInfo.json', {
+fetch('/data/wallpaper-favorite.json', {
   method: 'GET',
 })
   .then(res => res.json())
