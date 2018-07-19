@@ -371,8 +371,8 @@ function prepareProxy(proxy, appPublicFolder) {
         if (proxyReq.getHeader('origin')) {
           proxyReq.setHeader('origin', target);
         };
-        console.log(`[${chalk.gray('proxy')}]: ` +
-          `${chalk.greenBright(cur)} ` +
+        console.log(`${chalk.inverse(chalk.blue(' PROXY '))} ` +
+          `[${chalk.gray(cur)}] ` +
           `${chalk.cyanBright(proxyReq.method)} ` +
           `${chalk.yellowBright(proxyReq.path)} `);
       },
