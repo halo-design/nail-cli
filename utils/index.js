@@ -4,7 +4,7 @@ const reg = require('./reg');
 
 exports.reg = reg;
 
-exports.isEmptyObject = obj => Object.keys(obj).length > 0;
+exports.isEmptyObject = obj => Object.keys(obj).length === 0;
 
 exports.getFileName = s => s.substring(s.lastIndexOf('/') + 1);
 
