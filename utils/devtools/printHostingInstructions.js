@@ -40,14 +40,9 @@ function printHostingInstructions(
 
 function printBaseMessage(buildFolder, hostingLocation) {
   console.log(
-    `\nThe project was built assuming it is hosted at ${chalk.green(
+    `\nThe project was built assuming it is hosted at:${chalk.green(
       hostingLocation || 'the server root'
     )}.`
-  );
-  console.log(
-    `You can control this with the ${chalk.green(
-      'homepage'
-    )} field in your ${chalk.cyan('package.json')}.`
   );
 
   if (!hostingLocation) {
