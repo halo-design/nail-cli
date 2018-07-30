@@ -118,7 +118,7 @@ const setBaseBuildConfig = ({
 
   if (!productionSourceMap) {
     const comment = '/*!\n'
-    + ` * Build By nail-cli@${config.local.packageJson.version}\n`
+    + ` * Build By @nail-cli/core@${config.local.packageJson.version}\n`
     + ` * (c) 2018 ${author}\n`
     + ` * GitHub ${githubSite}\n`
     + ` * Released under the ${license} License.\n`
@@ -131,7 +131,7 @@ const setBaseBuildConfig = ({
           assets.setAsset(`${assetName}.map`, null);
           return postcss(comments({ removeAll: true }))
             .process(asset.source(), { from: undefined })
-            .then(r => r.css);
+            .then(r => comment + r.css);
         },
       }, {
         regExp: /\.js$/,

@@ -3,13 +3,11 @@ const baseConfig = {
   cacheDirectory: true,
   presets: [
     '@babel/preset-env',
-    ['@babel/preset-stage-2', {
-      decoratorsLegacy: true,
-    }],
     '@babel/preset-react',
   ],
   plugins: [
     '@babel/proposal-numeric-separator',
+    '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-export-namespace-from',
     ['@babel/proposal-object-rest-spread', {
       useBuiltIns: true,
