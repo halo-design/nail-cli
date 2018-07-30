@@ -25,4 +25,5 @@ module.exports = {
   autoOpenBrowser: true,
   lintOnSave: true,
   pwa: true,
+  productionSourceMap: false,
 };

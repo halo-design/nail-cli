@@ -116,30 +116,39 @@ const setBaseBuildConfig = ({
     }));
   }
 
-  if (!productionSourceMap) {
-    const comment = '/*!\n'
-    + ` * Build By @nail-cli/core@${config.local.packageJson.version}\n`
-    + ` * (c) 2018 ${author}\n`
-    + ` * GitHub ${githubSite}\n`
-    + ` * Released under the ${license} License.\n`
-    + ' */\n';
+  const comment = '/*!\n'
+  + ` * Build By @nail-cli/core@${config.local.packageJson.version}\n`
+  + ` * (c) 2018 ${author}\n`
+  + ` * GitHub ${githubSite}\n`
+  + ` * Released under the ${license} License.\n`
+  + ' */\n';
 
-    baseBuildConfig.plugins.push(new LastCallWebpackPlugin({
-      assetProcessors: [{
-        regExp: /\.css$/,
-        processor: (assetName, asset, assets) => {
-          assets.setAsset(`${assetName}.map`, null);
-          return postcss(comments({ removeAll: true }))
-            .process(asset.source(), { from: undefined })
-            .then(r => comment + r.css);
-        },
-      }, {
-        regExp: /\.js$/,
-        processor: (assetName, asset) => Promise.resolve(comment + asset.source()),
-      }],
-      canPrint: true,
-    }));
+  const assetProcessors = [{
+    regExp: /\.js$/,
+    processor: (assetName, asset) => Promise.resolve(comment + asset.source()),
+  }]
+
+  if (productionSourceMap) {
+    assetProcessors.push({
+      regExp: /\.css$/,
+      processor: (assetName, asset) => Promise.resolve(comment + asset.source()),
+    });
+  } else {
+    assetProcessors.push({
+      regExp: /\.css$/,
+      processor: (assetName, asset, assets) => {
+        assets.setAsset(`${assetName}.map`, null);
+        return postcss(comments({ removeAll: true }))
+          .process(asset.source(), { from: undefined })
+          .then(r => comment + r.css);
+      },
+    });
   }
+
+  baseBuildConfig.plugins.push(new LastCallWebpackPlugin({
+    assetProcessors,
+    canPrint: true,
+  }));
 
   if (pwa) {
     baseBuildConfig.plugins.push(
