@@ -1,9 +1,7 @@
 const { createTransformer } = require('babel-jest');
+const babelConfig = require('../../webpack/babel/common');
 
 module.exports = createTransformer({
-  presets: [
-    require.resolve('@babel/preset-env'),
-    require.resolve('@babel/preset-react'),
-  ],
+  ...babelConfig,
   babelrc: false,
 });
