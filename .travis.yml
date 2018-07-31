@@ -16,3 +16,5 @@ script:
   - npm run lint
   - npm run unit:c
   - npm run build
+  - npm run e2e
+  
