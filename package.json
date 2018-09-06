@@ -1,12 +1,16 @@
 {
   "name": "@nail-cli/core",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/OwlAford/nail-cli",
   "main": "./bin/index.js",
   "author": "OwlAford",
   "license": "MIT",
-  "keywords": ["webpack", "cli", "react"],
+  "keywords": [
+    "webpack",
+    "cli",
+    "react"
+  ],
   "bin": {
     "nail-cli": "./bin/index.js"
   },
@@ -106,6 +110,7 @@
     "postcss-flexibility": "^2.0.0",
     "postcss-import": "^12.0.0",
     "postcss-loader": "^3.0.0",
+    "progress-bar-webpack-plugin": "^1.11.0",
     "raw-loader": "^0.5.1",
     "react-error-overlay": "^4.0.1",
     "read-yaml": "^1.1.0",

@@ -22,7 +22,7 @@ const runBuild = (opts, callback) => {
   const fullOutputDir = getRealPath(outputDir);
 
   const builder = previousFileSizes => {
-    log.cyan('Creating an optimized production build...');
+    log.cyan('Creating an optimized production build...\n');
 
     const compiler = webpack(getBuildConfig(opts));
     return new Promise((resolve, reject) => {
@@ -75,8 +75,6 @@ const runBuild = (opts, callback) => {
         console.log(`To ignore, add ${
           chalk.cyan('// eslint-disable-next-line')
         } to the line before.\n`);
-      } else {
-        log.green('Compiled successfully.\n');
       }
 
       console.log(`${iconPackage}File sizes after gzip:\n`);

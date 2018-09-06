@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const webpack = require('webpack');
 const postcss = require('postcss');
 const merge = require('webpack-merge');
@@ -6,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const { removeLastSlash } = require('../../utils');
@@ -72,6 +74,12 @@ const setBaseBuildConfig = ({
       ],
     },
     plugins: [
+      new ProgressBarPlugin({
+        complete: chalk.green('█'),
+        incomplete: chalk.white('█'),
+        format: `  :bar ${chalk.green.bold(':percent')} (:elapsed seconds) `,
+        clear: false,
+      }),
       new HtmlWebpackPlugin({
         pwa,
         publicPath,
