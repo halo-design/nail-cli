@@ -59,9 +59,6 @@ const setBaseBuildConfig = ({
               warnings: false,
               comparisons: false,
             },
-            mangle: {
-              safari10: true,
-            },
             output: {
               comments: false,
               ascii_only: true,
