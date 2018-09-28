@@ -6,6 +6,7 @@ const comments = require('postcss-discard-comments');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
@@ -166,6 +167,10 @@ const setBaseBuildConfig = ({
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         staticFileGlobsIgnorePatterns: [/\.map$/, /precache-manifest\.json$/],
         minify: true,
+      }),
+      new PreloadWebpackPlugin({
+        rel: 'prefetch',
+        include: 'asyncChunks',
       }),
     );
   }
