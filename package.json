@@ -1,8 +1,8 @@
 {
   "name": "@nail-cli/core",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Front end development scaffolding",
-  "homepage": "https://github.com/OwlAford/nail-cli",
+  "homepage": "https://github.com/halo-design/nail-cli",
   "main": "./bin/index.js",
   "author": "OwlAford",
   "license": "MIT",
@@ -15,11 +15,11 @@
     "nail-cli": "./bin/index.js"
   },
   "bugs": {
-    "url": "https://github.com/OwlAford/nail-cli/issues"
+    "url": "https://github.com/halo-design/nail-cli/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OwlAford/nail-cli.git"
+    "url": "git+https://github.com/halo-design/nail-cli.git"
   },
   "directories": {
     "test": "tests"
@@ -40,10 +40,10 @@
     "lint:fix": "eslint --fix --ext .js,.jsx src/"
   },
   "dependencies": {
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.1.2",
     "@babel/node": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-decorators": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
     "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
     "@babel/plugin-proposal-numeric-separator": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
@@ -56,7 +56,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-stage-2": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
     "address": "^1.0.3",
     "autoprefixer": "^9.1.5",
     "babel-core": "^7.0.0-bridge.0",
@@ -72,7 +72,7 @@
     "css-loader": "^1.0.0",
     "cssnano": "^4.1.4",
     "detect-port-alt": "^1.1.6",
-    "eslint": "5.6.0",
+    "eslint": "5.6.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-standard": "12.0.0",
     "eslint-config-standard-react": "^7.0.2",
@@ -80,7 +80,7 @@
     "eslint-loader": "^2.1.1",
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.11.1",
@@ -104,7 +104,7 @@
     "mini-css-extract-plugin": "^0.4.3",
     "node-sass": "^4.9.3",
     "opn": "^5.4.0",
-    "postcss": "^7.0.4",
+    "postcss": "^7.0.5",
     "postcss-discard-comments": "^4.0.1",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-flexibility": "^2.0.0",
@@ -113,14 +113,14 @@
     "preload-webpack-plugin": "3.0.0-beta.2",
     "progress-bar-webpack-plugin": "^1.11.0",
     "raw-loader": "^0.5.1",
-    "react-error-overlay": "^4.0.1",
+    "react-error-overlay": "^5.0.4",
     "read-yaml": "^1.1.0",
     "recursive-readdir": "^2.2.2",
     "resolve": "^1.8.1",
     "sass-loader": "^7.1.0",
     "semver": "^5.5.1",
     "sockjs-client": "^1.3.0",
-    "strip-ansi": "^4.0.0",
+    "strip-ansi": "^5.0.0",
     "style-loader": "^0.23.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",

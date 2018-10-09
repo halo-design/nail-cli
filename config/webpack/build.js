@@ -172,6 +172,10 @@ const setBaseBuildConfig = ({
         rel: 'prefetch',
         include: 'asyncChunks',
       }),
+      new PreloadWebpackPlugin({
+        rel: 'preload',
+        include: 'initial',
+      }),
     );
   }
 
