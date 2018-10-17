@@ -132,7 +132,7 @@ const setBaseBuildConfig = ({
   const assetProcessors = [{
     regExp: /\.js$/,
     processor: (assetName, asset) => Promise.resolve(comment + asset.source()),
-  }]
+  }];
 
   if (productionSourceMap) {
     assetProcessors.push({
