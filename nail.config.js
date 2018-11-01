@@ -10,7 +10,7 @@ module.exports = {
   assetsPath: 'static/',
   proxyTable: {
     '/data': {
-      target: 'http://yuis.qiniudn.com',
+      target: 'http://106.14.138.86:7000',
       changeOrigin: true,
     },
   },
