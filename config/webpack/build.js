@@ -124,7 +124,7 @@ const setBaseBuildConfig = ({
 
   const comment = '/*!\n'
   + ` * Build By @nail-cli/core@${config.local.packageJson.version}\n`
-  + ` * (c) 2018 ${author}\n`
+  + ` * (c) 2018-2019 ${author}\n`
   + ` * GitHub ${githubSite}\n`
   + ` * Released under the ${license} License.\n`
   + ' */\n';

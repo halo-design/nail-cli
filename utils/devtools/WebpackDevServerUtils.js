@@ -93,10 +93,10 @@ function printInstructions(appName, urls, useYarn) {
 
   if (urls.lanUrlForTerminal) {
     console.log(
-      `  ${chalk.bold('Local:')}    ${urls.localUrlForTerminal}`
+      `  ${chalk.bold('Local:')}    ${chalk.cyan(urls.localUrlForTerminal)}`
     );
     console.log(
-      `  ${chalk.bold('Network:')}  ${urls.lanUrlForTerminal}\n`
+      `  ${chalk.bold('Network:')}  ${chalk.cyan(urls.lanUrlForTerminal)}\n`
     );
   } else {
     console.log(`  ${urls.localUrlForTerminal}\n`);

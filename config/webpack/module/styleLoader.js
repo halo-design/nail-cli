@@ -6,7 +6,6 @@ const styleLoader = (loader, postcssPlugins, isDebug) => {
     loader: 'css-loader',
     options: {
       importLoaders: 1,
-      minimize: !isDebug,
       sourceMap: isDebug,
     },
   }, {
