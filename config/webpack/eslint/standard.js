@@ -20,11 +20,13 @@ module.exports = {
     'babel',
     'react',
     'promise',
+    'react-hooks',
   ],
   rules: {
     'arrow-parens': 0,
     'generator-star-spacing': 0,
     'react/prop-types': 0,
+    'react-hooks/rules-of-hooks': 'error',
     'padded-blocks': 0,
     'no-unused-expressions': ['error', {
       allowShortCircuit: true,
