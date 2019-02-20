@@ -5,7 +5,7 @@ const merge = require('webpack-merge');
 const comments = require('postcss-discard-comments');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
@@ -54,19 +54,28 @@ const setBaseBuildConfig = ({
         },
       },
       minimizer: [
-        new UglifyJsPlugin({
-          uglifyOptions: {
+        new TerserPlugin({
+          terserOptions: {
+            parse: {
+              ecma: 8,
+            },
             compress: {
+              ecma: 5,
               warnings: false,
               comparisons: false,
+              inline: 2,
+            },
+            mangle: {
+              safari10: true,
             },
             output: {
+              ecma: 5,
               comments: false,
               ascii_only: true,
             },
           },
-          cache: true,
           parallel,
+          cache: true,
           sourceMap: productionSourceMap,
         }),
       ],
