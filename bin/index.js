@@ -64,10 +64,8 @@ program
 
 program
   .command('unit')
-  .option('-c --coverage', 'Generate test coverage reports')
-  .action(cmd => {
-    const argv = cmd.coverage ? ['--coverage'] : [];
-    jestTest(finalConfig.jestConfig, argv);
+  .action(() => {
+    jestTest(finalConfig.jestConfig, ['--coverage']);
   });
 
 program
