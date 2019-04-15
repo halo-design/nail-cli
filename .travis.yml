@@ -26,9 +26,10 @@ script:
   - npm run unit
   - npm run build
 
-after_script:
-  - npm config set registry http://registry.npmjs.org
-  - npm config set Username 'owlaford'
-  - npm config set Password '${GT_PSWD}'
-  - npm config set Email 'owlaford@gmail.com'
-  - npm publish
+deploy:
+  provider: npm
+  email: owlaford@gmail.com
+  api_key: '$NPM_TOKEN'
+  skip_cleanup: true
+  on:
+    all_branches: true
