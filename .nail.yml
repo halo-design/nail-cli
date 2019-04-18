@@ -1,4 +1,4 @@
 author: Aford
-lockConfig: config.js
-githubSite: https://github.com/OwlAford
+configFile: config.js
+orgSite: https://github.com/OwlAford
 license: MIT

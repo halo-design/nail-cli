@@ -4,16 +4,15 @@ const postcss = require('postcss');
 const merge = require('webpack-merge');
 const comments = require('postcss-discard-comments');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 const { removeLastSlash } = require('../../utils');
 const {
-  getRealPath, config, author, githubSite, license,
+  getRealPath, config, author, orgSite, license,
 } = require('../../env');
 
 const setBaseBuildConfig = ({
@@ -134,7 +133,7 @@ const setBaseBuildConfig = ({
   const comment = '/*!\n'
   + ` * Build By @nail-cli/core@${config.local.packageJson.version}\n`
   + ` * (c) 2018-2019 ${author}\n`
-  + ` * GitHub ${githubSite}\n`
+  + ` * GitHub ${orgSite}\n`
   + ` * Released under the ${license} License.\n`
   + ' */\n';
 
@@ -167,15 +166,9 @@ const setBaseBuildConfig = ({
 
   if (pwa) {
     baseBuildConfig.plugins.push(
-      new ManifestPlugin({
-        fileName: 'precache-manifest.json',
-      }),
-      new SWPrecacheWebpackPlugin({
-        filename: 'service-worker.js',
-        cacheId: config.app.packageJson.name,
-        dontCacheBustUrlsMatching: /\.\w{8}\./,
-        staticFileGlobsIgnorePatterns: [/\.map$/, /precache-manifest\.json$/],
-        minify: true,
+      new GenerateSW({
+        importWorkboxFrom: 'disabled',
+        offlineGoogleAnalytics: false,
       }),
       new PreloadWebpackPlugin({
         rel: 'prefetch',

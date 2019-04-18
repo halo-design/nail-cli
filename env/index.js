@@ -30,7 +30,7 @@ const APP_NAILCONFIG_DIRS = [
 let APP_NAILCONFIG_FILE;
 let APP_PACKAGEJSON_FILE;
 let SETAUTHOR = 'OwlAford';
-let SETGITHUBSITE = 'https://github.com/halo-design/nail-cli';
+let SETORGSITE = 'https://github.com/halo-design/nail-cli';
 let SETLICENSE = 'MIT';
 
 if (fs.existsSync(APP_PACKAGEJSON_DIR)) {
@@ -44,27 +44,27 @@ if (fs.existsSync(APP_PACKAGEJSON_DIR)) {
 if (fs.existsSync(NAILLOCK)) {
   const lockData = readYaml.sync(NAILLOCK);
   const {
-    author, lockConfig, githubSite, license,
+    author, configFile, orgSite, license,
   } = lockData;
 
   if (author) {
     SETAUTHOR = author;
   }
 
-  if (githubSite) {
-    SETGITHUBSITE = githubSite;
+  if (orgSite) {
+    SETORGSITE = orgSite;
   }
 
   if (license) {
     SETLICENSE = license;
   }
 
-  if (lockConfig) {
-    const SET_NAILCONFIG_DIR = appResolve(lockConfig);
+  if (configFile) {
+    const SET_NAILCONFIG_DIR = appResolve(configFile);
     if (fs.existsSync(SET_NAILCONFIG_DIR)) {
       APP_NAILCONFIG_FILE = require(SET_NAILCONFIG_DIR);
     } else {
-      log.red(`\nThe specified nail-cli configuration ${lockConfig} does not exist.\n`);
+      log.red(`\nThe specified nail-cli configuration ${configFile} does not exist.\n`);
       process.exit(1);
     }
   }
@@ -81,7 +81,7 @@ if (fs.existsSync(NAILLOCK)) {
 
 const config = {
   getRealPath,
-  githubSite: SETGITHUBSITE,
+  orgSite: SETORGSITE,
   author: SETAUTHOR,
   license: SETLICENSE,
   dir: {
