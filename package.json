@@ -1,6 +1,6 @@
 {
   "name": "@nail-cli/core",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/halo-design/nail-cli",
   "main": "./bin/index.js",

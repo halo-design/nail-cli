@@ -20,5 +20,4 @@ const finalConfig = (customConfig = {}, eslintExtend, isDebug) => {
   }
 };
 
-
 module.exports = finalConfig;

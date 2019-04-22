@@ -17,12 +17,9 @@ module.exports = {
     'react',
     'promise',
     'react-hooks',
-    'prettier'
   ],
   extends: [
-    'eslint:recommended',
-    'prettier',
-    'prettier/react',
+    'plugin:prettier/recommended',
   ],
   rules: {
     'prettier/prettier': 'warn',
