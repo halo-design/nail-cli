@@ -1,16 +1,17 @@
-import { upcase } from './libs/utils';
-import txt from './nail.txt';
-import './addTimestamp';
-import './style.scss';
-import halo from './halo.svg?inline';
+import { upcase } from "./libs/utils";
+import txt from "./nail.txt";
+import "./addTimestamp";
+import "./style.scss";
+import halo from "./halo.svg?inline";
 
-import(/* webpackChunkName: "async" */ '@/asyncModule').then(() => {
-  console.log('The asynchronous component is loaded.');
+import(/* webpackChunkName: "async" */ "@/asyncModule").then(() => {
+  // eslint-disable-next-line no-console
+  console.log("The asynchronous component is loaded.");
 });
 
-const $root = document.getElementById('MOUNT_NODE');
+const $root = document.getElementById("MOUNT_NODE");
 const title = upcase(txt);
-const $context = document.createElement('div');
+const $context = document.createElement("div");
 
 $context.innerHTML = `
   <div class="logo"></div>
@@ -19,11 +20,12 @@ $context.innerHTML = `
   <div class="empty"></div>
 `;
 
-fetch('/data/wallpaper-favorite.json', {
-  method: 'GET',
+fetch("/data/wallpaper-favorite.json", {
+  method: "GET"
 })
   .then(res => res.json())
   .then(data => {
+    // eslint-disable-next-line no-console
     console.log(data);
   });
 

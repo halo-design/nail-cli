@@ -1,5 +1,10 @@
-dist
-node_modules
-public
-utils/devtools/
-src/assets/
+bin/
+config/
+dist/
+env/
+node_modules/
+public/
+report/
+tests/
+utils/
+./*.js

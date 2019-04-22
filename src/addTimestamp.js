@@ -1,5 +1,5 @@
 function addAutor(target) {
-  target.author = 'OwlAford';
+  target.author = "OwlAford";
 }
 
 @addAutor
@@ -9,13 +9,13 @@ class Timestamp {
   }
 
   setTime() {
-    const dom = document.createElement('h3');
+    const dom = document.createElement("h3");
     dom.innerHTML = `
       The current timestamp is: ${this.time}
       <br/>
       Author @${Timestamp.author}
     `;
-    document.getElementById('MOUNT_NODE').appendChild(dom);
+    document.getElementById("MOUNT_NODE").appendChild(dom);
   }
 }
 
