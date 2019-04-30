@@ -167,7 +167,7 @@ const setBaseBuildConfig = ({
   if (pwa) {
     baseBuildConfig.plugins.push(
       new GenerateSW({
-        importWorkboxFrom: 'disabled',
+        // importWorkboxFrom: 'local',
         offlineGoogleAnalytics: false,
       }),
       new PreloadWebpackPlugin({

@@ -1,3 +1,4 @@
+import registerServiceWorker from "./registerServiceWorker";
 import { upcase } from "./libs/utils";
 import txt from "./nail.txt";
 import "./addTimestamp";
@@ -30,3 +31,4 @@ fetch("/data/wallpaper-favorite.json", {
   });
 
 $root.appendChild($context);
+registerServiceWorker();
