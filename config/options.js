@@ -29,4 +29,5 @@ module.exports = {
   babelConfig: {},
   eslintExtend: 'standard',
   eslintConfig: {},
+  cdn: false
 };

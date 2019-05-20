@@ -1,3 +1,7 @@
+console.log(process.env.NODE_ENV);
+const isProd = process.env.NODE_ENV === "production";
+const prefix = isProd ? "production.min" : "development";
+
 module.exports = {
   entry: ["@babel/polyfill", "<rootDir>/src/index.js"],
   template: "<rootDir>/public/index.html",
@@ -22,5 +26,22 @@ module.exports = {
   autoOpenBrowser: true,
   lintOnSave: true,
   pwa: true,
-  productionSourceMap: false
+  productionSourceMap: false,
+  cdn: {
+    prodUrl: "https://cdn.bootcss.com/:name/:version/:path",
+    modules: {
+      react: [
+        {
+          name: "react",
+          var: "React",
+          path: `umd/react.${prefix}.js`
+        },
+        {
+          name: "react-dom",
+          var: "ReactDOM",
+          path: `umd/react-dom.${prefix}.js`
+        }
+      ]
+    }
+  }
 };

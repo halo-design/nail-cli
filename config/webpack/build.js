@@ -10,12 +10,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
+const WebpackCdnPlugin = require('webpack-cdn-plugin');
 const { removeLastSlash } = require('../../utils');
 const {
   getRealPath, config, author, orgSite, license,
 } = require('../../env');
 
 const setBaseBuildConfig = ({
+  cdn,
   pwa,
   favicon,
   parallel,
@@ -80,31 +82,6 @@ const setBaseBuildConfig = ({
       ],
     },
     plugins: [
-      new ProgressBarPlugin({
-        complete: chalk.green('█'),
-        incomplete: chalk.white('█'),
-        format: `  :bar ${chalk.green.bold(':percent')} (:elapsed seconds) `,
-        clear: false,
-      }),
-      new HtmlWebpackPlugin({
-        pwa,
-        publicPath,
-        inject: true,
-        template: getRealPath(template),
-        favicon: getRealPath(favicon),
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash: true,
-          minifyJS: true,
-          minifyCSS: true,
-          minifyURLs: true,
-        },
-      }),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('production'),
@@ -118,6 +95,40 @@ const setBaseBuildConfig = ({
       }),
     ],
   };
+
+  if (cdn) {
+    baseBuildConfig.plugins.unshift(
+      new WebpackCdnPlugin(cdn)
+    );
+  };
+
+  baseBuildConfig.plugins.unshift(
+    new ProgressBarPlugin({
+      complete: chalk.green('█'),
+      incomplete: chalk.white('█'),
+      format: `  :bar ${chalk.green.bold(':percent')} (:elapsed seconds) `,
+      clear: false,
+    }),
+    new HtmlWebpackPlugin({
+      pwa,
+      publicPath,
+      inject: true,
+      template: getRealPath(template),
+      favicon: getRealPath(favicon),
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    })
+  );
 
   if (isAnalyze) {
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');

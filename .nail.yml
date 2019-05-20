@@ -1,4 +1,4 @@
 author: Aford
-configFile: config.js
+configFile: config.js #default "nail.config"
 orgSite: https://github.com/OwlAford
 license: MIT
