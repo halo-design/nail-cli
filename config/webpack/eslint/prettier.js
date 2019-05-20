@@ -12,15 +12,8 @@ module.exports = {
     browser: true,
     node: true,
   },
-  plugins: [
-    'babel',
-    'react',
-    'promise',
-    'react-hooks',
-  ],
-  extends: [
-    'plugin:prettier/recommended',
-  ],
+  plugins: ['babel', 'react', 'promise', 'react-hooks'],
+  extends: ['plugin:prettier/recommended'],
   rules: {
     'prettier/prettier': 'warn',
   },

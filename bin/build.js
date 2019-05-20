@@ -46,10 +46,7 @@ const runBuild = (opts, callback) => {
     });
   };
 
-  const excludeFiles = [
-    getRealPath(opts.template),
-    getRealPath(opts.favicon),
-  ];
+  const excludeFiles = [getRealPath(opts.template), getRealPath(opts.favicon)];
 
   if (!opts.pwa) {
     excludeFiles.push(getRealPath(opts.manifest));
@@ -58,23 +55,23 @@ const runBuild = (opts, callback) => {
   measureFileSizesBeforeBuild(fullOutputDir)
     .then(previousFileSizes => {
       fs.emptyDirSync(fullOutputDir);
-      copyer(
-        getRealPath(publicDir),
-        getRealPath(outputDir),
-        excludeFiles,
-      );
+      copyer(getRealPath(publicDir), getRealPath(outputDir), excludeFiles);
       return builder(previousFileSizes);
     })
     .then(({ stats, previousFileSizes, warnings }) => {
       if (warnings.length) {
         log.yellow('Compiled with warnings.\n');
         console.log(warnings.join('\n\n'));
-        console.log(`\nSearch for the ${
-          chalk.underline(chalk.yellow('keywords'))
-        } to learn more about each warning.`);
-        console.log(`To ignore, add ${
-          chalk.cyan('// eslint-disable-next-line')
-        } to the line before.\n`);
+        console.log(
+          `\nSearch for the ${chalk.underline(
+            chalk.yellow('keywords')
+          )} to learn more about each warning.`
+        );
+        console.log(
+          `To ignore, add ${chalk.cyan(
+            '// eslint-disable-next-line'
+          )} to the line before.\n`
+        );
       }
 
       console.log(`${iconPackage}File sizes after gzip:\n`);
@@ -83,7 +80,7 @@ const runBuild = (opts, callback) => {
         previousFileSizes,
         fullOutputDir,
         warnAfterBundleGzipSize,
-        warnAfterChunkGzipSize,
+        warnAfterChunkGzipSize
       );
 
       printHostingInstructions(
@@ -91,11 +88,12 @@ const runBuild = (opts, callback) => {
         null,
         fullOutputDir,
         path.relative(process.cwd(), fullOutputDir),
-        useYarn,
+        useYarn
       );
 
       if (callback) callback();
-    }).catch(err => {
+    })
+    .catch(err => {
       console.log(chalk.red('Failed to compile.\n'));
       printBuildError(err);
       process.exit(1);

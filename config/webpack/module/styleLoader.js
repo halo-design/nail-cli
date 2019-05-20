@@ -2,32 +2,35 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { browserslist } = require('../../../env');
 
 const styleLoader = (loader, postcssPlugins, isDebug) => {
-  const loaders = [{
-    loader: 'css-loader',
-    options: {
-      importLoaders: 1,
-      sourceMap: isDebug,
+  const loaders = [
+    {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 1,
+        sourceMap: isDebug,
+      },
     },
-  }, {
-    loader: 'postcss-loader',
-    options: {
-      sourceMap: isDebug,
-      ident: 'postcss',
-      plugins: opts => [
-        require('postcss-import')({
-          root: opts.resourcePath,
-        }),
-        ...postcssPlugins.map(plugin => require(plugin)()),
-        require('autoprefixer')({
-          browsers: browserslist,
-        }),
-        require('cssnano')({
-          reduceIdents: false,
-          safe: true,
-        }),
-      ],
+    {
+      loader: 'postcss-loader',
+      options: {
+        sourceMap: isDebug,
+        ident: 'postcss',
+        plugins: opts => [
+          require('postcss-import')({
+            root: opts.resourcePath,
+          }),
+          ...postcssPlugins.map(plugin => require(plugin)()),
+          require('autoprefixer')({
+            browsers: browserslist,
+          }),
+          require('cssnano')({
+            reduceIdents: false,
+            safe: true,
+          }),
+        ],
+      },
     },
-  }];
+  ];
 
   if (loader) {
     loaders.push({
@@ -40,13 +43,15 @@ const styleLoader = (loader, postcssPlugins, isDebug) => {
 
   return isDebug
     ? ['style-loader'].concat(loaders)
-    : [{
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        minimize: !isDebug,
-        sourceMap: isDebug,
-      },
-    }].concat(loaders);
+    : [
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            minimize: !isDebug,
+            sourceMap: isDebug,
+          },
+        },
+      ].concat(loaders);
 };
 
 module.exports = styleLoader;

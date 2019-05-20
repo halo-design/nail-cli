@@ -7,13 +7,18 @@ const runBuild = require('./build');
 const runDevServer = require('./devServer');
 const runProdServer = require('./prodServer');
 const { log, removeLastSlash } = require('../utils');
-const { protocol, config: { app, local } } = require('../env');
+const {
+  protocol,
+  config: { app, local },
+} = require('../env');
 
 const requiredVersion = app.packageJson.engines.node;
 
 if (!semver.satisfies(process.version, requiredVersion)) {
-  log.yellow(`You are using Node ${process.version}, but nail-cli `
-    + `requires Node ${requiredVersion}.\nPlease upgrade your Node version.`);
+  log.yellow(
+    `You are using Node ${process.version}, but nail-cli ` +
+      `requires Node ${requiredVersion}.\nPlease upgrade your Node version.`
+  );
   process.exit(1);
 }
 
@@ -23,7 +28,7 @@ const setProdEnv = stats => {
   process.env.BABEL_ENV = mode;
 };
 
-const getOptions = Opts => typeof Opts === 'function' ? Opts() : Opts;
+const getOptions = Opts => (typeof Opts === 'function' ? Opts() : Opts);
 
 // process.traceDeprecation = true
 process.noDeprecation = true;
@@ -65,29 +70,36 @@ program
     runBuild(finalConfig);
   });
 
-program
-  .command('unit')
-  .action(() => {
-    const finalConfig = Object.assign({}, local.options, getOptions(app.options));
-    jestTest(finalConfig.jestConfig, ['--coverage']);
-  });
+program.command('unit').action(() => {
+  const finalConfig = Object.assign({}, local.options, getOptions(app.options));
+  jestTest(finalConfig.jestConfig, ['--coverage']);
+});
 
 program
   .command('e2e')
   .option('-o --open', 'Open cypress for testing')
   .action(cmd => {
-    const finalConfig = Object.assign({}, local.options, getOptions(app.options));
-    let cyArgv = ['--config', `baseUrl=${protocol}://localhost:${finalConfig.devServerPort}/`];
+    const finalConfig = Object.assign(
+      {},
+      local.options,
+      getOptions(app.options)
+    );
+    let cyArgv = [
+      '--config',
+      `baseUrl=${protocol}://localhost:${finalConfig.devServerPort}/`,
+    ];
     cyArgv = [cmd.open ? 'open' : 'run'].concat(cyArgv);
 
     finalConfig.autoOpenBrowser = false;
     finalConfig.callback = () => {
-      log.cyan('It\'s starting cypress...\n');
+      log.cyan("It's starting cypress...\n");
       try {
         const cypressBinPath = require.resolve('cypress/bin/cypress');
         execa(cypressBinPath, cyArgv, { stdio: 'inherit' });
       } catch (e) {
-        log.yellow('If you need an e2e test feature, install the cypress module please.\n');
+        log.yellow(
+          'If you need an e2e test feature, install the cypress module please.\n'
+        );
         process.exit(0);
       }
     };

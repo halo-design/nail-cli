@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
+"use strict";
 
-var chalk = require('chalk');
-var execSync = require('child_process').execSync;
-var spawn = require('cross-spawn');
-var opn = require('opn');
+var chalk = require("chalk");
+var execSync = require("child_process").execSync;
+var spawn = require("cross-spawn");
+var opn = require("opn");
 
 // https://github.com/sindresorhus/opn#app
-var OSX_CHROME = 'google chrome';
+var OSX_CHROME = "google chrome";
 
 const Actions = Object.freeze({
   NONE: 0,
   BROWSER: 1,
-  SCRIPT: 2,
+  SCRIPT: 2
 });
 
 function getBrowserEnv() {
@@ -30,9 +30,9 @@ function getBrowserEnv() {
   if (!value) {
     // Default.
     action = Actions.BROWSER;
-  } else if (value.toLowerCase().endsWith('.js')) {
+  } else if (value.toLowerCase().endsWith(".js")) {
     action = Actions.SCRIPT;
-  } else if (value.toLowerCase() === 'none') {
+  } else if (value.toLowerCase() === "none") {
     action = Actions.NONE;
   } else {
     action = Actions.BROWSER;
@@ -42,18 +42,18 @@ function getBrowserEnv() {
 
 function executeNodeScript(scriptPath, url) {
   const extraArgs = process.argv.slice(2);
-  const child = spawn('node', [scriptPath, ...extraArgs, url], {
-    stdio: 'inherit',
+  const child = spawn("node", [scriptPath, ...extraArgs, url], {
+    stdio: "inherit"
   });
-  child.on('close', code => {
+  child.on("close", code => {
     if (code !== 0) {
       console.log();
       console.log(
         chalk.red(
-          'The script specified as BROWSER environment variable failed.'
+          "The script specified as BROWSER environment variable failed."
         )
       );
-      console.log(chalk.cyan(scriptPath) + ' exited with code ' + code + '.');
+      console.log(chalk.cyan(scriptPath) + " exited with code " + code + ".");
       console.log();
       return;
     }
@@ -67,8 +67,8 @@ function startBrowserProcess(browser, url) {
   // Chrome with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
   const shouldTryOpenChromeWithAppleScript =
-    process.platform === 'darwin' &&
-    (typeof browser !== 'string' || browser === OSX_CHROME);
+    process.platform === "darwin" &&
+    (typeof browser !== "string" || browser === OSX_CHROME);
 
   if (shouldTryOpenChromeWithAppleScript) {
     try {
@@ -77,7 +77,7 @@ function startBrowserProcess(browser, url) {
       execSync('ps cax | grep "Google Chrome"');
       execSync('osascript openChrome.applescript "' + encodeURI(url) + '"', {
         cwd: __dirname,
-        stdio: 'ignore',
+        stdio: "ignore"
       });
       return true;
     } catch (err) {
@@ -89,7 +89,7 @@ function startBrowserProcess(browser, url) {
   // In this case, instead of passing `open` to `opn` (which won't work),
   // just ignore it (thus ensuring the intended behavior, i.e. opening the system browser):
   // https://github.com/facebookincubator/create-react-app/pull/1690#issuecomment-283518768
-  if (process.platform === 'darwin' && browser === 'open') {
+  if (process.platform === "darwin" && browser === "open") {
     browser = undefined;
   }
 
@@ -119,7 +119,7 @@ function openBrowser(url) {
     case Actions.BROWSER:
       return startBrowserProcess(value, url);
     default:
-      throw new Error('Not implemented.');
+      throw new Error("Not implemented.");
   }
 }
 

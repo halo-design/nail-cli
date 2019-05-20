@@ -12,23 +12,26 @@ module.exports = (jestConfig, argv) => {
     argv.push('--watchAll');
   }
 
-  argv.push(
-    '--config',
-    JSON.stringify(createJestConfig(jestConfig)),
-  );
+  argv.push('--config', JSON.stringify(createJestConfig(jestConfig)));
 
   const resolveJestDefaultEnvironment = name => {
-    const jestDir = path.dirname(resolve.sync('jest', {
-      basedir: __dirname,
-    }));
+    const jestDir = path.dirname(
+      resolve.sync('jest', {
+        basedir: __dirname,
+      })
+    );
 
-    const jestCLIDir = path.dirname(resolve.sync('jest-cli', {
-      basedir: jestDir,
-    }));
+    const jestCLIDir = path.dirname(
+      resolve.sync('jest-cli', {
+        basedir: jestDir,
+      })
+    );
 
-    const jestConfigDir = path.dirname(resolve.sync('jest-config', {
-      basedir: jestCLIDir,
-    }));
+    const jestConfigDir = path.dirname(
+      resolve.sync('jest-config', {
+        basedir: jestCLIDir,
+      })
+    );
 
     return resolve.sync(name, {
       basedir: jestConfigDir,
@@ -50,9 +53,10 @@ module.exports = (jestConfig, argv) => {
   } while (argv.length > 0);
 
   argv = cleanArgv;
-  const testEnvironment = resolveJestDefaultEnvironment(`jest-environment-${env}`)
-    || resolveJestDefaultEnvironment(env)
-    || env;
+  const testEnvironment =
+    resolveJestDefaultEnvironment(`jest-environment-${env}`) ||
+    resolveJestDefaultEnvironment(env) ||
+    env;
 
   argv.push('--env', testEnvironment);
   jest.run(argv);

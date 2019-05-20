@@ -4,26 +4,26 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-'use strict';
+"use strict";
 
-const address = require('address');
-const fs = require('fs');
-const path = require('path');
-const url = require('url');
-const chalk = require('chalk');
-const detect = require('detect-port-alt');
-const isRoot = require('is-root');
-const inquirer = require('inquirer');
-const clearConsole = require('./clearConsole');
-const formatWebpackMessages = require('./formatWebpackMessages');
-const getProcessForPort = require('./getProcessForPort');
+const address = require("address");
+const fs = require("fs");
+const path = require("path");
+const url = require("url");
+const chalk = require("chalk");
+const detect = require("detect-port-alt");
+const isRoot = require("is-root");
+const inquirer = require("inquirer");
+const clearConsole = require("./clearConsole");
+const formatWebpackMessages = require("./formatWebpackMessages");
+const getProcessForPort = require("./getProcessForPort");
 
 const isInteractive = process.stdout.isTTY;
 let handleCompile;
 
 // You can safely remove this after ejecting.
 // We only use this block for testing of Create React App itself:
-const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+const isSmokeTest = process.argv.some(arg => arg.indexOf("--smoke-test") > -1);
 if (isSmokeTest) {
   handleCompile = (err, stats) => {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
@@ -40,20 +40,20 @@ function prepareUrls(protocol, host, port) {
       protocol,
       hostname,
       port,
-      pathname: '/',
+      pathname: "/"
     });
   const prettyPrintUrl = hostname =>
     url.format({
       protocol,
       hostname,
       port: chalk.bold(port),
-      pathname: '/',
+      pathname: "/"
     });
 
-  const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
+  const isUnspecifiedHost = host === "0.0.0.0" || host === "::";
   let prettyHost, lanUrlForConfig, lanUrlForTerminal;
   if (isUnspecifiedHost) {
-    prettyHost = 'localhost';
+    prettyHost = "localhost";
     try {
       // This can only return an IPv4 address
       lanUrlForConfig = address.ip();
@@ -84,7 +84,7 @@ function prepareUrls(protocol, host, port) {
     lanUrlForConfig,
     lanUrlForTerminal,
     localUrlForTerminal,
-    localUrlForBrowser,
+    localUrlForBrowser
   };
 }
 
@@ -93,10 +93,10 @@ function printInstructions(appName, urls, useYarn) {
 
   if (urls.lanUrlForTerminal) {
     console.log(
-      `  ${chalk.bold('Local:')}    ${chalk.cyan(urls.localUrlForTerminal)}`
+      `  ${chalk.bold("Local:")}    ${chalk.cyan(urls.localUrlForTerminal)}`
     );
     console.log(
-      `  ${chalk.bold('Network:')}  ${chalk.cyan(urls.lanUrlForTerminal)}\n`
+      `  ${chalk.bold("Network:")}  ${chalk.cyan(urls.lanUrlForTerminal)}\n`
     );
   } else {
     console.log(`  ${urls.localUrlForTerminal}\n`);
@@ -110,7 +110,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   try {
     compiler = webpack(config, handleCompile);
   } catch (err) {
-    console.log(chalk.red('Failed to compile.'));
+    console.log(chalk.red("Failed to compile."));
     console.log();
     console.log(err.message || err);
     console.log();
@@ -121,18 +121,18 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
-  compiler.plugin('invalid', () => {
+  compiler.plugin("invalid", () => {
     if (isInteractive) {
       clearConsole();
     }
-    console.log('Compiling...');
+    console.log("Compiling...");
   });
 
   let isFirstCompile = true;
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', stats => {
+  compiler.plugin("done", stats => {
     if (isInteractive) {
       clearConsole();
     }
@@ -143,8 +143,8 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     const messages = formatWebpackMessages(stats.toJson({}, true));
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
-      console.log(chalk.green('Compiled successfully!'));
-      if ('TRAVIS' in process.env && 'CI' in process.env) {
+      console.log(chalk.green("Compiled successfully!"));
+      if ("TRAVIS" in process.env && "CI" in process.env) {
         process.exit(0);
       }
     }
@@ -160,26 +160,26 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      console.log(chalk.red('Failed to compile.\n'));
-      console.log(messages.errors.join('\n\n'));
+      console.log(chalk.red("Failed to compile.\n"));
+      console.log(messages.errors.join("\n\n"));
       return;
     }
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.\n'));
-      console.log(messages.warnings.join('\n\n'));
+      console.log(chalk.yellow("Compiled with warnings.\n"));
+      console.log(messages.warnings.join("\n\n"));
 
       // Teach some ESLint tricks.
       console.log(
-        '\nSearch for the ' +
-          chalk.underline(chalk.yellow('keywords')) +
-          ' to learn more about each warning.'
+        "\nSearch for the " +
+          chalk.underline(chalk.yellow("keywords")) +
+          " to learn more about each warning."
       );
       console.log(
-        'To ignore, add ' +
-          chalk.cyan('// eslint-disable-next-line') +
-          ' to the line before.\n'
+        "To ignore, add " +
+          chalk.cyan("// eslint-disable-next-line") +
+          " to the line before.\n"
       );
     }
   });
@@ -189,7 +189,7 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
 function resolveLoopback(proxy) {
   const o = url.parse(proxy);
   o.host = undefined;
-  if (o.hostname !== 'localhost') {
+  if (o.hostname !== "localhost") {
     return proxy;
   }
   // Unfortunately, many languages (unlike node) do not yet support IPv6.
@@ -207,10 +207,10 @@ function resolveLoopback(proxy) {
     // localhost. Otherwise, we can just be safe and assume localhost is
     // IPv4 for maximum compatibility.
     if (!address.ip()) {
-      o.hostname = '127.0.0.1';
+      o.hostname = "127.0.0.1";
     }
   } catch (_ignored) {
-    o.hostname = '127.0.0.1';
+    o.hostname = "127.0.0.1";
   }
   return url.format(o);
 }
@@ -221,19 +221,19 @@ function onProxyError(proxy) {
   return (err, req, res) => {
     const host = req.headers && req.headers.host;
     console.log(
-      chalk.red('Proxy error:') +
-        ' Could not proxy request ' +
+      chalk.red("Proxy error:") +
+        " Could not proxy request " +
         chalk.cyan(req.url) +
-        ' from ' +
+        " from " +
         chalk.cyan(host) +
-        ' to ' +
+        " to " +
         chalk.cyan(proxy) +
-        '.'
+        "."
     );
     console.log(
-      'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' +
+      "See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (" +
         chalk.cyan(err.code) +
-        ').'
+        ")."
     );
     console.log();
 
@@ -243,15 +243,15 @@ function onProxyError(proxy) {
       res.writeHead(500);
     }
     res.end(
-      'Proxy error: Could not proxy request ' +
+      "Proxy error: Could not proxy request " +
         req.url +
-        ' from ' +
+        " from " +
         host +
-        ' to ' +
+        " to " +
         proxy +
-        ' (' +
+        " (" +
         err.code +
-        ').'
+        ")."
     );
   };
 }
@@ -263,7 +263,7 @@ function prepareProxy(proxy, appPublicFolder) {
   if (!proxy) {
     return undefined;
   }
-  if (typeof proxy !== 'object' && typeof proxy !== 'string') {
+  if (typeof proxy !== "object" && typeof proxy !== "string") {
     console.log(
       chalk.red(
         'When specified, "proxy" in package.json must be a string or an object.'
@@ -287,7 +287,7 @@ function prepareProxy(proxy, appPublicFolder) {
   }
 
   // Support proxy as a string for those who are using the simple proxy option
-  if (typeof proxy === 'string') {
+  if (typeof proxy === "string") {
     if (!/^http(s)?:\/\//.test(proxy)) {
       console.log(
         chalk.red(
@@ -298,7 +298,7 @@ function prepareProxy(proxy, appPublicFolder) {
     }
 
     let target;
-    if (process.platform === 'win32') {
+    if (process.platform === "win32") {
       target = resolveLoopback(proxy);
     } else {
       target = proxy;
@@ -306,12 +306,12 @@ function prepareProxy(proxy, appPublicFolder) {
     return [
       {
         target,
-        logLevel: 'silent',
+        logLevel: "silent",
         // For single page apps, we generally want to fallback to /index.html.
         // However we also want to respect `proxy` for API calls.
         // So if `proxy` is specified as a string, we need to decide which fallback to use.
         // We use a heuristic: We want to proxy all the requests that are not meant
-        // for static assets and as all the requests for static assets will be using 
+        // for static assets and as all the requests for static assets will be using
         // `GET` method, we can proxy all non-`GET` requests.
         // For `GET` requests, if request `accept`s text/html, we pick /index.html.
         // Modern browsers include text/html into `accept` header when navigating.
@@ -319,45 +319,47 @@ function prepareProxy(proxy, appPublicFolder) {
         // If this heuristic doesn’t work well for you, use a custom `proxy` object.
         context: function(pathname, req) {
           return (
-            req.method !== 'GET' ||
+            req.method !== "GET" ||
             (mayProxy(pathname) &&
               req.headers.accept &&
-              req.headers.accept.indexOf('text/html') === -1)
+              req.headers.accept.indexOf("text/html") === -1)
           );
         },
         onProxyReq: proxyReq => {
           // Browers may send Origin headers even with same-origin
           // requests. To prevent CORS issues, we have to change
           // the Origin to match the target URL.
-          if (proxyReq.getHeader('origin')) {
-            proxyReq.setHeader('origin', target);
-          };
-          console.log(`[${chalk.gray('proxy')}]: ` +
-            `${chalk.cyanBright(proxyReq.method)} ` +
-            `${chalk.yellowBright(proxyReq.path)}`);
+          if (proxyReq.getHeader("origin")) {
+            proxyReq.setHeader("origin", target);
+          }
+          console.log(
+            `[${chalk.gray("proxy")}]: ` +
+              `${chalk.cyanBright(proxyReq.method)} ` +
+              `${chalk.yellowBright(proxyReq.path)}`
+          );
         },
         onError: onProxyError(target),
         secure: false,
         changeOrigin: true,
         ws: true,
-        xfwd: true,
-      },
+        xfwd: true
+      }
     ];
   }
 
   // Otherwise, proxy is an object so create an array of proxies to pass to webpackDevServer
   return Object.keys(proxy).map(function(context) {
-    if (!proxy[context].hasOwnProperty('target')) {
+    if (!proxy[context].hasOwnProperty("target")) {
       console.log(
         chalk.red(
-          'When `proxy` in package.json is as an object, each `context` object must have a ' +
-            '`target` property specified as a url string'
+          "When `proxy` in package.json is as an object, each `context` object must have a " +
+            "`target` property specified as a url string"
         )
       );
       process.exit(1);
     }
     let target;
-    if (process.platform === 'win32') {
+    if (process.platform === "win32") {
       target = resolveLoopback(proxy[context].target);
     } else {
       target = proxy[context].target;
@@ -370,17 +372,19 @@ function prepareProxy(proxy, appPublicFolder) {
         // Browers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
-        const cur = (new Date()).toLocaleTimeString('it-IT');
-        if (proxyReq.getHeader('origin')) {
-          proxyReq.setHeader('origin', target);
-        };
-        console.log(`${chalk.inverse(chalk.blue(' PROXY '))} ` +
-          `[${chalk.gray(cur)}] ` +
-          `${chalk.cyanBright(proxyReq.method)} ` +
-          `${chalk.yellowBright(proxyReq.path)} `);
+        const cur = new Date().toLocaleTimeString("it-IT");
+        if (proxyReq.getHeader("origin")) {
+          proxyReq.setHeader("origin", target);
+        }
+        console.log(
+          `${chalk.inverse(chalk.blue(" PROXY "))} ` +
+            `[${chalk.gray(cur)}] ` +
+            `${chalk.cyanBright(proxyReq.method)} ` +
+            `${chalk.yellowBright(proxyReq.path)} `
+        );
       },
       target,
-      onError: onProxyError(target),
+      onError: onProxyError(target)
     });
   });
 }
@@ -393,21 +397,21 @@ function choosePort(host, defaultPort) {
           return resolve(port);
         }
         const message =
-          process.platform !== 'win32' && defaultPort < 1024 && !isRoot()
+          process.platform !== "win32" && defaultPort < 1024 && !isRoot()
             ? `Admin permissions are required to run a server on a port below 1024.`
             : `Something is already running on port ${defaultPort}.`;
         if (isInteractive) {
           clearConsole();
           const existingProcess = getProcessForPort(defaultPort);
           const question = {
-            type: 'confirm',
-            name: 'shouldChangePort',
+            type: "confirm",
+            name: "shouldChangePort",
             message:
               chalk.yellow(
                 message +
-                  `${existingProcess ? ` Probably:\n  ${existingProcess}` : ''}`
-              ) + '\n\nWould you like to run the app on another port instead?',
-            default: true,
+                  `${existingProcess ? ` Probably:\n  ${existingProcess}` : ""}`
+              ) + "\n\nWould you like to run the app on another port instead?",
+            default: true
           };
           inquirer.prompt(question).then(answer => {
             if (answer.shouldChangePort) {
@@ -424,9 +428,9 @@ function choosePort(host, defaultPort) {
     err => {
       throw new Error(
         chalk.red(`Could not find an open port at ${chalk.bold(host)}.`) +
-          '\n' +
-          ('Network error message: ' + err.message || err) +
-          '\n'
+          "\n" +
+          ("Network error message: " + err.message || err) +
+          "\n"
       );
     }
   );
@@ -436,5 +440,5 @@ module.exports = {
   choosePort,
   createCompiler,
   prepareProxy,
-  prepareUrls,
+  prepareUrls
 };

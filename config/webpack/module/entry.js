@@ -5,14 +5,17 @@ const setEntry = ({ entry }, isDebug) => {
 
   return isDebug
     ? {
-      entry: {
-        app: [require.resolve('../../../utils/devtools/webpackHotDevClient')].concat(base),
-      },
-    } : {
-      entry: {
-        app: base,
-      },
-    };
+        entry: {
+          app: [
+            require.resolve('../../../utils/devtools/webpackHotDevClient'),
+          ].concat(base),
+        },
+      }
+    : {
+        entry: {
+          app: base,
+        },
+      };
 };
 
 module.exports = setEntry;

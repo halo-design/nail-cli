@@ -1,48 +1,48 @@
 module.exports = () => {
-  const isProd = process.env.NODE_ENV === "production";
-  const prefix = isProd ? "production.min" : "development";
+  const isProd = process.env.NODE_ENV === 'production';
+  const prefix = isProd ? 'production.min' : 'development';
 
   return {
-    entry: ["@babel/polyfill", "<rootDir>/src/index.js"],
-    template: "<rootDir>/public/index.html",
+    entry: ['@babel/polyfill', '<rootDir>/src/index.js'],
+    template: '<rootDir>/public/index.html',
     devServerPort: 8080,
     buildServerPort: 9090,
-    publicPath: "/nail/",
-    assetsPath: "static/",
+    publicPath: '/nail/',
+    assetsPath: 'static/',
     proxyTable: {
-      "/data": {
-        target: "http://106.14.138.86:7000",
-        changeOrigin: true
-      }
+      '/data': {
+        target: 'http://106.14.138.86:7000',
+        changeOrigin: true,
+      },
     },
     alias: {
-      "~": "<rootDir>/src",
-      "@": "<rootDir>/src/views",
-      "#": "<rootDir>/src/assets",
-      "&": "<rootDir>/src/models",
-      "^": "<rootDir>/src/components"
+      '~': '<rootDir>/src',
+      '@': '<rootDir>/src/views',
+      '#': '<rootDir>/src/assets',
+      '&': '<rootDir>/src/models',
+      '^': '<rootDir>/src/components',
     },
-    eslintExtend: "prettier",
+    eslintExtend: 'prettier',
     autoOpenBrowser: true,
     lintOnSave: true,
     pwa: true,
     productionSourceMap: false,
     cdn: {
-      prodUrl: "https://cdn.bootcss.com/:name/:version/:path",
+      prodUrl: 'https://cdn.bootcss.com/:name/:version/:path',
       modules: {
         react: [
           {
-            name: "react",
-            var: "React",
-            path: `umd/react.${prefix}.js`
+            name: 'react',
+            var: 'React',
+            path: `umd/react.${prefix}.js`,
           },
           {
-            name: "react-dom",
-            var: "ReactDOM",
-            path: `umd/react-dom.${prefix}.js`
-          }
-        ]
-      }
-    }
+            name: 'react-dom',
+            var: 'ReactDOM',
+            path: `umd/react-dom.${prefix}.js`,
+          },
+        ],
+      },
+    },
   };
 };

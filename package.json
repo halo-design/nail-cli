@@ -1,6 +1,6 @@
 {
   "name": "@nail-cli/core",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Front end development scaffolding",
   "homepage": "https://github.com/halo-design/nail-cli",
   "main": "./bin/index.js",
@@ -35,8 +35,8 @@
     "unit": "node ./bin unit",
     "e2e": "node ./bin e2e",
     "e2e:o": "node ./bin e2e -o",
-    "lint": "eslint --ext .js,.jsx src/",
-    "lint:fix": "eslint --fix --ext .js,.jsx src/"
+    "lint": "eslint '**/*.js?(x)'",
+    "lint:fix": "eslint --fix '**/*.js?(x)'"
   },
   "dependencies": {
     "@babel/core": "^7.4.4",

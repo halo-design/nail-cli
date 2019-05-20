@@ -5,11 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const { getRealPath } = require('../../env');
 
-const setBaseConfig = ({
-  cdn,
-  favicon,
-  template,
-}) => {
+const setBaseConfig = ({ cdn, favicon, template }) => {
   const baseDevConfig = {
     plugins: [
       new webpack.DefinePlugin({
@@ -22,13 +18,11 @@ const setBaseConfig = ({
       new CaseSensitivePathsPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ],
-  }
+  };
 
   if (cdn) {
-    baseDevConfig.plugins.unshift(
-      new WebpackCdnPlugin(cdn)
-    );
-  };
+    baseDevConfig.plugins.unshift(new WebpackCdnPlugin(cdn));
+  }
 
   baseDevConfig.plugins.unshift(
     new HtmlWebpackPlugin({
@@ -42,19 +36,23 @@ const setBaseConfig = ({
   return baseDevConfig;
 };
 
-const setDevConfig = opts => merge(
-  require('./base')(true),
-  require('./module/alias')(opts),
-  require('./module/entry')(opts, true),
-  require('./module/output')({
-    ...opts,
-    ...{
-      assetsPath: '',
-      publicPath: '/',
-    },
-  }, true),
-  require('./module/rule')(opts, true),
-  setBaseConfig(opts),
-);
+const setDevConfig = opts =>
+  merge(
+    require('./base')(true),
+    require('./module/alias')(opts),
+    require('./module/entry')(opts, true),
+    require('./module/output')(
+      {
+        ...opts,
+        ...{
+          assetsPath: '',
+          publicPath: '/',
+        },
+      },
+      true
+    ),
+    require('./module/rule')(opts, true),
+    setBaseConfig(opts)
+  );
 
 module.exports = setDevConfig;

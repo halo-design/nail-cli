@@ -1,8 +1,5 @@
 module.exports = {
-  entry: [
-    '@babel/polyfill',
-    '<rootDir>/src/index.js',
-  ],
+  entry: ['@babel/polyfill', '<rootDir>/src/index.js'],
   template: '<rootDir>/public/index.html',
   favicon: '<rootDir>/public/favicon.ico',
   manifest: '<rootDir>/public/manifest.json',
@@ -17,10 +14,7 @@ module.exports = {
   buildServerPort: 9090,
   autoOpenBrowser: false,
   productionSourceMap: false,
-  postcssPlugins: [
-    'postcss-flexbugs-fixes',
-    'postcss-flexibility',
-  ],
+  postcssPlugins: ['postcss-flexbugs-fixes', 'postcss-flexibility'],
   pwa: false,
   parallel: require('os').cpus().length > 1,
   lintOnSave: true,
@@ -29,5 +23,5 @@ module.exports = {
   babelConfig: {},
   eslintExtend: 'standard',
   eslintConfig: {},
-  cdn: false
+  cdn: false,
 };

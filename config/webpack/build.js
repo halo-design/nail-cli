@@ -12,9 +12,7 @@ const LastCallWebpackPlugin = require('last-call-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const WebpackCdnPlugin = require('webpack-cdn-plugin');
 const { removeLastSlash } = require('../../utils');
-const {
-  getRealPath, config, author, orgSite, license,
-} = require('../../env');
+const { getRealPath, config, author, orgSite, license } = require('../../env');
 
 const setBaseBuildConfig = ({
   cdn,
@@ -97,10 +95,8 @@ const setBaseBuildConfig = ({
   };
 
   if (cdn) {
-    baseBuildConfig.plugins.unshift(
-      new WebpackCdnPlugin(cdn)
-    );
-  };
+    baseBuildConfig.plugins.unshift(new WebpackCdnPlugin(cdn));
+  }
 
   baseBuildConfig.plugins.unshift(
     new ProgressBarPlugin({
@@ -132,31 +128,39 @@ const setBaseBuildConfig = ({
 
   if (isAnalyze) {
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-    baseBuildConfig.plugins.push(new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: getRealPath(`${reportDir}/analyze/${
-        (new Date()).toLocaleString()
-          .replace(/ /g, '_')
-      }.html`),
-    }));
+    baseBuildConfig.plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        reportFilename: getRealPath(
+          `${reportDir}/analyze/${new Date()
+            .toLocaleString()
+            .replace(/ /g, '_')}.html`
+        ),
+      })
+    );
   }
 
-  const comment = '/*!\n'
-  + ` * Build By @nail-cli/core@${config.local.packageJson.version}\n`
-  + ` * (c) 2018-2019 ${author}\n`
-  + ` * GitHub ${orgSite}\n`
-  + ` * Released under the ${license} License.\n`
-  + ' */\n';
+  const comment =
+    '/*!\n' +
+    ` * Build By @nail-cli/core@${config.local.packageJson.version}\n` +
+    ` * (c) 2018-2019 ${author}\n` +
+    ` * GitHub ${orgSite}\n` +
+    ` * Released under the ${license} License.\n` +
+    ' */\n';
 
-  const assetProcessors = [{
-    regExp: /\.js$/,
-    processor: (assetName, asset) => Promise.resolve(comment + asset.source()),
-  }];
+  const assetProcessors = [
+    {
+      regExp: /\.js$/,
+      processor: (assetName, asset) =>
+        Promise.resolve(comment + asset.source()),
+    },
+  ];
 
   if (productionSourceMap) {
     assetProcessors.push({
       regExp: /\.css$/,
-      processor: (assetName, asset) => Promise.resolve(comment + asset.source()),
+      processor: (assetName, asset) =>
+        Promise.resolve(comment + asset.source()),
     });
   } else {
     assetProcessors.push({
@@ -170,10 +174,12 @@ const setBaseBuildConfig = ({
     });
   }
 
-  baseBuildConfig.plugins.push(new LastCallWebpackPlugin({
-    assetProcessors,
-    canPrint: true,
-  }));
+  baseBuildConfig.plugins.push(
+    new LastCallWebpackPlugin({
+      assetProcessors,
+      canPrint: true,
+    })
+  );
 
   if (pwa) {
     baseBuildConfig.plugins.push(
@@ -188,20 +194,21 @@ const setBaseBuildConfig = ({
       new PreloadWebpackPlugin({
         rel: 'preload',
         include: 'initial',
-      }),
+      })
     );
   }
 
   return baseBuildConfig;
 };
 
-const setBuildConfig = opts => merge(
-  require('./base')(false),
-  require('./module/alias')(opts),
-  require('./module/entry')(opts, false),
-  require('./module/output')(opts, false),
-  require('./module/rule')(opts, false),
-  setBaseBuildConfig(opts),
-);
+const setBuildConfig = opts =>
+  merge(
+    require('./base')(false),
+    require('./module/alias')(opts),
+    require('./module/entry')(opts, false),
+    require('./module/output')(opts, false),
+    require('./module/rule')(opts, false),
+    setBaseBuildConfig(opts)
+  );
 
 module.exports = setBuildConfig;

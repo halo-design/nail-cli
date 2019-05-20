@@ -13,12 +13,7 @@ module.exports = {
     node: true,
   },
   extends: ['airbnb'],
-  plugins: [
-    'babel',
-    'react',
-    'promise',
-    'react-hooks',
-  ],
+  plugins: ['babel', 'react', 'promise', 'react-hooks'],
   rules: {
     'no-console': 0,
     'arrow-parens': 0,
@@ -57,11 +52,7 @@ module.exports = {
       {
         components: ['Link'],
         specialLink: ['to'],
-        aspects: [
-          'noHref',
-          'invalidHref',
-          'preferButton',
-        ],
+        aspects: ['noHref', 'invalidHref', 'preferButton'],
       },
     ],
 

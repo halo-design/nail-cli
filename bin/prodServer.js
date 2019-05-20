@@ -7,9 +7,7 @@ const { log } = require('../utils');
 const runBuild = require('./build');
 const openBrowser = require('../utils/devtools/openBrowser');
 
-const {
-  protocol, getRealPath,
-} = require('../env');
+const { protocol, getRealPath } = require('../env');
 
 const {
   choosePort,
@@ -26,9 +24,7 @@ const printInstructions = urls => {
 };
 
 const runServer = opts => {
-  const {
-    outputDir, proxyTable, publicPath, autoOpenBrowser, callback,
-  } = opts;
+  const { outputDir, proxyTable, publicPath, autoOpenBrowser, callback } = opts;
 
   const outputPath = getRealPath(outputDir);
   const SET_HOST = process.env.HOST || '0.0.0.0';
@@ -39,9 +35,11 @@ const runServer = opts => {
 
     const staticFileMiddleware = express.static(outputPath);
 
-    app.use(history({
-      index: `${publicPath}index.html`,
-    }));
+    app.use(
+      history({
+        index: `${publicPath}index.html`,
+      })
+    );
 
     app.use(publicPath, staticFileMiddleware);
 
@@ -65,29 +63,30 @@ const runServer = opts => {
         options = { target: options };
       }
       options.onProxyReq = proxyReq => {
-        console.log(`[${chalk.gray('proxy')}]: `
-          + `${chalk.cyanBright(proxyReq.method)} `
-          + `${chalk.yellowBright(proxyReq.path)}`);
+        console.log(
+          `[${chalk.gray('proxy')}]: ` +
+            `${chalk.cyanBright(proxyReq.method)} ` +
+            `${chalk.yellowBright(proxyReq.path)}`
+        );
       };
       app.use(proxyMiddleware(options.filter || context, options));
     });
   };
 
-  choosePort(SET_HOST, SET_PORT)
-    .then(port => {
-      if (!port) {
-        log.yellow('We have not found a port!');
+  choosePort(SET_HOST, SET_PORT).then(port => {
+    if (!port) {
+      log.yellow('We have not found a port!');
+    } else {
+      const urls = prepareUrls(protocol, SET_HOST, port);
+      if (fs.existsSync(outputPath)) {
+        createServer(port, urls);
       } else {
-        const urls = prepareUrls(protocol, SET_HOST, port);
-        if (fs.existsSync(outputPath)) {
+        runBuild(opts, () => {
           createServer(port, urls);
-        } else {
-          runBuild(opts, () => {
-            createServer(port, urls);
-          });
-        }
+        });
       }
-    });
+    }
+  });
 };
 
 module.exports = runServer;

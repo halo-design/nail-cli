@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
+"use strict";
 
-const chalk = require('chalk');
+const chalk = require("chalk");
 
 module.exports = function printBuildError(err) {
   const message = err != null && err.message;
@@ -16,29 +16,29 @@ module.exports = function printBuildError(err) {
   // Add more helpful message for UglifyJs error
   if (
     stack &&
-    typeof message === 'string' &&
-    message.indexOf('from UglifyJs') !== -1
+    typeof message === "string" &&
+    message.indexOf("from UglifyJs") !== -1
   ) {
     try {
       const matched = /(.+)\[(.+):(.+),(.+)\]\[.+\]/.exec(stack);
       if (!matched) {
-        throw new Error('Using errors for control flow is bad.');
+        throw new Error("Using errors for control flow is bad.");
       }
       const problemPath = matched[2];
       const line = matched[3];
       const column = matched[4];
       console.log(
-        'Failed to minify the code from this file: \n\n',
+        "Failed to minify the code from this file: \n\n",
         chalk.yellow(
-          `\t${problemPath}:${line}${column !== '0' ? ':' + column : ''}`
+          `\t${problemPath}:${line}${column !== "0" ? ":" + column : ""}`
         ),
-        '\n'
+        "\n"
       );
     } catch (ignored) {
-      console.log('Failed to minify the bundle.', err);
+      console.log("Failed to minify the bundle.", err);
     }
   } else {
-    console.log((message || err) + '\n');
+    console.log((message || err) + "\n");
   }
   console.log();
 };

@@ -9,9 +9,10 @@ const LOCAL_ROOT = resolve(__dirname, '..');
 const appResolve = args => resolve(APP_ROOT, args);
 const localResolve = args => resolve(LOCAL_ROOT, args);
 
-const getRealPath = file => (file.indexOf('<rootDir>/') > -1
-  ? appResolve(file.replace('<rootDir>/', ''))
-  : require.resolve(file));
+const getRealPath = file =>
+  file.indexOf('<rootDir>/') > -1
+    ? appResolve(file.replace('<rootDir>/', ''))
+    : require.resolve(file);
 
 const LOCAL_PACKAGEJSON_DIR = localResolve('package.json');
 const LOCAL_PACKAGEJSON_FILE = require(LOCAL_PACKAGEJSON_DIR);
@@ -43,9 +44,7 @@ if (fs.existsSync(APP_PACKAGEJSON_DIR)) {
 
 if (fs.existsSync(NAILLOCK)) {
   const lockData = readYaml.sync(NAILLOCK);
-  const {
-    author, configFile, orgSite, license,
-  } = lockData;
+  const { author, configFile, orgSite, license } = lockData;
 
   if (author) {
     SETAUTHOR = author;
@@ -64,7 +63,9 @@ if (fs.existsSync(NAILLOCK)) {
     if (fs.existsSync(SET_NAILCONFIG_DIR)) {
       APP_NAILCONFIG_FILE = require(SET_NAILCONFIG_DIR);
     } else {
-      log.red(`\nThe specified nail-cli configuration ${configFile} does not exist.\n`);
+      log.red(
+        `\nThe specified nail-cli configuration ${configFile} does not exist.\n`
+      );
       process.exit(1);
     }
   }
@@ -113,9 +114,12 @@ const config = {
 
   protocol: process.env.HTTPS === 'true' ? 'https' : 'http',
   useYarn: fs.existsSync(appResolve('yarn.lock')),
-  browserslist:
-    APP_PACKAGEJSON_FILE.browserslist
-    || ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9'],
+  browserslist: APP_PACKAGEJSON_FILE.browserslist || [
+    '>1%',
+    'last 4 versions',
+    'Firefox ESR',
+    'not ie < 9',
+  ],
 };
 
 module.exports = config;

@@ -11,13 +11,13 @@ const finalConfig = (customConfig = {}, eslintExtend, isDebug) => {
   const config = {
     ...createBaseConfig(eslintExtend),
     ...customConfig,
-  }
+  };
   writeJSON(config, getRealPath('<rootDir>/.eslintrc'));
 
   return {
     ...config,
-    ...{ 'no-debugger': isDebug ? 0 : 2 }
-  }
+    ...{ 'no-debugger': isDebug ? 0 : 2 },
+  };
 };
 
 module.exports = finalConfig;

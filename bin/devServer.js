@@ -4,9 +4,7 @@ const { log } = require('../utils');
 const getWebpackConfig = require('../config/webpack/dev');
 const getServerConfig = require('../config/webpack/server');
 const openBrowser = require('../utils/devtools/openBrowser');
-const {
-  config, protocol, getRealPath, useYarn,
-} = require('../env');
+const { config, protocol, getRealPath, useYarn } = require('../env');
 const {
   choosePort,
   prepareUrls,
@@ -17,9 +15,7 @@ const {
 const runServer = opts => {
   const isWin = process.platform === 'win32';
   const iconRocket = isWin ? '' : '🚀 ';
-  const {
-    publicDir, proxyTable, autoOpenBrowser, callback,
-  } = opts;
+  const { publicDir, proxyTable, autoOpenBrowser, callback } = opts;
   const publicPath = '/';
 
   const SET_HOST = process.env.HOST || '0.0.0.0';
@@ -39,7 +35,7 @@ const runServer = opts => {
         webpackConfig,
         config.app.packageJson.name,
         urls,
-        useYarn,
+        useYarn
       );
 
       const proxyConfig = prepareProxy(proxyTable, getRealPath(publicDir));
@@ -47,7 +43,7 @@ const runServer = opts => {
         proxyConfig,
         urls.lanUrlForConfig,
         publicDir,
-        publicPath,
+        publicPath
       );
 
       const devServer = new WebpackDevServer(compiler, devServerConfig);

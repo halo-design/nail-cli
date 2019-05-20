@@ -9,9 +9,7 @@ module.exports = isDebug => ({
   resolve: {
     modules: ['node_modules', 'src'],
     extensions: ['.js', '.json', '.jsx'],
-    plugins: [
-      new ModuleScopePlugin(dir.app.src, [dir.app.packageJson]),
-    ],
+    plugins: [new ModuleScopePlugin(dir.app.src, [dir.app.packageJson])],
   },
 
   module: {

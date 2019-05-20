@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
+"use strict";
 
 module.exports = function createNoopServiceWorkerMiddleware() {
   return function noopServiceWorkerMiddleware(req, res, next) {
-    if (req.url === '/service-worker.js') {
-      res.setHeader('Content-Type', 'text/javascript');
+    if (req.url === "/service-worker.js") {
+      res.setHeader("Content-Type", "text/javascript");
       res.send(
         `// This service worker file is effectively a 'no-op' that will reset any
 // previous service worker registered for the same host:port combination.

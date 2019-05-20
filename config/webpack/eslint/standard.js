@@ -12,26 +12,21 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: [
-    'standard',
-    'standard-react',
-  ],
-  plugins: [
-    'babel',
-    'react',
-    'promise',
-    'react-hooks',
-  ],
+  extends: ['standard', 'standard-react'],
+  plugins: ['babel', 'react', 'promise', 'react-hooks'],
   rules: {
     'arrow-parens': 0,
     'generator-star-spacing': 0,
     'react/prop-types': 0,
     'react-hooks/rules-of-hooks': 'error',
     'padded-blocks': 0,
-    'no-unused-expressions': ['error', {
-      allowShortCircuit: true,
-      allowTernary: true,
-    }],
+    'no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+        allowTernary: true,
+      },
+    ],
     'import/no-webpack-loader-syntax': 0,
   },
 };

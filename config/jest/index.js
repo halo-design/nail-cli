@@ -10,9 +10,7 @@ const baseConfig = {
   collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
   coverageDirectory: '<rootDir>/report/coverage',
   setupFiles: [require.resolve('@babel/polyfill')],
-  testMatch: [
-    '<rootDir>/tests/unit/**/*.spec.(ts|tsx|js)',
-  ],
+  testMatch: ['<rootDir>/tests/unit/**/*.spec.(ts|tsx|js)'],
   testEnvironment: 'node',
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
   moduleFileExtensions: [
