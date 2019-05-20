@@ -144,6 +144,9 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
+      if ('TRAVIS' in process.env && 'CI' in process.env) {
+        process.exit(0);
+      }
     }
     if (isSuccessful && (isInteractive || isFirstCompile)) {
       printInstructions(appName, urls, useYarn);
