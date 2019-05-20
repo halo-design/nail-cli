@@ -42,9 +42,14 @@ if (fs.existsSync(APP_PACKAGEJSON_DIR)) {
   process.exit(1);
 }
 
+let configFile = null;
 if (fs.existsSync(NAILLOCK)) {
   const lockData = readYaml.sync(NAILLOCK);
-  const { author, configFile, orgSite, license } = lockData;
+  const { author, orgSite, license } = lockData;
+
+  if ('configFile' in lockData) {
+    configFile = lockData.configFile;
+  }
 
   if (author) {
     SETAUTHOR = author;
@@ -57,17 +62,17 @@ if (fs.existsSync(NAILLOCK)) {
   if (license) {
     SETLICENSE = license;
   }
+}
 
-  if (configFile) {
-    const SET_NAILCONFIG_DIR = appResolve(configFile);
-    if (fs.existsSync(SET_NAILCONFIG_DIR)) {
-      APP_NAILCONFIG_FILE = require(SET_NAILCONFIG_DIR);
-    } else {
-      log.red(
-        `\nThe specified nail-cli configuration ${configFile} does not exist.\n`
-      );
-      process.exit(1);
-    }
+if (configFile) {
+  const SET_NAILCONFIG_DIR = appResolve(configFile);
+  if (fs.existsSync(SET_NAILCONFIG_DIR)) {
+    APP_NAILCONFIG_FILE = require(SET_NAILCONFIG_DIR);
+  } else {
+    log.red(
+      `\nThe specified nail-cli configuration ${configFile} does not exist.\n`
+    );
+    process.exit(1);
   }
 } else if (fs.existsSync(APP_NAILCONFIG_DIRS[0])) {
   APP_NAILCONFIG_DIR = APP_NAILCONFIG_DIRS[0];
