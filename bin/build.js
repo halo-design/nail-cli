@@ -15,7 +15,7 @@ const {
 
 const runBuild = (opts, callback) => {
   const isWin = process.platform === 'win32';
-  const iconPackage = isWin ? '' : '📦 ';
+  const iconPackage = isWin ? '' : '📦  ';
   const { publicDir, outputDir } = opts;
   const warnAfterBundleGzipSize = 512 * 1024;
   const warnAfterChunkGzipSize = 1024 * 1024;
@@ -24,7 +24,9 @@ const runBuild = (opts, callback) => {
   const builder = previousFileSizes => {
     log.cyan('Creating an optimized production build...\n');
 
-    const compiler = webpack(getBuildConfig(opts));
+    const buildWebpackConfig = getBuildConfig(opts);
+
+    const compiler = webpack(buildWebpackConfig);
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
         if (err) {

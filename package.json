@@ -1,6 +1,6 @@
 {
   "name": "@nail-cli/core",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "React Development Scaffolding",
   "homepage": "https://github.com/halo-design/nail-cli",
   "main": "./bin/index.js",

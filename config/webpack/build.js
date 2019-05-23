@@ -100,9 +100,10 @@ const setBaseBuildConfig = ({
 
   baseBuildConfig.plugins.unshift(
     new ProgressBarPlugin({
-      complete: chalk.green('█'),
-      incomplete: chalk.white('█'),
-      format: `  :bar ${chalk.green.bold(':percent')} (:elapsed seconds) `,
+      width: 30,
+      complete: chalk.cyanBright('█'),
+      incomplete: chalk.gray('█'),
+      format: `  :bar ${chalk.cyan.bold(':percent')} (:elapsed seconds) :msg`,
       clear: false,
     }),
     new HtmlWebpackPlugin({
@@ -143,7 +144,7 @@ const setBaseBuildConfig = ({
   const comment =
     '/*!\n' +
     ` * Build By @nail-cli/core@${config.local.packageJson.version}\n` +
-    ` * (c) 2018-2019 ${author}\n` +
+    ` * (c) 2018-present ${author}\n` +
     ` * GitHub ${orgSite}\n` +
     ` * Released under the ${license} License.\n` +
     ' */\n';

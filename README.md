@@ -9,5 +9,6 @@
 [![npm](https://img.shields.io/npm/v/npm.svg)](https://github.com/halo-design/nail-cli)
 [![Dependencies status](https://david-dm.org/halo-design/nail-cli/status.svg)](https://david-dm.org/halo-design/nail-cli)
 [![build](https://www.travis-ci.org/halo-design/nail-cli.svg?branch=master)](https://github.com/halo-design/nail-cli)
+[![style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/halo-design/nail-cli)
 
 React Development Scaffolding
