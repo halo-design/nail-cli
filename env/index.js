@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const { resolve } = require('path');
 const readYaml = require('read-yaml');
 const { log } = require('../utils');

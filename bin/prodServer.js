@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const chalk = require('chalk');
 const express = require('express');
 const history = require('connect-history-api-fallback');

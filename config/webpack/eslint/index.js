@@ -1,3 +1,4 @@
+const fs = require('fs-extra');
 const { getRealPath } = require('../../../env');
 const { writeJSON } = require('../../../utils');
 
@@ -12,7 +13,11 @@ const finalConfig = (customConfig = {}, eslintExtend, isDebug) => {
     ...createBaseConfig(eslintExtend),
     ...customConfig,
   };
-  writeJSON(config, getRealPath('<rootDir>/.eslintrc'));
+  const eslintPath = getRealPath('<rootDir>/.eslintrc');
+
+  if (!fs.existsSync(eslintPath)) {
+    writeJSON(config, eslintPath);
+  }
 
   return {
     ...config,
