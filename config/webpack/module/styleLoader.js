@@ -21,7 +21,7 @@ const styleLoader = (loader, postcssPlugins, isDebug) => {
           }),
           ...postcssPlugins.map(plugin => require(plugin)()),
           require('autoprefixer')({
-            browsers: browserslist,
+            overrideBrowserslist: browserslist,
           }),
           require('cssnano')({
             reduceIdents: false,
