@@ -19,10 +19,7 @@ const finalConfig = (customConfig = {}, eslintExtend, isDebug) => {
     writeJSON(config, eslintPath);
   }
 
-  return {
-    ...config,
-    ...{ 'no-debugger': isDebug ? 0 : 2 },
-  };
+  return config;
 };
 
 module.exports = finalConfig;
